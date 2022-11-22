@@ -10,10 +10,10 @@ public abstract class Persona {
 	protected String campoLaboral;
 	protected String email;
 	protected String estado;
-	protected Solicitudes solicitud;
+	protected Solicitud solicitud;
 	
 	public Persona(String cedula, String nombre, String telefono, String pais, String campoLaboral, String email,
-			String estado, Solicitudes solicitud) {
+			String estado, Solicitud solicitud) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
@@ -65,11 +65,11 @@ public abstract class Persona {
 		this.estado = estado;
 	}
 
-	public Solicitudes getSolicitud() {
+	public Solicitud getSolicitud() {
 		return solicitud;
 	}
 
-	public void setSolicitud(Solicitudes solicitud) {
+	public void setSolicitud(Solicitud solicitud) {
 		this.solicitud = solicitud;
 	}
 
