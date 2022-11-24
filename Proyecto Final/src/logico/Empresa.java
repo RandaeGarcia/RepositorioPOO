@@ -4,14 +4,17 @@ public class Empresa {
 
 	private	String codigo;
 	private String nombreEmpresa;
+	private String campolaboral;
 	private String telefono;
 	private String email;
 	private String pais;
 	
-	public Empresa(String codigo, String nombreEmpresa, String telefono, String email, String pais) {
+	public Empresa(String codigo, String nombreEmpresa, String campolaboral, String telefono, String email,
+			String pais) {
 		super();
 		this.codigo = codigo;
 		this.nombreEmpresa = nombreEmpresa;
+		this.campolaboral = campolaboral;
 		this.telefono = telefono;
 		this.email = email;
 		this.pais = pais;
@@ -35,6 +38,10 @@ public class Empresa {
 
 	public String getPais() {
 		return pais;
+	}
+
+	public String getCampolaboral() {
+		return campolaboral;
 	}
 	
 }
