@@ -7,10 +7,24 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JPasswordField passwordField;
+	private JButton btnRegistrar;
+	private JButton btnCancelar;
+	private JRadioButton rdbtnSecre;
+	private JRadioButton rdbtnAdmin;
 
 	/**
 	 * Launch the application.
@@ -29,27 +43,106 @@ public class CrearUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public CrearUsuario() {
-		setBounds(100, 100, 450, 300);
+		setTitle("Crear Usuario");
+		setBounds(100, 100, 340, 228);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		{
+			JPanel panel = new JPanel();
+			contentPanel.add(panel, BorderLayout.CENTER);
+			panel.setLayout(null);
+			{
+				JPanel panel_1 = new JPanel();
+				panel_1.setBounds(10, 11, 295, 22);
+				panel.add(panel_1);
+				panel_1.setLayout(null);
+				{
+					JLabel lblNewLabel = new JLabel("Crear como:");
+					lblNewLabel.setBounds(10, 4, 79, 14);
+					panel_1.add(lblNewLabel);
+				}
+				{
+					rdbtnAdmin = new JRadioButton("Administrador");
+					rdbtnAdmin.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							rdbtnSecre.setSelected(false);
+						}
+					});
+					rdbtnAdmin.setBounds(80, 0, 101, 23);
+					panel_1.add(rdbtnAdmin);
+				}
+				{
+					rdbtnSecre = new JRadioButton("Secretaria");
+					rdbtnSecre.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							rdbtnAdmin.setSelected(false);
+						}
+					});
+					rdbtnSecre.setBounds(183, 0, 86, 23);
+					panel_1.add(rdbtnSecre);
+				}
+			}
+			{
+				JPanel panel_1 = new JPanel();
+				panel_1.setBounds(10, 44, 295, 95);
+				panel.add(panel_1);
+				panel_1.setLayout(null);
+				{
+					JLabel label = new JLabel("Codigo:");
+					label.setBounds(10, 14, 46, 14);
+					panel_1.add(label);
+				}
+				{
+					textField = new JTextField();
+					textField.setEnabled(false);
+					textField.setColumns(10);
+					textField.setBounds(87, 13, 186, 17);
+					panel_1.add(textField);
+				}
+				{
+					textField_1 = new JTextField();
+					textField_1.setColumns(10);
+					textField_1.setBounds(87, 42, 186, 17);
+					panel_1.add(textField_1);
+				}
+				{
+					JLabel lblNewLabel_1 = new JLabel("Usuario");
+					lblNewLabel_1.setBounds(10, 43, 46, 14);
+					panel_1.add(lblNewLabel_1);
+				}
+				
+				passwordField = new JPasswordField();
+				passwordField.setBounds(87, 71, 186, 17);
+				panel_1.add(passwordField);
+				{
+					JLabel lblContase = new JLabel("Contase\u00F1a:");
+					lblContase.setBounds(10, 72, 76, 14);
+					panel_1.add(lblContase);
+				}
+			}
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnRegistrar = new JButton("Registrar");
+				btnRegistrar.setActionCommand("OK");
+				buttonPane.add(btnRegistrar);
+				getRootPane().setDefaultButton(btnRegistrar);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
+				btnCancelar.setActionCommand("Cancel");
+				buttonPane.add(btnCancelar);
 			}
 		}
 	}
-
 }

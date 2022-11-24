@@ -101,7 +101,7 @@ public class CrearSolicitud extends JDialog {
 	 */
 	public CrearSolicitud() {
 		setTitle("Crear Solicitud");
-		setBounds(100, 100, 587, 137);
+		setBounds(100, 100, 587, 325);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.GRAY);
