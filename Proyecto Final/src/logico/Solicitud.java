@@ -4,58 +4,42 @@ import java.util.ArrayList;
 
 public abstract class Solicitud {
 
-	protected String modalidadubicacion;
-	protected String modalidadtiempo;
+	protected String codigo;
+	protected String modalidadUbicacion;
+	protected String modalidadTiempo;
 	protected String ubicacion;
 	protected ArrayList<String> idiomas;
+	protected String sexo;
 	protected boolean oktomove;
-	protected boolean licenciaConduccion;
+	protected boolean vehiculoPropio;
+	protected Usuario creador;
 	protected boolean estado;
-	protected int cantpuestos;
-	protected float salariomin;
-	protected float salariomax;
-	protected float matchpercent;
 	
-	public Solicitud(String modalidadubicacion, String modalidadtiempo, String ubicacion, ArrayList<String> idiomas,
-			boolean oktomove, boolean licenciaConduccion, int cantpuestos, float salariomin, float salariomax,
-			float matchpercent) {
+	public Solicitud(String codigo, String modalidadUbicacion, String modalidadTiempo, String ubicacion,
+			ArrayList<String> idiomas, String sexo, boolean oktomove, boolean vehiculoPropio, Usuario creador) {
 		super();
-		this.modalidadubicacion = modalidadubicacion;
-		this.modalidadtiempo = modalidadtiempo;
+		this.codigo = codigo;
+		this.modalidadUbicacion = modalidadUbicacion;
+		this.modalidadTiempo = modalidadTiempo;
 		this.ubicacion = ubicacion;
-		this.idiomas = new ArrayList<>();
 		this.idiomas = idiomas;
+		this.sexo = sexo;
 		this.oktomove = oktomove;
-		this.licenciaConduccion = licenciaConduccion;
-		this.cantpuestos = cantpuestos;
-		this.salariomin = salariomin;
-		this.salariomax = salariomax;
-		this.matchpercent = matchpercent;
+		this.vehiculoPropio = vehiculoPropio;
+		this.creador = creador;
 		this.estado = true;
 	}
 
-	public boolean isEstado() {
-		return estado;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setEstado(boolean estado) {
-		this.estado = estado;
+	public String getModalidadUbicacion() {
+		return modalidadUbicacion;
 	}
 
-	public int getCantpuestos() {
-		return cantpuestos;
-	}
-
-	public void setCantpuestos(int cantpuestos) {
-		this.cantpuestos = cantpuestos;
-	}
-
-	public String getModalidadubicacion() {
-		return modalidadubicacion;
-	}
-
-	public String getModalidadtiempo() {
-		return modalidadtiempo;
+	public String getModalidadTiempo() {
+		return modalidadTiempo;
 	}
 
 	public String getUbicacion() {
@@ -66,24 +50,28 @@ public abstract class Solicitud {
 		return idiomas;
 	}
 
+	public String getSexo() {
+		return sexo;
+	}
+
 	public boolean isOktomove() {
 		return oktomove;
 	}
 
-	public boolean isLicenciaConduccion() {
-		return licenciaConduccion;
+	public boolean isVehiculoPropio() {
+		return vehiculoPropio;
 	}
 
-	public float getSalariomin() {
-		return salariomin;
+	public Usuario getCreador() {
+		return creador;
 	}
 
-	public float getSalariomax() {
-		return salariomax;
+	public boolean isEstado() {
+		return estado;
 	}
 
-	public float getMatchpercent() {
-		return matchpercent;
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	
 	

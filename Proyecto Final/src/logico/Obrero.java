@@ -1,13 +1,21 @@
 package logico;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Obrero extends Persona {
-	private ArrayList<String> oficiosConocidos;
 
-	public Obrero(String cedula, String nombre, String telefono, String pais, String campoLaboral, String email,
-			String estado, Solicitud solicitud, ArrayList<String> oficiosConocidos) {
-		super(cedula, nombre, telefono, pais, campoLaboral, email, estado, solicitud);
-		this.oficiosConocidos = new ArrayList<String>();
+	private ArrayList<String> oficiosconocidos;
+
+	public Obrero(String nombre, String cedula, String telefono, String pais, String sexo, String campolaboral,
+			String email, Date fechaNacimiento, ArrayList<String> oficiosconocidos) {
+		super(nombre, cedula, telefono, pais, sexo, campolaboral, email, fechaNacimiento);
+		this.oficiosconocidos = oficiosconocidos;
 	}
+
+	public ArrayList<String> getOficiosconocidos() {
+		return oficiosconocidos;
+	}
+	
+	
 }

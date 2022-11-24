@@ -1,83 +1,72 @@
 package logico;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class Persona {
-	protected String cedula;
+	
 	protected String nombre;
+	protected String cedula;
 	protected String telefono;
 	protected String pais;
-	protected String campoLaboral;
+	protected String sexo;
+	protected String campolaboral;
 	protected String email;
-	protected String estado;
-	protected Solicitud solicitud;
+	protected boolean estado;
+	protected Date fechaNacimiento;
 	
-	public Persona(String cedula, String nombre, String telefono, String pais, String campoLaboral, String email,
-			String estado, Solicitud solicitud) {
+	public Persona(String nombre, String cedula, String telefono, String pais, String sexo, String campolaboral,
+			String email, Date fechaNacimiento) {
 		super();
-		this.cedula = cedula;
 		this.nombre = nombre;
+		this.cedula = cedula;
 		this.telefono = telefono;
 		this.pais = pais;
-		this.campoLaboral = campoLaboral;
+		this.sexo = sexo;
+		this.campolaboral = campolaboral;
 		this.email = email;
-		this.estado = estado;
-		this.solicitud = solicitud;
+		this.fechaNacimiento = fechaNacimiento;
+		this.estado = true;
 	}
 
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
-	public String getCampoLaboral() {
-		return campoLaboral;
-	}
-
-	public void setCampoLaboral(String campoLaboral) {
-		this.campoLaboral = campoLaboral;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 
-	public Solicitud getSolicitud() {
-		return solicitud;
-	}
-
-	public void setSolicitud(Solicitud solicitud) {
-		this.solicitud = solicitud;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public String getCedula() {
 		return cedula;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getTelefono() {
+		return telefono;
 	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public String getCampolaboral() {
+		return campolaboral;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	
+	
 }

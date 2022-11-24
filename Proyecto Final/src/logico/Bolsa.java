@@ -4,47 +4,50 @@ import java.util.ArrayList;
 
 public class Bolsa {
 
-	private ArrayList<Persona> listpersonas;
+	private ArrayList<Usuario> listusuarios;
 	private ArrayList<Solicitud> listsolicitudes;
 	private ArrayList<Empresa> listempresas;
-	public static Bolsa bolsa = null;
+	private ArrayList<Persona> listpersonas;
 	
-	public static Bolsa getInstance() {
-		if(bolsa == null) {
-			bolsa = new Bolsa();
-		}
-		return bolsa;
-	}
-	
-	private Bolsa() {
+	public Bolsa() {
 		super();
 		this.listempresas = new ArrayList<>();
 		this.listpersonas = new ArrayList<>();
 		this.listsolicitudes = new ArrayList<>();
+		this.listusuarios = new ArrayList<>();
 	}
 
-	public ArrayList<Persona> getListpersonas() {
-		return listpersonas;
+	public ArrayList<Usuario> getListusuarios() {
+		return listusuarios;
 	}
 
-	public void setListpersonas(Persona newlistpersonas) {
-		listpersonas.add(newlistpersonas);
+	public void setListusuarios(Usuario newusuario) {
+		listusuarios.add(newusuario);
 	}
 
 	public ArrayList<Solicitud> getListsolicitudes() {
 		return listsolicitudes;
 	}
 
-	public void setListsolicitudes(Solicitud newlistsolicitudes) {
-		listsolicitudes.add(newlistsolicitudes);
+	public void setListsolicitudes(Solicitud newsolicitud) {
+		listsolicitudes.add(newsolicitud);
 	}
 
 	public ArrayList<Empresa> getListempresas() {
 		return listempresas;
 	}
 
-	public void setListempresas(Empresa newlistempresas) {
-		listempresas.add(newlistempresas);
+	public void setListempresas(Empresa newempresa) {
+		listempresas.add(newempresa);
 	}
+
+	public ArrayList<Persona> getListpersonas() {
+		return listpersonas;
+	}
+
+	public void setListpersonas(Persona newpersona) {
+		listpersonas.add(newpersona);
+	}
+	
 	
 }

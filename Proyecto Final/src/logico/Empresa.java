@@ -1,36 +1,32 @@
 package logico;
 
-import java.util.ArrayList;
-
 public class Empresa {
 
-	private String codigo;
-	private String nombre;
-	private String tipo;
+	private	String codigo;
+	private String nombreEmpresa;
+	private String telefono;
 	private String email;
 	private String pais;
-	private ArrayList<Solicitud> empleos;
 	
-	public Empresa(String codigo, String nombre, String tipo, String email, String pais) {
+	public Empresa(String codigo, String nombreEmpresa, String telefono, String email, String pais) {
 		super();
 		this.codigo = codigo;
-		this.nombre = nombre;
-		this.tipo = tipo;
+		this.nombreEmpresa = nombreEmpresa;
+		this.telefono = telefono;
 		this.email = email;
 		this.pais = pais;
-		this.empleos = new ArrayList<>();
 	}
 
 	public String getCodigo() {
 		return codigo;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreEmpresa() {
+		return nombreEmpresa;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getTelefono() {
+		return telefono;
 	}
 
 	public String getEmail() {
@@ -40,10 +36,5 @@ public class Empresa {
 	public String getPais() {
 		return pais;
 	}
-
-	public ArrayList<Solicitud> getEmpleos() {
-		return empleos;
-	}
-	
 	
 }
