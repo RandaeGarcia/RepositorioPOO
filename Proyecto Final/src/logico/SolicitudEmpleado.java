@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class SolicitudEmpleado extends Solicitud {
 
-	private Empresa solicitante;
 	private float salariomin;
 	private Persona info;
 	
@@ -16,9 +15,6 @@ public class SolicitudEmpleado extends Solicitud {
 		this.info = info;
 	}
 
-	public Empresa getSolicitante() {
-		return solicitante;
-	}
 
 	public float getSalariomin() {
 		return salariomin;
@@ -27,10 +23,5 @@ public class SolicitudEmpleado extends Solicitud {
 	public Persona getInfo() {
 		return info;
 	}
-
-	public void setSolicitante(Empresa solicitante) {
-		this.solicitante = solicitante;
-	}
-	
 	
 }

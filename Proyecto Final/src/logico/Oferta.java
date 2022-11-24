@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Oferta extends Solicitud {
 	
-	private Persona solicitante;
 	private int cantpuestos;
 	private float salariomax;
 	private float matchpercent;
@@ -18,14 +17,6 @@ public class Oferta extends Solicitud {
 		this.salariomax = salariomax;
 		this.matchpercent = matchpercent;
 		this.info = info;
-	}
-
-	public Persona getSolicitante() {
-		return solicitante;
-	}
-
-	public void setSolicitante(Persona solicitante) {
-		this.solicitante = solicitante;
 	}
 
 	public int getCantpuestos() {
