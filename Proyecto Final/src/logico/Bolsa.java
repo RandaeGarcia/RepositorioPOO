@@ -49,5 +49,34 @@ public class Bolsa {
 		listpersonas.add(newpersona);
 	}
 	
+	public boolean verificarLogin(String userName, String password)
+	{
+		boolean verif = false;
+		if (buscarUsuarioByUser(userName) != null)
+		{
+			if (buscarUsuarioByUser(userName).getPassword().compareTo(password) == 0)
+			{
+				verif = true;
+			}
+		}
+		return verif;
+	}
+	
+	public Usuario buscarUsuarioByUser(String userName)
+	{
+		Usuario auxUsuario = null;
+		boolean find = false;
+		int ind = 0;
+		while (find == false && ind < listusuarios.size())
+		{
+			if (listusuarios.get(ind).getUsername().equalsIgnoreCase(userName))
+			{
+				auxUsuario = listusuarios.get(ind);
+				find = true;
+			}
+			ind++;
+		}
+		return auxUsuario;
+	}
 	
 }
