@@ -136,6 +136,8 @@ public class Registros extends JDialog {
 			lblNewLabel_8.setBounds(10, 234, 92, 14);
 			panel_1.add(lblNewLabel_8);
 			
+			
+			
 			rdbtntecnico = new JRadioButton("T\u00E9cnico:");
 			rdbtntecnico.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -213,7 +215,7 @@ public class Registros extends JDialog {
 			
 			JSpinner spinner = new JSpinner();
 			spinner.setModel(new SpinnerDateModel(new Date(1669262400000L), null, null, Calendar.MONTH));
-			spinner.setBounds(10, 160, 120, 20);
+			spinner.setBounds(10, 160, 140, 20);
 			panel_1.add(spinner);
 			
 			txtnombre = new JTextField();
@@ -405,6 +407,10 @@ public class Registros extends JDialog {
 						panelpersona.setVisible(true);
 						panelempresa.setVisible(false);
 						panel2.setVisible(true);
+						txtcorreoempresa.setEnabled(false);
+						txtnombreempresa.setEnabled(false);
+						txttelefonoempresa.setEnabled(false);
+						cbxprovinciaempresa.setEnabled(false);
 					}
 				});
 				rdbtnpersona.setSelected(true);
@@ -419,6 +425,10 @@ public class Registros extends JDialog {
 						panelempresa.setVisible(true);
 						panelpersona.setVisible(false);
 						panel2.setVisible(false);
+						cbxprovinciaempresa.setEnabled(true);
+						txtcorreoempresa.setEnabled(true);
+						txtnombreempresa.setEnabled(true);
+						txttelefonoempresa.setEnabled(true);
 					}
 				});
 				panel.add(rdbtnempresa);
@@ -441,5 +451,21 @@ public class Registros extends JDialog {
 				buttonPane.add(btncancelar);
 			}
 		}
+		
+		panel3.setVisible(true);
+		panel5.setVisible(false);
+		panel4.setVisible(false);
+		
+		txtcodigo.setEnabled(false);
+		txtcorreoempresa.setEnabled(false);
+		txtnombreempresa.setEnabled(false);
+		txttelefonoempresa.setEnabled(false);
+		cbxprovinciaempresa.setEnabled(false);
+		cbxareadetrabajo.setEnabled(true);
+		spnexperiencia.setEnabled(true);
+		cbxcarrera.setEnabled(false);
+		spnfechagraduacion.setEnabled(false);
+		txtoficiosconocidos.setEnabled(false);
+		btnagregar.setEnabled(false);
 	}
 }
