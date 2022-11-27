@@ -70,7 +70,7 @@ public class CrearUsuario extends JDialog {
 							rdbtnSecre.setSelected(false);
 						}
 					});
-					rdbtnAdmin.setBounds(80, 0, 101, 23);
+					rdbtnAdmin.setBounds(80, 0, 110, 23);
 					panel_1.add(rdbtnAdmin);
 				}
 				{
@@ -80,7 +80,7 @@ public class CrearUsuario extends JDialog {
 							rdbtnAdmin.setSelected(false);
 						}
 					});
-					rdbtnSecre.setBounds(183, 0, 86, 23);
+					rdbtnSecre.setBounds(192, 0, 86, 23);
 					panel_1.add(rdbtnSecre);
 				}
 			}

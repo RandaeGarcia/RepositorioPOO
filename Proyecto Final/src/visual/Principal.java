@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame {
 
@@ -56,6 +58,13 @@ public class Principal extends JFrame {
 		menuBar.add(mnPersona);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Crear solicitud");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearSolicitud crearsolicitud = new CrearSolicitud();
+				crearsolicitud.setModal(true);
+				crearsolicitud.setVisible(true);
+			}
+		});
 		mnPersona.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listar solicitudes");
@@ -68,6 +77,13 @@ public class Principal extends JFrame {
 		menuBar.add(mnEmpresa);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Crear oferta");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearSolicitud crearsolicitud = new CrearSolicitud();
+				crearsolicitud.setModal(true);
+				crearsolicitud.setVisible(true);
+			}
+		});
 		mnEmpresa.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Listar ofertas");
@@ -83,9 +99,23 @@ public class Principal extends JFrame {
 		menuBar.add(mnadministracion);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registros registrar = new Registros();
+				registrar.setModal(true);
+				registrar.setVisible(true);
+			}
+		});
 		mnadministracion.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Crear usuario");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearUsuario crearusuario = new CrearUsuario();
+				crearusuario.setModal(true);
+				crearusuario.setVisible(true);
+			}
+		});
 		mnadministracion.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listar usuarios");

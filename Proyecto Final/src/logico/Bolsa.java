@@ -8,13 +8,22 @@ public class Bolsa {
 	private ArrayList<Solicitud> listsolicitudes;
 	private ArrayList<Empresa> listempresas;
 	private ArrayList<Persona> listpersonas;
+	private static Bolsa bolsa = null;
+	public static int generadorcodempresa = 1;
 	
-	public Bolsa() {
+	private Bolsa() {
 		super();
 		this.listempresas = new ArrayList<>();
 		this.listpersonas = new ArrayList<>();
 		this.listsolicitudes = new ArrayList<>();
 		this.listusuarios = new ArrayList<>();
+	}
+	
+	public static Bolsa getinstance() {
+		if(bolsa == null) {
+			bolsa = new Bolsa();
+		}
+		return bolsa;
 	}
 
 	public ArrayList<Usuario> getListusuarios() {

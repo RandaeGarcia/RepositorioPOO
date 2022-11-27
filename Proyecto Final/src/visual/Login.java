@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -72,6 +74,13 @@ public class Login extends JFrame {
 		textField_1.setColumns(10);
 		
 		btnlogin = new JButton("Iniciar sesi\u00F3n");
+		btnlogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Principal principal = new Principal();
+				principal.setVisible(true);
+			}
+		});
 		btnlogin.setBounds(155, 136, 120, 23);
 		panel.add(btnlogin);
 	}
