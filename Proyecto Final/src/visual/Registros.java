@@ -33,6 +33,10 @@ import javax.swing.DefaultComboBoxModel;
 
 public class Registros extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton btncancelar;
 	private JTextField txtcedula;

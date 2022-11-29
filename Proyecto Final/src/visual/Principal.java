@@ -9,20 +9,43 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
+
+import logico.Bolsa;
+import logico.Usuario;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Principal extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Dimension dim;
-	
 	private JPanel contentPane;
 	private JMenu mnPersona;
-	private JMenu mnadministracion;
+	private JMenu mnAdministracion;
 	private JMenu mnEmpresa;
-	private JMenu mnreportes;
+	private JMenu mnReportes;
+	private JMenuItem mntmCrearUsuario;
+	private JMenuItem mntmRegistrar;
+	private JMenuItem mntmListarUsuarios;
+	private JMenuItem mntmCrearOferta;
+	private JMenuItem mntmListarOfertas;
+	private JMenuItem mntmListarSolicitud;
+	private JMenuItem mntmListarPersonas;
+	private JMenuItem mntmListarEmpresas;
 
 	/**
 	 * Launch the application.
@@ -44,6 +67,23 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				FileOutputStream bolsaTrabajoOut;
+				ObjectOutputStream bolsaTrabajoWrite;
+					try {
+						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
+						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
+						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+			}
+		});
+		
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -57,69 +97,73 @@ public class Principal extends JFrame {
 		mnPersona = new JMenu("Persona");
 		menuBar.add(mnPersona);
 		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Crear solicitud");
-		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+		JMenuItem mntmCrearSolicitud = new JMenuItem("Crear solicitud");
+		mntmCrearSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearSolicitud crearsolicitud = new CrearSolicitud();
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}
 		});
-		mnPersona.add(mntmNewMenuItem_6);
+		mnPersona.add(mntmCrearSolicitud);
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listar solicitudes");
-		mnPersona.add(mntmNewMenuItem_7);
+		mntmListarSolicitud = new JMenuItem("Listar solicitudes");
+		mnPersona.add(mntmListarSolicitud);
 		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Listar personas");
-		mnPersona.add(mntmNewMenuItem_8);
+		mntmListarPersonas = new JMenuItem("Listar personas");
+		mnPersona.add(mntmListarPersonas);
 		
 		mnEmpresa = new JMenu("Empresa");
 		menuBar.add(mnEmpresa);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Crear oferta");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+		mntmCrearOferta = new JMenuItem("Crear oferta");
+		mntmCrearOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearSolicitud crearsolicitud = new CrearSolicitud();
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}
 		});
-		mnEmpresa.add(mntmNewMenuItem_4);
+		mnEmpresa.add(mntmCrearOferta);
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Listar ofertas");
-		mnEmpresa.add(mntmNewMenuItem_5);
+		mntmListarOfertas = new JMenuItem("Listar ofertas");
+		mnEmpresa.add(mntmListarOfertas);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listar empresas");
-		mnEmpresa.add(mntmNewMenuItem_2);
+		mntmListarEmpresas = new JMenuItem("Listar empresas");
+		mnEmpresa.add(mntmListarEmpresas);
 		
-		mnreportes = new JMenu("Reportes");
-		menuBar.add(mnreportes);
+		mnReportes = new JMenu("Reportes");
+		menuBar.add(mnReportes);
 		
-		mnadministracion = new JMenu("Administraci\u00F3n");
-		menuBar.add(mnadministracion);
+		mnAdministracion = new JMenu("Administraci\u00F3n");
+		menuBar.add(mnAdministracion);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+		mntmRegistrar = new JMenuItem("Registrar");
+		mntmRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Registros registrar = new Registros();
 				registrar.setModal(true);
 				registrar.setVisible(true);
 			}
 		});
-		mnadministracion.add(mntmNewMenuItem_3);
+		mnAdministracion.add(mntmRegistrar);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Crear usuario");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		mntmCrearUsuario = new JMenuItem("Crear usuario");
+		if (!Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador"))
+		{
+			mntmCrearUsuario.setEnabled(false);
+		}
+		mntmCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario crearusuario = new CrearUsuario();
 				crearusuario.setModal(true);
 				crearusuario.setVisible(true);
 			}
 		});
-		mnadministracion.add(mntmNewMenuItem);
+		mnAdministracion.add(mntmCrearUsuario);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listar usuarios");
-		mnadministracion.add(mntmNewMenuItem_1);
+		mntmListarUsuarios = new JMenuItem("Listar usuarios");
+		mnAdministracion.add(mntmListarUsuarios);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setLayout(new BorderLayout(0, 0));

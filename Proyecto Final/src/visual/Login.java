@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
@@ -26,6 +27,10 @@ import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField pswContra;
@@ -52,7 +57,7 @@ public class Login extends JFrame {
 					try {
 						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
 						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
-						Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-1");
+						Usuario auxUsu = new Usuario("admin", "Admin", "Administrador", "USU-1");
 						Bolsa.getinstance().registrarUsuario(auxUsu);
 						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
 						bolsaTrabajoOut.close();
@@ -116,8 +121,12 @@ public class Login extends JFrame {
 				if (Bolsa.getinstance().verificarLogin(txtUserName.getText(), pswContra.getText()))
 				{
 					Principal principal = new Principal();
-					dispose();
 					principal.setVisible(true);
+					dispose();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña Incorrecta", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
