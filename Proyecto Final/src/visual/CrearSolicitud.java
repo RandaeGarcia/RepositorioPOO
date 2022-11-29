@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.Font;
@@ -48,13 +47,13 @@ public class CrearSolicitud extends JDialog {
 	private JRadioButton rbtnObrero;
 	private JRadioButton rbtnUniversitario;
 	private JTextField txtIdentificacion;
-	private JComboBox cbxProvincias;
+	private JComboBox<String> cbxProvincias;
 	private JRadioButton rdbtnOtros;
 	private JRadioButton rdbtnFrances;
 	private JRadioButton rdbtnIngles;
 	private JRadioButton rdbtnEspanol;
 	private JSpinner spnSalario;
-	private JComboBox cbxPuesto;
+	private JComboBox<String> cbxPuesto;
 	private JRadioButton rbtnSiDM;
 	private JRadioButton rbtnNoDM;
 	private JRadioButton rdbtnNoLM;
@@ -72,7 +71,7 @@ public class CrearSolicitud extends JDialog {
 	private JRadioButton rdbtnAmbosVP;
 	private JRadioButton rdbtnAmbosDM;
 	private JLabel lblProv;
-	private JComboBox<?> cbxProvEncuesta;
+	private JComboBox<String> cbxProvEncuesta;
 	private JLabel lblPuestoDisp;
 	private JSpinner spnPuestosDisp;
 	private JLabel lblSalarioMax;
@@ -95,7 +94,7 @@ public class CrearSolicitud extends JDialog {
 	private JTextField textField;
 	private JLabel lblCedula;
 	private JLabel lblNombre;
-	private JComboBox cbxEmpresa;
+	private JComboBox<String> cbxEmpresa;
 	private JTextField txtCodigo;
 
 	private Solicitud local;
@@ -240,7 +239,7 @@ public class CrearSolicitud extends JDialog {
 
 			txtCodigo = new JTextField();
 			txtCodigo.setEnabled(false);
-			txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().generadorCodSolicitud));
+			txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.generadorCodSolicitud));
 			txtCodigo.setBounds(339, 8, 186, 20);
 			panel_1.add(txtCodigo);
 			txtCodigo.setColumns(10);
@@ -743,7 +742,7 @@ public class CrearSolicitud extends JDialog {
 		}
 	}
 	private void clean() {
-		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().generadorCodSolicitud));
+		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.generadorCodSolicitud));
 		cbxPuesto.setSelectedIndex(0);
 		spnSalario.setValue(0);
 		spnPorcentaje.setValue(50);

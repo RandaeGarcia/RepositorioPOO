@@ -1,9 +1,11 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Persona {
+public abstract class Persona implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	protected String nombre;
 	protected String cedula;
 	protected String telefono;

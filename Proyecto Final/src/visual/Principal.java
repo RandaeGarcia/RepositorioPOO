@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
 
@@ -149,10 +148,10 @@ public class Principal extends JFrame {
 		mnAdministracion.add(mntmRegistrar);
 		
 		mntmCrearUsuario = new JMenuItem("Crear usuario");
-		/*if (!Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador"))
+		if (!Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador"))
 		{
 			mntmCrearUsuario.setEnabled(false);
-		}*/
+		}
 		mntmCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario crearusuario = new CrearUsuario();

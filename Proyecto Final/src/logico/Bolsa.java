@@ -1,9 +1,11 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bolsa {
+public class Bolsa implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Usuario> listusuarios;
 	private ArrayList<Solicitud> listsolicitudes;
 	private ArrayList<Empresa> listempresas;
@@ -24,7 +26,9 @@ public class Bolsa {
 	
 	public static Bolsa getinstance() {
 		if(bolsa == null) {
+			Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-" + String.valueOf(Bolsa.generadorCodUsuario));
 			bolsa = new Bolsa();
+			bolsa.registrarUsuario(auxUsu);
 		}
 		return bolsa;
 	}
@@ -181,7 +185,6 @@ public class Bolsa {
 				aux = solicitud;
 			}
 		}
-		
 		return aux;
 	}
 	
@@ -192,7 +195,6 @@ public class Bolsa {
 				aux = empresa;
 			}
 		}
-		
 		return aux;
 	}
 	
@@ -204,7 +206,6 @@ public class Bolsa {
 				aux = persona;
 			}
 		}
-		
 		return aux;
 	}
 }

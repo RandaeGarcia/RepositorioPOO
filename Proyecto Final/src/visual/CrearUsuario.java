@@ -15,16 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CrearUsuario extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUserName;
@@ -37,6 +33,8 @@ public class CrearUsuario extends JDialog {
 	private JTextField txtCodigo;
 	private Usuario local = null;
 	private JPasswordField pswConfirmacion;
+	private char[] auxContra = null;
+	private char[] auxConfirmacion = null;
 
 	/**
 	 * Launch the application.
@@ -168,13 +166,15 @@ public class CrearUsuario extends JDialog {
 				}
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (pswConfirmacion.equals(pswContra))
+						auxContra = pswContra.getPassword();
+						auxConfirmacion = pswConfirmacion.getPassword();
+						if (String.valueOf(auxContra).equals(String.valueOf(auxConfirmacion)))
 						{
 							if (local == null)
 							{
 								if (tipo != null)
 								{
-									Usuario auxUsuario = new Usuario(txtUserName.getText(), pswContra.toString(), tipo, txtCodigo.getText());
+									Usuario auxUsuario = new Usuario(txtUserName.getText(), auxContra.toString(), tipo, txtCodigo.getText());
 
 									if (!Bolsa.getinstance().existeUusario(auxUsuario.getUsername()))
 									{
@@ -194,7 +194,7 @@ public class CrearUsuario extends JDialog {
 							}
 							else
 							{
-								local.setPassword(pswContra.toString());
+								local.setPassword(auxContra.toString());
 								local.setCodigo(txtCodigo.toString());
 								local.setUsername(txtUserName.toString());
 								local.setTipo(tipo);
@@ -233,7 +233,6 @@ public class CrearUsuario extends JDialog {
 		{
 			txtCodigo.setText(local.getCodigo());
 			txtUserName.setText(local.getUsername());
-			pswContra.setText(local.getPassword());
 			if (tipo.equalsIgnoreCase(rdbtnAdmin.getText()))
 			{
 				rdbtnAdmin.setSelected(true);
@@ -249,6 +248,7 @@ public class CrearUsuario extends JDialog {
 		txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
 		txtUserName.setText("");
 		pswContra.setText("");
+		pswConfirmacion.setText("");
 		rdbtnSecre.setSelected(false);
 		rdbtnAdmin.setSelected(false);
 
