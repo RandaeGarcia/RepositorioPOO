@@ -57,7 +57,7 @@ public class Login extends JFrame {
 					try {
 						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
 						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
-						Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-1");
+						Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-" + String.valueOf(Bolsa.generadorCodUsuario));
 						Bolsa.getinstance().registrarUsuario(auxUsu);
 						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
 						bolsaTrabajoOut.close();
