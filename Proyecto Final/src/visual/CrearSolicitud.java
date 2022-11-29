@@ -133,7 +133,7 @@ public class CrearSolicitud extends JDialog {
 	 */
 	public CrearSolicitud() {
 		setTitle("Crear Solicitud");
-		setBounds(100, 100, 587, 583);
+		setBounds(100, 100, 587, 137);
 		
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());

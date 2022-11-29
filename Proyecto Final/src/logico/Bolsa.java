@@ -9,6 +9,7 @@ public class Bolsa {
 	private ArrayList<Empresa> listempresas;
 	private ArrayList<Persona> listpersonas;
 	private static Bolsa bolsa = null;
+	private static Usuario loginUser;
 	public static int generadorCodEmpresa = 1;
 	public static int generadorCodUsuario = 1;
 	public static int generadorCodSolicitud = 1;
@@ -26,6 +27,18 @@ public class Bolsa {
 			bolsa = new Bolsa();
 		}
 		return bolsa;
+	}
+	
+	public static void setBolsa(Bolsa bolsa) {
+		Bolsa.bolsa = bolsa;
+	}
+	
+	public static Usuario getLoginUser() {
+		return loginUser;
+	}
+
+	public static void setLoginUser(Usuario loginUser) {
+		Bolsa.loginUser = loginUser;
 	}
 
 	public ArrayList<Usuario> getListusuarios() {
@@ -63,17 +76,18 @@ public class Bolsa {
 	public boolean verificarLogin(String userName, String password)
 	{
 		boolean verif = false;
-		if (buscarUsuarioByUser(userName) != null)
+		for (Usuario auxUsuario : listusuarios)
 		{
-			if (buscarUsuarioByUser(userName).getPassword().compareTo(password) == 0)
+			if (auxUsuario.getUsername().equalsIgnoreCase(userName) && auxUsuario.getPassword().equals(password))
 			{
+				loginUser = auxUsuario;
 				verif = true;
 			}
 		}
 		return verif;
 	}
 	
-	public Usuario buscarUsuarioByUser(String userName)
+	/*public Usuario buscarUsuarioByUser(String userName)
 	{
 		Usuario auxUsuario = null;
 		boolean find = false;
@@ -88,7 +102,7 @@ public class Bolsa {
 			ind++;
 		}
 		return auxUsuario;
-	}
+	}*/
 
 	public void registrarUsuario(Usuario auxUsuario) {
 		if (auxUsuario != null)
@@ -119,6 +133,45 @@ public class Bolsa {
 			listsolicitudes.add(auxSoli);
 			generadorCodSolicitud++;
 		}		
+	}
+
+	public void registrarPersona(Persona auxPersona) {
+		if (auxPersona != null)
+		{
+			listpersonas.add(auxPersona);
+			generadorCodSolicitud++;
+		}		
+	}
+
+	public void registrarEmpresa(Empresa auxEmpresa) {
+		if (auxEmpresa != null)
+		{
+			listempresas.add(auxEmpresa);
+			generadorCodEmpresa++;
+		}			
+	}
+
+	public void modificarUsuario(Usuario local) {
+		int pos = buscarPosUsuario(local.getCodigo());
+		listusuarios.remove(pos);
+		listusuarios.add(local);
+	}
+
+	private int buscarPosUsuario(String codigo) {
+		int pos = 0;
+		int ind = 0;
+		boolean find = false;
+		ArrayList<Usuario> auxUsu = listusuarios;
+		while (!find)
+		{
+			if (auxUsu.get(ind).getCodigo().equals(codigo))
+			{
+				find = true;
+				pos = ind;
+			}
+			ind++;
+		}
+		return pos;
 	}
 	
 }

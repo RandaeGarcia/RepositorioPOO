@@ -24,7 +24,7 @@ public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUserName;
-	private JPasswordField txtPassword;
+	private JPasswordField pswContra;
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
 	private JRadioButton rdbtnSecre;
@@ -32,6 +32,7 @@ public class CrearUsuario extends JDialog {
 	private String tipo = null;
 	private JTextField txtCodigo;
 	private Usuario local = null;
+	private JPasswordField pswConfirmacion;
 
 	/**
 	 * Launch the application.
@@ -51,8 +52,16 @@ public class CrearUsuario extends JDialog {
 	 */
 	public CrearUsuario() {
 		//local = usuario;
-		setTitle("Crear Usuario");
-		setBounds(100, 100, 340, 228);
+		if (local == null)
+		{
+			setTitle("Crear Usuario");
+		}
+		else 
+		{
+			setTitle("Modificar Usuario");
+			txtUserName.setEnabled(false);
+		}
+		setBounds(100, 100, 346, 277);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,7 +106,7 @@ public class CrearUsuario extends JDialog {
 			}
 			{
 				JPanel panel_1 = new JPanel();
-				panel_1.setBounds(10, 44, 295, 95);
+				panel_1.setBounds(10, 44, 295, 140);
 				panel.add(panel_1);
 				panel_1.setLayout(null);
 				{
@@ -125,14 +134,22 @@ public class CrearUsuario extends JDialog {
 					panel_1.add(lblNewLabel_1);
 				}
 
-				txtPassword = new JPasswordField();
-				txtPassword.setBounds(87, 71, 186, 17);
-				panel_1.add(txtPassword);
+				pswContra = new JPasswordField();
+				pswContra.setBounds(87, 71, 186, 17);
+				panel_1.add(pswContra);
 				{
 					JLabel lblContase = new JLabel("Contase\u00F1a:");
 					lblContase.setBounds(10, 72, 76, 14);
 					panel_1.add(lblContase);
 				}
+				
+				JLabel lblConfirmar = new JLabel("Confirmar:");
+				lblConfirmar.setBounds(10, 100, 76, 14);
+				panel_1.add(lblConfirmar);
+				
+				pswConfirmacion = new JPasswordField();
+				pswConfirmacion.setBounds(87, 99, 186, 17);
+				panel_1.add(pswConfirmacion);
 			}
 		}
 		{
@@ -141,29 +158,49 @@ public class CrearUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnRegistrar = new JButton("Registrar");
+				if (local != null)
+				{
+					btnRegistrar.setText("Modificar");
+				}
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (local == null)
+						if (pswConfirmacion.equals(pswContra))
 						{
-							if (tipo != null)
+							if (local == null)
 							{
-								Usuario auxUsuario = new Usuario(txtUserName.getText(), txtPassword.toString(), tipo, txtCodigo.getText());
-
-								if (!Bolsa.getinstance().existeUusario(auxUsuario.getUsername()))
+								if (tipo != null)
 								{
-									Bolsa.getinstance().registrarUsuario(auxUsuario);
-									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+									Usuario auxUsuario = new Usuario(txtUserName.getText(), pswContra.toString(), tipo, txtCodigo.getText());
+
+									if (!Bolsa.getinstance().existeUusario(auxUsuario.getUsername()))
+									{
+										Bolsa.getinstance().registrarUsuario(auxUsuario);
+										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+									}
+									else
+									{
+										JOptionPane.showMessageDialog(null, "Usuario Existente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+									}
+									clean();
 								}
 								else
 								{
-									JOptionPane.showMessageDialog(null, "Usuario Existente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Seleccione Puesto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 								}
-								clean();
 							}
 							else
 							{
-								JOptionPane.showMessageDialog(null, "Seleccione Puesto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+								local.setPassword(pswContra.toString());
+								local.setCodigo(txtCodigo.toString());
+								local.setUsername(txtUserName.toString());
+								local.setTipo(tipo);
+								Bolsa.getinstance().modificarUsuario(local);
+								dispose();
 							}
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Cotraseña no Valida", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				});
@@ -182,7 +219,7 @@ public class CrearUsuario extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		
+
 		loadUsuario();
 	}
 
@@ -192,12 +229,12 @@ public class CrearUsuario extends JDialog {
 		{
 			txtCodigo.setText(local.getCodigo());
 			txtUserName.setText(local.getUsername());
-			txtPassword.setText(local.getPassword());
+			pswContra.setText(local.getPassword());
 			if (tipo.equalsIgnoreCase(rdbtnAdmin.getText()))
 			{
 				rdbtnAdmin.setSelected(true);
 			}
-			else
+			else if (tipo.equalsIgnoreCase(rdbtnSecre.getText()))
 			{
 				rdbtnSecre.setSelected(true);
 			}
@@ -207,7 +244,7 @@ public class CrearUsuario extends JDialog {
 	private void clean() {
 		txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
 		txtUserName.setText("");
-		txtPassword.setText("");
+		pswContra.setText("");
 		rdbtnSecre.setSelected(false);
 		rdbtnAdmin.setSelected(false);
 

@@ -23,8 +23,20 @@ public class Usuario {
 		return password;
 	}
 	
-	public String setPassword() {
-		return password;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getTipo() {

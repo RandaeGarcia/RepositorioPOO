@@ -506,41 +506,38 @@ public class Registros extends JDialog {
 				btnregistrar = new JButton("Registrar");
 				btnregistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						if(rdbtnpersona.isSelected()) {
+						Persona auxPersona = null;
+						if (rdbtnpersona.isSelected()) {
 							String sexoaux = "";
-							if(rdbtnfemenino.isSelected()) {
-								sexoaux = "F";
+							if (rdbtnfemenino.isSelected()) {
+								sexoaux = "Femenino";
 							}
 							else {
-								sexoaux = "M";
+								sexoaux = "Masculino";
 							}
-							if(rdbtntecnico.isSelected()) {
-								Tecnico tecnico = new Tecnico(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux,
+							
+							if (rdbtntecnico.isSelected()) {
+								 auxPersona = new Tecnico(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux,
 										cbxcampolaboral.getSelectedItem().toString(), txtcorreo.getText(), (Date) spnfechanacimiento.getValue(), 
 										cbxareadetrabajo.getSelectedItem().toString(), (int) spnexperiencia.getValue());
-								aux = tecnico;
 							}
-							if(rdbtnuniversitario.isSelected()) {
-								Universitario universitario = new Universitario(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), 
+							if (rdbtnuniversitario.isSelected()) {
+								auxPersona = new Universitario(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), 
 										sexoaux, cbxcampolaboral.getSelectedItem().toString(), txtcorreo.getText(), 
 										(Date) spnfechanacimiento.getValue(), cbxcarrera.getSelectedItem().toString(), (int) spnfechagraduacion.getValue());
-								aux = universitario;
 							}
-							if(rdbtnobrero.isSelected()) {
-								Obrero obrero = new Obrero(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
+							if (rdbtnobrero.isSelected()) {
+								auxPersona = new Obrero(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
 										cbxcampolaboral.getSelectedItem().toString(),
 										txtcorreo.getText(), (Date) spnfechanacimiento.getValue(), oficios);
-								aux = obrero;
 							}
-							Bolsa.getinstance().setListpersonas(aux);
+							Bolsa.getinstance().registrarPersona(auxPersona);
 							JOptionPane.showMessageDialog(null, "Registro de persona satisfactorio.", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
-							Empresa empresa = new Empresa(txtcodigo.getText(), txtnombreempresa.getText(), cbxcampolaboralempresa.getSelectedItem().toString(), txttelefonoempresa.getText(), 
+							Empresa auxEmpresa = new Empresa(txtcodigo.getText(), txtnombreempresa.getText(), cbxcampolaboralempresa.getSelectedItem().toString(), txttelefonoempresa.getText(), 
 									txtcorreoempresa.getText(), cbxprovinciaempresa.getSelectedItem().toString());
-							Bolsa.getinstance().setListempresas(empresa);
-							Bolsa.generadorCodEmpresa++;
+							Bolsa.getinstance().registrarEmpresa(auxEmpresa);
 							JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}
 						clean();
