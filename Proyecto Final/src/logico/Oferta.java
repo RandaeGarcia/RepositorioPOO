@@ -9,15 +9,16 @@ public class Oferta extends Solicitud {
 	private float matchpercent;
 	private Empresa info;
 	
-	public Oferta(String codigo, String modalidadUbicacion, String modalidadTiempo, String ubicacion,
-			ArrayList<String> idiomas, String sexo, boolean oktomove, boolean vehiculoPropio, Usuario creador,
-			int cantpuestos, float salariomax, float matchpercent, Empresa info) {
-		super(codigo, modalidadUbicacion, modalidadTiempo, ubicacion, idiomas, sexo, oktomove, vehiculoPropio, creador);
+	public Oferta(String codigo, String campLab, String modalidad, String tiempo, String puesto, String ubicacion,
+			ArrayList<String> idiomas, String sexo, int exp, boolean dispMov, boolean vehiculoPropio, boolean licencia,
+			Usuario creador, boolean estado, int cantpuestos, float salariomax, float matchpercent, Empresa info) {
+		super(codigo, campLab, modalidad, tiempo, puesto, ubicacion, idiomas, sexo, exp, dispMov, vehiculoPropio, licencia,
+				creador, estado);
 		this.cantpuestos = cantpuestos;
 		this.salariomax = salariomax;
 		this.matchpercent = matchpercent;
 		this.info = info;
-	}
+	}	
 
 	public int getCantpuestos() {
 		return cantpuestos;
@@ -38,6 +39,4 @@ public class Oferta extends Solicitud {
 	public Empresa getInfo() {
 		return info;
 	}
-
-	
 }

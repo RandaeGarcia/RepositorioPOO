@@ -390,6 +390,7 @@ public class Registros extends JDialog {
 		
 		txtcodigo = new JTextField();
 		txtcodigo.setBounds(10, 51, 230, 20);
+		txtcodigo.setText("EMP-"+Bolsa.generadorCodEmpresa);
 		panel_3.add(txtcodigo);
 		txtcodigo.setColumns(10);
 		
@@ -539,7 +540,7 @@ public class Registros extends JDialog {
 							Empresa empresa = new Empresa(txtcodigo.getText(), txtnombreempresa.getText(), cbxcampolaboralempresa.getSelectedItem().toString(), txttelefonoempresa.getText(), 
 									txtcorreoempresa.getText(), cbxprovinciaempresa.getSelectedItem().toString());
 							Bolsa.getinstance().setListempresas(empresa);
-							Bolsa.generadorcodempresa++;
+							Bolsa.generadorCodEmpresa++;
 							JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}
 						clean();
@@ -560,7 +561,6 @@ public class Registros extends JDialog {
 				buttonPane.add(btncancelar);
 			}
 		}
-		txtcodigo.setText("EMP-"+Bolsa.generadorcodempresa);
 	}
 
 	private void clean() {

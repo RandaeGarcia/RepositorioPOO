@@ -5,14 +5,14 @@ public class Usuario {
 	private String username;
 	private String password;
 	private String tipo;
-	private String correo;
+	private String codigo;
 	
-	public Usuario(String username, String password, String tipo, String correo) {
+	public Usuario(String username, String password, String tipo, String codigo) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.tipo = tipo;
-		this.correo = correo;
+		this.codigo = codigo;
 	}
 
 	public String getUsername() {
@@ -22,15 +22,16 @@ public class Usuario {
 	public String getPassword() {
 		return password;
 	}
+	
+	public String setPassword() {
+		return password;
+	}
 
 	public String getTipo() {
 		return tipo;
 	}
 
-	public String getCorreo() {
-		return correo;
+	public String getCodigo() {
+		return codigo;
 	}
-	
-	
-	
 }

@@ -7,7 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logico.Bolsa;
+import logico.Usuario;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -18,13 +23,15 @@ import java.awt.event.ActionEvent;
 public class CrearUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JPasswordField passwordField;
+	private JTextField txtUserName;
+	private JPasswordField txtPassword;
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
 	private JRadioButton rdbtnSecre;
 	private JRadioButton rdbtnAdmin;
+	private String tipo = null;
+	private JTextField txtCodigo;
+	private Usuario local = null;
 
 	/**
 	 * Launch the application.
@@ -43,8 +50,10 @@ public class CrearUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public CrearUsuario() {
+		//local = usuario;
 		setTitle("Crear Usuario");
 		setBounds(100, 100, 340, 228);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -68,6 +77,7 @@ public class CrearUsuario extends JDialog {
 					rdbtnAdmin.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							rdbtnSecre.setSelected(false);
+							tipo = rdbtnAdmin.getText().toString();
 						}
 					});
 					rdbtnAdmin.setBounds(80, 0, 110, 23);
@@ -78,6 +88,7 @@ public class CrearUsuario extends JDialog {
 					rdbtnSecre.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							rdbtnAdmin.setSelected(false);
+							tipo = rdbtnSecre.getText().toString();
 						}
 					});
 					rdbtnSecre.setBounds(192, 0, 86, 23);
@@ -95,27 +106,28 @@ public class CrearUsuario extends JDialog {
 					panel_1.add(label);
 				}
 				{
-					textField = new JTextField();
-					textField.setEnabled(false);
-					textField.setColumns(10);
-					textField.setBounds(87, 13, 186, 17);
-					panel_1.add(textField);
+					txtCodigo = new JTextField();
+					txtCodigo.setEnabled(false);
+					txtCodigo.setColumns(10);
+					txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
+					txtCodigo.setBounds(87, 13, 186, 17);
+					panel_1.add(txtCodigo);
 				}
 				{
-					textField_1 = new JTextField();
-					textField_1.setColumns(10);
-					textField_1.setBounds(87, 42, 186, 17);
-					panel_1.add(textField_1);
+					txtUserName = new JTextField();
+					txtUserName.setColumns(10);
+					txtUserName.setBounds(87, 42, 186, 17);
+					panel_1.add(txtUserName);
 				}
 				{
 					JLabel lblNewLabel_1 = new JLabel("Usuario");
 					lblNewLabel_1.setBounds(10, 43, 46, 14);
 					panel_1.add(lblNewLabel_1);
 				}
-				
-				passwordField = new JPasswordField();
-				passwordField.setBounds(87, 71, 186, 17);
-				panel_1.add(passwordField);
+
+				txtPassword = new JPasswordField();
+				txtPassword.setBounds(87, 71, 186, 17);
+				panel_1.add(txtPassword);
 				{
 					JLabel lblContase = new JLabel("Contase\u00F1a:");
 					lblContase.setBounds(10, 72, 76, 14);
@@ -129,6 +141,32 @@ public class CrearUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnRegistrar = new JButton("Registrar");
+				btnRegistrar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if (local == null)
+						{
+							if (tipo != null)
+							{
+								Usuario auxUsuario = new Usuario(txtUserName.getText(), txtPassword.toString(), tipo, txtCodigo.getText());
+
+								if (!Bolsa.getinstance().existeUusario(auxUsuario.getUsername()))
+								{
+									Bolsa.getinstance().registrarUsuario(auxUsuario);
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+								}
+								else
+								{
+									JOptionPane.showMessageDialog(null, "Usuario Existente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+								}
+								clean();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Seleccione Puesto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					}
+				});
 				btnRegistrar.setActionCommand("OK");
 				buttonPane.add(btnRegistrar);
 				getRootPane().setDefaultButton(btnRegistrar);
@@ -144,5 +182,35 @@ public class CrearUsuario extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
+		
+		loadUsuario();
+	}
+
+	private void loadUsuario()
+	{
+		if (local != null)
+		{
+			txtCodigo.setText(local.getCodigo());
+			txtUserName.setText(local.getUsername());
+			txtPassword.setText(local.getPassword());
+			if (tipo.equalsIgnoreCase(rdbtnAdmin.getText()))
+			{
+				rdbtnAdmin.setSelected(true);
+			}
+			else
+			{
+				rdbtnSecre.setSelected(true);
+			}
+		}
+	}
+
+	private void clean() {
+		txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
+		txtUserName.setText("");
+		txtPassword.setText("");
+		rdbtnSecre.setSelected(false);
+		rdbtnAdmin.setSelected(false);
+
 	}
 }
+

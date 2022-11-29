@@ -9,7 +9,9 @@ public class Bolsa {
 	private ArrayList<Empresa> listempresas;
 	private ArrayList<Persona> listpersonas;
 	private static Bolsa bolsa = null;
-	public static int generadorcodempresa = 1;
+	public static int generadorCodEmpresa = 1;
+	public static int generadorCodUsuario = 1;
+	public static int generadorCodSolicitud = 1;
 	
 	private Bolsa() {
 		super();
@@ -86,6 +88,37 @@ public class Bolsa {
 			ind++;
 		}
 		return auxUsuario;
+	}
+
+	public void registrarUsuario(Usuario auxUsuario) {
+		if (auxUsuario != null)
+		{
+			listusuarios.add(auxUsuario);
+			generadorCodUsuario++;
+		}
+		
+	}
+
+	public boolean existeUusario(String username) {
+		boolean find = false;
+		if (username != null)
+		{
+			for (Usuario auxUser : listusuarios) {
+				if (auxUser.getUsername().equalsIgnoreCase(username))
+				{
+					find = true;
+				}
+			}
+		}
+		return find;
+	}
+
+	public void registrarSolicitud(Solicitud auxSoli) {
+		if (auxSoli != null)
+		{
+			listsolicitudes.add(auxSoli);
+			generadorCodSolicitud++;
+		}		
 	}
 	
 }

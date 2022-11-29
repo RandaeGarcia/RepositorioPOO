@@ -7,14 +7,14 @@ public class SolicitudEmpleado extends Solicitud {
 	private float salariomin;
 	private Persona info;
 	
-	public SolicitudEmpleado(String codigo, String modalidadUbicacion, String modalidadTiempo, String ubicacion,
-			ArrayList<String> idiomas, String sexo, boolean oktomove, boolean vehiculoPropio, Usuario creador,
-			float salariomin, Persona info) {
-		super(codigo, modalidadUbicacion, modalidadTiempo, ubicacion, idiomas, sexo, oktomove, vehiculoPropio, creador);
+	public SolicitudEmpleado(String codigo, String campLab, String modalidad, String tiempo, String puesto, String ubicacion,
+			ArrayList<String> idiomas, String sexo, int exp, boolean dispMov, boolean vehiculoPropio, boolean licencia,
+			Usuario creador, boolean estado, float salariomin, Persona info) {
+		super(codigo, campLab, modalidad, tiempo, puesto, ubicacion, idiomas, sexo, exp, dispMov, vehiculoPropio, licencia,
+				creador, estado);
 		this.salariomin = salariomin;
 		this.info = info;
-	}
-
+	}	
 
 	public float getSalariomin() {
 		return salariomin;
@@ -23,5 +23,4 @@ public class SolicitudEmpleado extends Solicitud {
 	public Persona getInfo() {
 		return info;
 	}
-	
 }
