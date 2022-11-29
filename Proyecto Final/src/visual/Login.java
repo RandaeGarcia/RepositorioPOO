@@ -121,8 +121,8 @@ public class Login extends JFrame {
 				if (Bolsa.getinstance().verificarLogin(txtUserName.getText(), pswContra.getText()))
 				{
 					Principal principal = new Principal();
-					principal.setVisible(true);
 					dispose();
+					principal.setVisible(true);
 				}
 				else
 				{
