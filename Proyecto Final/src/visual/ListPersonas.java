@@ -5,12 +5,14 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Bolsa;
 import logico.Obrero;
+import logico.Persona;
 import logico.Tecnico;
 import logico.Universitario;
 
@@ -20,6 +22,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListPersonas extends JDialog {
 
@@ -31,6 +35,7 @@ public class ListPersonas extends JDialog {
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] rows;
+	private Persona aux = null;
 
 	/**
 	 * Launch the application.
@@ -69,6 +74,17 @@ public class ListPersonas extends JDialog {
 					String[] columnas = {"Cédula","Nombre","Sexo","Email","Tipo"};
 					model.setColumnIdentifiers(columnas);
 					table = new JTable();
+					table.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							int rowselected = -1;
+							rowselected = table.getSelectedRow();
+							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+								btnEliminar.setEnabled(true);
+								aux = Bolsa.getinstance().buscarPersonaByCedula(table.getValueAt(table.getSelectedRow(), 0).toString());
+							}
+						}
+					});
 					
 					table.setBorder(new EmptyBorder(0, 0, 0, 0));
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -83,6 +99,19 @@ public class ListPersonas extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Eliminar");
+				btnEliminar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int option;
+						if(aux != null) {
+							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar la cuenta seleccionada? ", "Confirmación", JOptionPane.YES_NO_OPTION);
+							if(option == JOptionPane.OK_OPTION){
+								Bolsa.getinstance().getListpersonas().remove(aux);
+								btnEliminar.setEnabled(false);
+								loadPersonas();
+							}
+						}
+					}
+				});
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);

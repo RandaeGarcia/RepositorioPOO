@@ -11,7 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Bolsa;
-import logico.Empresa;
+import logico.Oferta;
+import logico.SolicitudEmpleado;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,22 +22,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListEmpresas extends JDialog {
+public class ListSolicitudesEmpleados extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JButton btnCancelar;
 	private JButton btnEliminar;
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] rows;
-	private Empresa aux = null;
+	private SolicitudEmpleado aux = null;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ListEmpresas dialog = new ListEmpresas();
+			ListSolicitudesEmpleados dialog = new ListSolicitudesEmpleados();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -47,8 +47,8 @@ public class ListEmpresas extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListEmpresas() {
-		setTitle("Lista de Empresas");
+	public ListSolicitudesEmpleados() {
+		setTitle("Lista de Solicitudes de Empleados");
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -64,7 +64,7 @@ public class ListEmpresas extends JDialog {
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					model = new DefaultTableModel();
-					String[] columnas = {"Código","Nombre","Campo laboral","Email"};
+					String[] columnas = {"Código","Solicitante","Campo laboral","Puesto","Tiempo"};
 					model.setColumnIdentifiers(columnas);
 					table = new JTable();
 					table.addMouseListener(new MouseAdapter() {
@@ -74,7 +74,7 @@ public class ListEmpresas extends JDialog {
 							rowselected = table.getSelectedRow();
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
-								aux = Bolsa.getinstance().buscarEmpresaByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
+								aux = (SolicitudEmpleado) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
 					});
@@ -92,26 +92,26 @@ public class ListEmpresas extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Eliminar");
+				btnEliminar.setEnabled(false);
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int option;
 						if(aux != null) {
 							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar la cuenta seleccionada? ", "Confirmación", JOptionPane.YES_NO_OPTION);
 							if(option == JOptionPane.OK_OPTION){
-								Bolsa.getinstance().getListempresas().remove(aux);
+								Bolsa.getinstance().getListsolicitudes().remove(aux);
 								btnEliminar.setEnabled(false);
-								loadEmpresas();
+								loadSolicitudes();
 							}
 						}
 					}
 				});
-				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
 				getRootPane().setDefaultButton(btnEliminar);
 			}
 			{
-				btnCancelar = new JButton("Cancelar");
+				JButton btnCancelar = new JButton("Cancelar");
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -121,20 +121,23 @@ public class ListEmpresas extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		loadEmpresas();
+		loadSolicitudes();
 	}
 
-	private void loadEmpresas() {
+	private void loadSolicitudes() {
 		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
-		for (int i = 0; i < Bolsa.getinstance().getListempresas().size(); i++) {
-			rows[0] = Bolsa.getinstance().getListempresas().get(i).getCodigo();
-			rows[1] = Bolsa.getinstance().getListempresas().get(i).getNombreEmpresa();
-			rows[2] = Bolsa.getinstance().getListempresas().get(i).getCampolaboral();
-			rows[3] = Bolsa.getinstance().getListempresas().get(i).getEmail();
-			model.addRow(rows);
+		for (int i = 0; i < Bolsa.getinstance().getListsolicitudes().size(); i++) {
+			if(Bolsa.getinstance().getListsolicitudes().get(i) instanceof SolicitudEmpleado) {
+				aux = (SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(i);
+				rows[0] = aux.getCodigo();
+				rows[1] = aux.getInfo().getNombre();
+				rows[2] = aux.getPuesto();
+				rows[3] = aux.getTiempo();
+				rows[4] = aux.getInfo().getCampolaboral();
+				model.addRow(rows);
+			}
 		}
-		
 	}
 
 }

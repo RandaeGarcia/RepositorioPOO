@@ -174,4 +174,37 @@ public class Bolsa {
 		return pos;
 	}
 	
+	public Solicitud buscarSolicitudByCode(String codigo) {
+		Solicitud aux = null;
+		for (Solicitud solicitud : listsolicitudes) {
+			if(solicitud.getCodigo().equalsIgnoreCase(codigo)) {
+				aux = solicitud;
+			}
+		}
+		
+		return aux;
+	}
+	
+	public Empresa buscarEmpresaByCode(String codigo) {
+		Empresa aux = null;
+		for (Empresa empresa : listempresas) {
+			if(empresa.getCodigo().equalsIgnoreCase(codigo)) {
+				aux = empresa;
+			}
+		}
+		
+		return aux;
+	}
+	
+	
+	public Persona buscarPersonaByCedula(String cedulaaux) {
+		Persona aux = null;
+		for (Persona persona : listpersonas) {
+			if(persona.getCedula().equalsIgnoreCase(cedulaaux)) {
+				aux = persona;
+			}
+		}
+		
+		return aux;
+	}
 }
