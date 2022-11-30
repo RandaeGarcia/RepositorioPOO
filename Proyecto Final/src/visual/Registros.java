@@ -102,7 +102,7 @@ public class Registros extends JDialog {
 	 */
 	public Registros() {
 		setTitle("Registro");
-		setBounds(100, 100, 512, 580);
+		setBounds(100, 100, 512, 121);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -149,7 +149,7 @@ public class Registros extends JDialog {
 			lblNewLabel_7.setBounds(218, 135, 80, 14);
 			panel_1.add(lblNewLabel_7);
 			
-			JLabel lblNewLabel_8 = new JLabel("Conocimientos:");
+			JLabel lblNewLabel_8 = new JLabel("Nivel Estudios:");
 			lblNewLabel_8.setBounds(10, 279, 92, 14);
 			panel_1.add(lblNewLabel_8);
 			
@@ -175,7 +175,6 @@ public class Registros extends JDialog {
 					btnagregar.setEnabled(false);
 				}
 			});
-			rdbtntecnico.setSelected(true);
 			rdbtntecnico.setBounds(114, 275, 92, 23);
 			panel_1.add(rdbtntecnico);
 			
@@ -275,7 +274,7 @@ public class Registros extends JDialog {
 			panel_1.add(txttelefono);
 			txttelefono.setColumns(10);
 			
-			JLabel lblNewLabel_16 = new JLabel("Campo laboral:");
+			JLabel lblNewLabel_16 = new JLabel("Especialidad:");
 			lblNewLabel_16.setBounds(218, 197, 92, 14);
 			panel_1.add(lblNewLabel_16);
 			
@@ -441,7 +440,7 @@ public class Registros extends JDialog {
 		txttelefonoempresa.setEnabled(false);
 		cbxprovinciaempresa.setEnabled(false);
 		
-		lblNewLabel_17 = new JLabel("Campo laboral:");
+		lblNewLabel_17 = new JLabel("Nivel Estudios:");
 		lblNewLabel_17.setBounds(10, 326, 87, 14);
 		panel_3.add(lblNewLabel_17);
 		
@@ -467,6 +466,8 @@ public class Registros extends JDialog {
 				rdbtnpersona = new JRadioButton("Persona");
 				rdbtnpersona.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						setBounds(100, 100, 512, 567);
+						setLocationRelativeTo(null);
 						rdbtnpersona.setSelected(true);
 						rdbtnempresa.setSelected(false);
 						panelpersona.setVisible(true);
@@ -479,13 +480,14 @@ public class Registros extends JDialog {
 						cbxcampolaboralempresa.setEnabled(false);
 					}
 				});
-				rdbtnpersona.setSelected(true);
 				panel.add(rdbtnpersona);
 			}
 			{
 				rdbtnempresa = new JRadioButton("Empresa");
 				rdbtnempresa.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						setBounds(100, 100, 512, 567);
+						setLocationRelativeTo(null);
 						rdbtnempresa.setSelected(true);
 						rdbtnpersona.setSelected(false);
 						panelempresa.setVisible(true);

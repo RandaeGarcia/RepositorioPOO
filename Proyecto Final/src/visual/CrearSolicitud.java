@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.Font;
@@ -47,7 +49,6 @@ public class CrearSolicitud extends JDialog {
 	private JRadioButton rbtnObrero;
 	private JRadioButton rbtnUniversitario;
 	private JTextField txtIdentificacion;
-	private JComboBox<String> cbxProvincias;
 	private JRadioButton rdbtnOtros;
 	private JRadioButton rdbtnFrances;
 	private JRadioButton rdbtnIngles;
@@ -91,7 +92,7 @@ public class CrearSolicitud extends JDialog {
 	private JRadioButton rdbtnAmbosTiempo;
 	private JLabel lblCodigo;
 	private JLabel lblEmpresa;
-	private JTextField textField;
+	private JTextField txtTelefono;
 	private JLabel lblCedula;
 	private JLabel lblNombre;
 	private JComboBox<String> cbxEmpresa;
@@ -116,6 +117,9 @@ public class CrearSolicitud extends JDialog {
 	private int puestosDisp = 0;
 	private int porcentaje = 0;
 	private int experiencia = 0;
+	private Persona postulado;
+	private Empresa empresa;
+	private JTextField txtProvincia;
 
 
 	/**
@@ -136,8 +140,8 @@ public class CrearSolicitud extends JDialog {
 	 */
 	public CrearSolicitud() {
 		setTitle("Crear Solicitud");
-		setBounds(100, 100, 587, 137);
-		
+		setBounds(100, 100, 587, 138);
+
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.GRAY);
@@ -254,7 +258,6 @@ public class CrearSolicitud extends JDialog {
 			pnlPostulado.add(lblCedula);
 
 			txtIdentificacion = new JTextField();
-			txtIdentificacion.setEnabled(false);
 			txtIdentificacion.setBounds(80, 10, 186, 17);
 			pnlPostulado.add(txtIdentificacion);
 			txtIdentificacion.setColumns(10);
@@ -287,12 +290,7 @@ public class CrearSolicitud extends JDialog {
 			lblProvincia.setBounds(276, 69, 60, 14);
 			pnlPostulado.add(lblProvincia);
 
-			cbxProvincias = new JComboBox();
-			cbxProvincias.setEnabled(false);
-			cbxProvincias.setBounds(339, 66, 186, 20);
-			pnlPostulado.add(cbxProvincias);
-
-			JLabel lblCampoLaboral = new JLabel("Campo Laboral:");
+			JLabel lblCampoLaboral = new JLabel("Nivel Estudios");
 			lblCampoLaboral.setBounds(10, 97, 91, 14);
 			pnlPostulado.add(lblCampoLaboral);
 
@@ -319,15 +317,72 @@ public class CrearSolicitud extends JDialog {
 			lblEmpresa.setBounds(10, 41, 60, 14);
 			pnlPostulado.add(lblEmpresa);
 
-			textField = new JTextField();
-			textField.setBounds(339, 38, 186, 17);
-			pnlPostulado.add(textField);
-			textField.setColumns(10);
+			txtTelefono = new JTextField();
+			txtTelefono.setEnabled(false);
+			txtTelefono.setBounds(339, 38, 186, 17);
+			pnlPostulado.add(txtTelefono);
+			txtTelefono.setColumns(10);
 
 			cbxEmpresa = new JComboBox();
 			cbxEmpresa.setEnabled(false);
 			cbxEmpresa.setBounds(80, 38, 186, 17);
 			pnlPostulado.add(cbxEmpresa);
+
+			JButton btnBuscar = new JButton("Buscar");
+			btnBuscar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int opcion;
+					if (txtIdentificacion != null)
+					{
+						if (rbtnPostulacion.isSelected())
+						{
+							postulado = Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.toString());
+							if (postulado != null)
+							{
+								loadPostulado();
+							}
+							else
+							{
+								opcion = JOptionPane.showConfirmDialog(null, "Postulado no encontrado, desea registrarlo?", "ERROR", JOptionPane.YES_NO_OPTION);
+								if (opcion == JOptionPane.YES_OPTION)
+								{
+									Registros registrar = new Registros();
+									registrar.setModal(true);
+									registrar.setVisible(true);
+								}
+							}
+						}
+						else if (rbtnOferta.isSelected())
+						{
+							empresa = Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.toString());
+							if (empresa != null)
+							{
+								loadEmpresa();
+							}
+							else
+							{
+								opcion = JOptionPane.showConfirmDialog(null, "Empresa no encontrada, desea registrarla?", "ERROR", JOptionPane.YES_NO_OPTION);
+								if (opcion == JOptionPane.YES_OPTION)
+								{
+									Registros registrar = new Registros();
+									registrar.setModal(true);
+									registrar.setVisible(true);
+								}
+							}
+						}
+					}
+				}
+
+				
+			});
+			btnBuscar.setBounds(276, 7, 89, 23);
+			pnlPostulado.add(btnBuscar);
+			
+			txtProvincia = new JTextField();
+			txtProvincia.setEnabled(false);
+			txtProvincia.setColumns(10);
+			txtProvincia.setBounds(339, 68, 186, 17);
+			pnlPostulado.add(txtProvincia);
 
 			pnlSolicitudPost = new JPanel();
 			pnlSolicitudPost.setBounds(10, 160, 541, 302);
@@ -474,9 +529,9 @@ public class CrearSolicitud extends JDialog {
 			rbtnNoDM.setBounds(197, 192, 81, 23);
 			pnlSolicitudPost.add(rbtnNoDM);
 
-			JLabel lblPuesto = new JLabel("Puesto:");
-			lblPuesto.setBounds(10, 14, 60, 14);
-			pnlSolicitudPost.add(lblPuesto);
+			JLabel lblEspecialidad = new JLabel("Especialidad:");
+			lblEspecialidad.setBounds(10, 14, 104, 14);
+			pnlSolicitudPost.add(lblEspecialidad);
 
 			cbxPuesto = new JComboBox();
 			cbxPuesto.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Puesto"}));
@@ -594,7 +649,7 @@ public class CrearSolicitud extends JDialog {
 
 			spnPuestosDisp = new JSpinner();
 			spnPuestosDisp.setModel(new SpinnerNumberModel(new Integer(1), new Integer(0), null, new Integer(1)));
-			spnPuestosDisp.setBounds(99, 272, 81, 20);
+			spnPuestosDisp.setBounds(106, 272, 81, 20);
 			pnlSolicitudPost.add(spnPuestosDisp);
 			puestosDisp = Integer.valueOf(spnPuestosDisp.getValue().toString());
 
@@ -659,7 +714,7 @@ public class CrearSolicitud extends JDialog {
 			pnlSolicitudPost.add(spnPorcentaje);
 			porcentaje = Integer.valueOf(spnPorcentaje.getValue().toString());
 
-			lblCampoLab = new JLabel("Campo Laboral:");
+			lblCampoLab = new JLabel("Nivel Estudios:");
 			lblCampoLab.setBounds(10, 247, 91, 14);
 			pnlSolicitudPost.add(lblCampoLab);
 
@@ -741,6 +796,40 @@ public class CrearSolicitud extends JDialog {
 			}
 		}
 	}
+	
+	private void loadPostulado()
+	{
+		if (postulado != null)
+		{
+			txtNombre.setText(postulado.getNombre());
+			txtCorreo.setText(postulado.getEmail());
+			txtTelefono.setText(postulado.getTelefono());
+			txtProvincia.setText(postulado.getPais());
+			if (postulado.getCampolaboral().equalsIgnoreCase("Obrero"))
+			{
+				rbtnObrero.setSelected(true);
+			}
+			else if (postulado.getCampolaboral().equalsIgnoreCase("Tecnico"))
+			{
+				rbtnTecnico.setSelected(true);
+			}
+			else
+			{
+				rbtnUniversitario.setSelected(true);
+			}
+		}
+	}
+	
+	private void loadEmpresa() {
+		if (empresa != null)
+		{
+			txtNombre.setText(empresa.getNombreEmpresa());
+			txtCorreo.setText(empresa.getEmail());
+			txtTelefono.setText(empresa.getTelefono());
+			txtProvincia.setText(empresa.getPais());	
+		}
+	}
+	
 	private void clean() {
 		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.generadorCodSolicitud));
 		cbxPuesto.setSelectedIndex(0);
