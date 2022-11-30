@@ -102,7 +102,7 @@ public class Registros extends JDialog {
 	 */
 	public Registros() {
 		setTitle("Registro");
-		setBounds(100, 100, 512, 121);
+		setBounds(100, 100, 512, 569);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
