@@ -107,9 +107,23 @@ public class Principal extends JFrame {
 		mnPersona.add(mntmCrearSolicitud);
 		
 		mntmListarSolicitud = new JMenuItem("Listar solicitudes");
+		mntmListarSolicitud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListSolicitudesEmpleados listSolicitudesEmpleados = new ListSolicitudesEmpleados();
+				listSolicitudesEmpleados.setModal(true);
+				listSolicitudesEmpleados.setVisible(true);
+			}
+		});
 		mnPersona.add(mntmListarSolicitud);
 		
 		mntmListarPersonas = new JMenuItem("Listar personas");
+		mntmListarPersonas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListPersonas listpersonas = new ListPersonas();
+				listpersonas.setModal(true);
+				listpersonas.setVisible(true);
+			}
+		});
 		mnPersona.add(mntmListarPersonas);
 		
 		mnEmpresa = new JMenu("Empresa");
@@ -126,9 +140,23 @@ public class Principal extends JFrame {
 		mnEmpresa.add(mntmCrearOferta);
 		
 		mntmListarOfertas = new JMenuItem("Listar ofertas");
+		mntmListarOfertas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListOfertas listofertas = new ListOfertas();
+				listofertas.setModal(true);
+				listofertas.setVisible(true);
+			}
+		});
 		mnEmpresa.add(mntmListarOfertas);
 		
 		mntmListarEmpresas = new JMenuItem("Listar empresas");
+		mntmListarEmpresas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListEmpresas listempresas = new ListEmpresas();
+				listempresas.setModal(true);
+				listempresas.setVisible(true);
+			}
+		});
 		mnEmpresa.add(mntmListarEmpresas);
 		
 		mnReportes = new JMenu("Reportes");
@@ -162,6 +190,13 @@ public class Principal extends JFrame {
 		mnAdministracion.add(mntmCrearUsuario);
 		
 		mntmListarUsuarios = new JMenuItem("Listar usuarios");
+		mntmListarUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListUsuarios listusuarios = new ListUsuarios();
+				listusuarios.setModal(true);
+				listusuarios.setVisible(true);
+			}
+		});
 		mnAdministracion.add(mntmListarUsuarios);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);

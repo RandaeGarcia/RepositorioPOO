@@ -1,6 +1,6 @@
 package logico;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Bolsa implements Serializable {
@@ -176,6 +176,16 @@ public class Bolsa implements Serializable {
 			ind++;
 		}
 		return pos;
+	}
+	
+	public Usuario buscarUsuarioByCode(String codigo) {
+		Usuario aux = null;
+		for (Usuario usuario : listusuarios) {
+			if(usuario.getCodigo().equalsIgnoreCase(codigo)) {
+				aux = usuario;
+			}
+		}
+		return aux;
 	}
 	
 	public Solicitud buscarSolicitudByCode(String codigo) {
