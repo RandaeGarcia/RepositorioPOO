@@ -1,7 +1,6 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,7 +9,6 @@ import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
 
 import logico.Bolsa;
-import logico.Usuario;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -18,20 +16,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Principal extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private Dimension dim;
 	private JPanel contentPane;
 	private JMenu mnPersona;
 	private JMenu mnAdministracion;
@@ -46,9 +38,6 @@ public class Principal extends JFrame {
 	private JMenuItem mntmListarPersonas;
 	private JMenuItem mntmListarEmpresas;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,12 +51,8 @@ public class Principal extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Principal() {
 		addWindowListener(new WindowAdapter() {
-			@Override
 			public void windowClosing(WindowEvent e) {
 				FileOutputStream bolsaTrabajoOut;
 				ObjectOutputStream bolsaTrabajoWrite;
@@ -86,7 +71,6 @@ public class Principal extends JFrame {
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		dim = getToolkit().getScreenSize();
 		setSize(900,650);
 		setLocationRelativeTo(null);
 		

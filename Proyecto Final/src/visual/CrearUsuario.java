@@ -174,7 +174,7 @@ public class CrearUsuario extends JDialog {
 							{
 								if (tipo != null)
 								{
-									Usuario auxUsuario = new Usuario(txtUserName.getText(), auxContra.toString(), tipo, txtCodigo.getText());
+									Usuario auxUsuario = new Usuario(txtUserName.getText(), String.valueOf(auxContra), tipo, txtCodigo.getText());
 
 									if (!Bolsa.getinstance().existeUusario(auxUsuario.getUsername()))
 									{

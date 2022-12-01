@@ -336,7 +336,7 @@ public class CrearSolicitud extends JDialog {
 					{
 						if (rbtnPostulacion.isSelected())
 						{
-							postulado = Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.toString());
+							postulado = Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.getText());
 							if (postulado != null)
 							{
 								loadPostulado();
@@ -354,7 +354,7 @@ public class CrearSolicitud extends JDialog {
 						}
 						else if (rbtnOferta.isSelected())
 						{
-							empresa = Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.toString());
+							empresa = Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.getText());
 							if (empresa != null)
 							{
 								loadEmpresa();
@@ -555,7 +555,7 @@ public class CrearSolicitud extends JDialog {
 			rdbtnEspanol = new JRadioButton("Espa\u00F1ol");
 			rdbtnEspanol.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					idioma.add(rdbtnEspanol.getText());
+					idioma.add("Espa\u00F1ol");
 				}
 			});
 			rdbtnEspanol.setBounds(106, 63, 81, 23);
@@ -564,7 +564,7 @@ public class CrearSolicitud extends JDialog {
 			rdbtnIngles = new JRadioButton("Ingles");
 			rdbtnIngles.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					idioma.add(rdbtnIngles.getText());
+					idioma.add("Ingles");
 				}
 			});
 			rdbtnIngles.setBounds(197, 63, 69, 23);
@@ -573,7 +573,7 @@ public class CrearSolicitud extends JDialog {
 			rdbtnFrances = new JRadioButton("Frances");
 			rdbtnFrances.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					idioma.add(rdbtnFrances.getText());
+					idioma.add("Frances");
 				}
 			});
 			rdbtnFrances.setBounds(280, 63, 81, 23);
@@ -582,7 +582,7 @@ public class CrearSolicitud extends JDialog {
 			rdbtnOtros = new JRadioButton("Otros");
 			rdbtnOtros.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					idioma.add(rdbtnOtros.getText());
+					idioma.add(rdbtnOtros.toString());
 				}
 			});
 			rdbtnOtros.setBounds(376, 63, 69, 23);

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,8 +29,9 @@ public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField pswContra;
+	private JPasswordField pswContra;
 	private JButton btnlogin;
+	private char[] auxContra;
 
 	/**
 	 * Launch the application.
@@ -103,7 +105,7 @@ public class Login extends JFrame {
 		panel.add(txtUserName);
 		txtUserName.setColumns(10);
 
-		pswContra = new JTextField();
+		pswContra = new JPasswordField();
 		pswContra.setBounds(252, 71, 151, 20);
 		panel.add(pswContra);
 		pswContra.setColumns(10);
@@ -111,7 +113,8 @@ public class Login extends JFrame {
 		btnlogin = new JButton("Iniciar sesi\u00F3n");
 		btnlogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Bolsa.getinstance().verificarLogin(txtUserName.getText(), pswContra.getText()))
+				auxContra = pswContra.getPassword();
+				if (Bolsa.getinstance().verificarLogin(txtUserName.getText(), String.valueOf(auxContra)))
 				{
 					Principal principal = new Principal();
 					dispose();

@@ -209,10 +209,10 @@ public class Bolsa implements Serializable {
 	}
 	
 	
-	public Persona buscarPersonaByCedula(String cedulaaux) {
+	public Persona buscarPersonaByCedula(String cedulaAux) {
 		Persona aux = null;
 		for (Persona persona : listpersonas) {
-			if(persona.getCedula().equalsIgnoreCase(cedulaaux)) {
+			if(persona.getCedula().equalsIgnoreCase(cedulaAux)) {
 				aux = persona;
 			}
 		}
