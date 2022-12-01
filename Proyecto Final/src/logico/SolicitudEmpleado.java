@@ -8,7 +8,7 @@ public class SolicitudEmpleado extends Solicitud {
 	private Persona info;
 	
 	public SolicitudEmpleado(String codigo, String campLab, String modalidad, String tiempo, String puesto, String ubicacion,
-			ArrayList<String> idiomas, String sexo, int exp, boolean dispMov, boolean vehiculoPropio, boolean licencia,
+			ArrayList<String> idiomas, String sexo, int exp, String dispMov, String vehiculoPropio, String licencia,
 			Usuario creador, boolean estado, float salariomin, Persona info) {
 		super(codigo, campLab, modalidad, tiempo, puesto, ubicacion, idiomas, sexo, exp, dispMov, vehiculoPropio, licencia,
 				creador, estado);

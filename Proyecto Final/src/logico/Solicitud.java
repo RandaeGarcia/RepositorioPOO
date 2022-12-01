@@ -15,14 +15,14 @@ public abstract class Solicitud implements Serializable{
 	protected ArrayList<String> idiomas;
 	protected String sexo;
 	protected int exp;
-	protected boolean dispMov;
-	protected boolean vehiculoPropio;
-	protected boolean licencia;
+	protected String dispMov;
+	protected String vehiculoPropio;
+	protected String licencia;
 	protected Usuario creador;
 	protected boolean estado;
 	
 	public Solicitud(String codigo, String campLab, String modalidad, String tiempo, String puesto, String ubicacion,
-			ArrayList<String> idiomas, String sexo, int exp, boolean dispMov, boolean vehiculoPropio, boolean licencia,
+			ArrayList<String> idiomas, String sexo, int exp, String dispMov, String vehiculoPropio, String licencia,
 			Usuario creador, boolean estado) {
 		super();
 		this.codigo = codigo;
@@ -53,7 +53,7 @@ public abstract class Solicitud implements Serializable{
 		return codigo;
 	}
 	
-	public String campLab() {
+	public String getCampLab() {
 		return codigo;
 	}
 
@@ -85,15 +85,15 @@ public abstract class Solicitud implements Serializable{
 		return exp;
 	}
 
-	public boolean isDispMov() {
+	public String getDispMov() {
 		return dispMov;
 	}
 
-	public boolean isVehiculoPropio() {
+	public String getVehiculoPropio() {
 		return vehiculoPropio;
 	}
 
-	public boolean isLicencia() {
+	public String getLicencia() {
 		return licencia;
 	}
 
@@ -101,5 +101,85 @@ public abstract class Solicitud implements Serializable{
 		return creador;
 	}
 	
+	public boolean matcheoSolicitudes(SolicitudEmpleado auxPostulado, Oferta auxOferta)
+	{
+		int califPostulado = 0;
+		int califOferta = 0;
+		if (auxPostulado.getPuesto().equalsIgnoreCase(auxOferta.getPuesto()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (auxPostulado.getUbicacion().equalsIgnoreCase(auxOferta.getUbicacion()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (auxPostulado.getSalariomin() <= auxOferta.getSalariomax())
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (auxPostulado.getExp() >= auxOferta.getExp())
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (compareSiNoOpcion(auxPostulado.getTiempo(), auxOferta.getTiempo()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (compareSiNoOpcion(auxPostulado.getModalidad(), auxOferta.getModalidad()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (compareSiNoOpcion(auxPostulado.getLicencia(), auxOferta.getLicencia()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (compareSiNoOpcion(auxPostulado.getVehiculoPropio(), auxOferta.getVehiculoPropio()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (compareSiNoOpcion(auxPostulado.getDispMov(), auxOferta.getDispMov()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (auxPostulado.getSexo().equalsIgnoreCase(auxOferta.getSexo()) || auxOferta.getSexo().equalsIgnoreCase("Ambos"))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		if (auxPostulado.getInfo().getCampolaboral().equalsIgnoreCase(auxOferta.getCampLab()))
+		{
+			califPostulado++;
+		}
+		califOferta++;
+		return calcularResultados(califPostulado, califOferta, auxOferta.getMatchpercent());
+	}
 	
+
+	private boolean compareSiNoOpcion(String postulado, String oferta)
+	{
+		boolean compare = false;
+		if (postulado.equalsIgnoreCase(oferta) || oferta.equalsIgnoreCase("Ambos"))
+		{
+			compare = true;
+		}
+		return compare;
+	}
+	
+	private boolean calcularResultados(int califPostulado, int califOferta, float matchpercent) {
+		boolean prueba = false;
+		if (califPostulado >= (califOferta * matchpercent))
+		{
+			prueba = true;
+		}
+		return prueba;
+	}
 }

@@ -80,7 +80,7 @@ public class Registros extends JDialog {
 	private Persona aux = null;
 	private ArrayList<String> oficios;
 	private JComboBox cbxprovincia;
-	private JComboBox cbxcampolaboral;
+	private JComboBox cbxEspecialidad;
 	private JLabel lblNewLabel_17;
 	private JComboBox cbxcampolaboralempresa;
 
@@ -278,10 +278,10 @@ public class Registros extends JDialog {
 			lblNewLabel_16.setBounds(218, 197, 92, 14);
 			panel_1.add(lblNewLabel_16);
 			
-			cbxcampolaboral = new JComboBox();
-			cbxcampolaboral.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Turismo", "Medicina", "Economia", "Tecnologia"}));
-			cbxcampolaboral.setBounds(218, 226, 230, 20);
-			panel_1.add(cbxcampolaboral);
+			cbxEspecialidad = new JComboBox();
+			cbxEspecialidad.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Turismo", "Medicina", "Economia", "Tecnologia"}));
+			cbxEspecialidad.setBounds(218, 226, 230, 20);
+			panel_1.add(cbxEspecialidad);
 			
 			panel2 = new JPanel();
 			panel2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -440,7 +440,7 @@ public class Registros extends JDialog {
 		txttelefonoempresa.setEnabled(false);
 		cbxprovinciaempresa.setEnabled(false);
 		
-		lblNewLabel_17 = new JLabel("Nivel Estudios:");
+		lblNewLabel_17 =  new JLabel("Nivel Estudios:");
 		lblNewLabel_17.setBounds(10, 326, 87, 14);
 		panel_3.add(lblNewLabel_17);
 		
@@ -524,17 +524,17 @@ public class Registros extends JDialog {
 							
 							if (rdbtntecnico.isSelected()) {
 								 auxPersona = new Tecnico(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux,
-										cbxcampolaboral.getSelectedItem().toString(), txtcorreo.getText(), (Date) spnfechanacimiento.getValue(), 
+										cbxEspecialidad.getSelectedItem().toString(), txtcorreo.getText(), (Date) spnfechanacimiento.getValue(), 
 										cbxareadetrabajo.getSelectedItem().toString(), (int) spnexperiencia.getValue());
 							}
 							if (rdbtnuniversitario.isSelected()) {
 								auxPersona = new Universitario(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), 
-										sexoaux, cbxcampolaboral.getSelectedItem().toString(), txtcorreo.getText(), 
+										sexoaux, cbxEspecialidad.getSelectedItem().toString(), txtcorreo.getText(), 
 										(Date) spnfechanacimiento.getValue(), cbxcarrera.getSelectedItem().toString(), (int) spnfechagraduacion.getValue());
 							}
 							if (rdbtnobrero.isSelected()) {
 								auxPersona = new Obrero(txtnombre.getText(), txtcedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
-										cbxcampolaboral.getSelectedItem().toString(),
+										cbxEspecialidad.getSelectedItem().toString(),
 										txtcorreo.getText(), (Date) spnfechanacimiento.getValue(), oficios);
 							}
 							Bolsa.getinstance().registrarPersona(auxPersona);
@@ -587,7 +587,7 @@ public class Registros extends JDialog {
 		txtcorreo.setText("");
 		txttelefono.setText("");
 		cbxprovincia.setSelectedIndex(0);
-		cbxcampolaboral.setSelectedIndex(0);
+		cbxEspecialidad.setSelectedIndex(0);
 		
 		txtcodigo.setEnabled(false);
 		txtcorreoempresa.setEnabled(false);
