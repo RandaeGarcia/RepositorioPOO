@@ -574,8 +574,8 @@ public class Registros extends JDialog {
 		panel5.setVisible(false);
 		panel4.setVisible(false);
 		
-		rdbtnpersona.setSelected(true);
-		rdbtntecnico.setSelected(true);
+		rdbtnpersona.setSelected(false);
+		rdbtntecnico.setSelected(false);
 		rdbtnuniversitario.setSelected(false);
 		rdbtnobrero.setSelected(false);
 		rdbtnempresa.setSelected(false);

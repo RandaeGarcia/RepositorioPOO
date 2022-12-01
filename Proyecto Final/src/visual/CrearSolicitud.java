@@ -140,7 +140,7 @@ public class CrearSolicitud extends JDialog {
 	 */
 	public CrearSolicitud() {
 		setTitle("Crear Solicitud");
-		setBounds(100, 100, 587, 138);
+		setBounds(100, 100, 587, 553);
 
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -534,7 +534,7 @@ public class CrearSolicitud extends JDialog {
 			pnlSolicitudPost.add(lblEspecialidad);
 
 			cbxPuesto = new JComboBox();
-			cbxPuesto.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Puesto"}));
+			cbxPuesto.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>"}));
 			puesto = cbxPuesto.getSelectedItem().toString();
 			cbxPuesto.setBounds(106, 11, 160, 20);
 			pnlSolicitudPost.add(cbxPuesto);
@@ -637,7 +637,7 @@ public class CrearSolicitud extends JDialog {
 			pnlSolicitudPost.add(lblProv);
 
 			cbxProvEncuesta = new JComboBox();
-			cbxProvEncuesta.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Provincia", "Az\u00FAa", "Barahona", "Distrito Nacional", "Independencia", "La Altagracia", "La Romana", "La Vega", "Puerto Plata", "Samana", "San Cristobal", "San Juan", "San Pedro de Macor\u00EDs", "Santiago", "Santo Domingo"}));
+			cbxProvEncuesta.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Az\u00FAa", "Barahona", "Distrito Nacional", "Independencia", "La Altagracia", "La Romana", "La Vega", "Puerto Plata", "Samana", "San Cristobal", "San Juan", "San Pedro de Macor\u00EDs", "Santiago", "Santo Domingo"}));
 			cbxProvEncuesta.setEnabled(false);
 			cbxProvEncuesta.setBounds(365, 11, 160, 20);
 			pnlSolicitudPost.add(cbxProvEncuesta);
