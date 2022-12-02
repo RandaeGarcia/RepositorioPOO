@@ -13,6 +13,7 @@ public class Bolsa implements Serializable {
 	private static Bolsa bolsa = null;
 	private static Usuario loginUser;
 	public static int generadorCodEmpresa = 1;
+	public static int generadorCodPersona = 1;
 	public static int generadorCodUsuario = 1;
 	public static int generadorCodSolicitud = 1;
 	
@@ -90,23 +91,6 @@ public class Bolsa implements Serializable {
 		}
 		return verif;
 	}
-	
-	/*public Usuario buscarUsuarioByUser(String userName)
-	{
-		Usuario auxUsuario = null;
-		boolean find = false;
-		int ind = 0;
-		while (find == false && ind < listusuarios.size())
-		{
-			if (listusuarios.get(ind).getUsername().equalsIgnoreCase(userName))
-			{
-				auxUsuario = listusuarios.get(ind);
-				find = true;
-			}
-			ind++;
-		}
-		return auxUsuario;
-	}*/
 
 	public void registrarUsuario(Usuario auxUsuario) {
 		if (auxUsuario != null)
@@ -143,7 +127,7 @@ public class Bolsa implements Serializable {
 		if (auxPersona != null)
 		{
 			listpersonas.add(auxPersona);
-			generadorCodSolicitud++;
+			generadorCodPersona++;
 		}		
 	}
 
@@ -217,5 +201,12 @@ public class Bolsa implements Serializable {
 			}
 		}
 		return aux;
+	}
+
+	public void conteoGeneradores() {
+		generadorCodEmpresa = listempresas.size();
+		generadorCodPersona = listpersonas.size();
+		generadorCodUsuario = listusuarios.size();
+		generadorCodSolicitud = listsolicitudes.size();
 	}
 }

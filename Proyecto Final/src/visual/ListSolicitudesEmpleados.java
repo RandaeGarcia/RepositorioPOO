@@ -132,7 +132,7 @@ public class ListSolicitudesEmpleados extends JDialog {
 				aux = (SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(i);
 				rows[0] = aux.getCodigo();
 				rows[1] = aux.getInfo().getNombre();
-				rows[2] = aux.getPuesto();
+				rows[2] = aux.getEspecialidad();
 				rows[3] = aux.getTiempo();
 				rows[4] = aux.getInfo().getCampolaboral();
 				model.addRow(rows);

@@ -33,9 +33,6 @@ public class Login extends JFrame {
 	private JButton btnlogin;
 	private char[] auxContra;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,6 +45,7 @@ public class Login extends JFrame {
 					bolsaTrabajoRead = new ObjectInputStream(bolsaTrabajoIn);
 					Bolsa aux = (Bolsa) bolsaTrabajoRead.readObject();
 					Bolsa.setBolsa(aux);
+					Bolsa.getinstance().conteoGeneradores();
 					bolsaTrabajoIn.close();
 					bolsaTrabajoRead.close();
 				} catch (FileNotFoundException e) {
@@ -74,9 +72,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setTitle("Inicio de Sesi\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

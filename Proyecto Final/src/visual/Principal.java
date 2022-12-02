@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class Principal extends JFrame {
 
@@ -37,37 +39,10 @@ public class Principal extends JFrame {
 	private JMenuItem mntmListarSolicitud;
 	private JMenuItem mntmListarPersonas;
 	private JMenuItem mntmListarEmpresas;
+	private JMenuItem mntmCrearSolicitud;
+	private JButton btnCerrarSesion;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Principal frame = new Principal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public Principal() {
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				FileOutputStream bolsaTrabajoOut;
-				ObjectOutputStream bolsaTrabajoWrite;
-					try {
-						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
-						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
-						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
-					} catch (FileNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-			}
-		});
-		
+	public Principal() {		
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -80,7 +55,12 @@ public class Principal extends JFrame {
 		mnPersona = new JMenu("Persona");
 		menuBar.add(mnPersona);
 		
-		JMenuItem mntmCrearSolicitud = new JMenuItem("Crear solicitud");
+		mntmCrearSolicitud = new JMenuItem("Crear solicitud");
+		mntmCrearSolicitud.setEnabled(true);
+		if (Bolsa.generadorCodPersona == 1)
+		{
+			mntmCrearSolicitud.setEnabled(false);
+		}
 		mntmCrearSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearSolicitud crearsolicitud = new CrearSolicitud();
@@ -91,6 +71,11 @@ public class Principal extends JFrame {
 		mnPersona.add(mntmCrearSolicitud);
 		
 		mntmListarSolicitud = new JMenuItem("Listar solicitudes");
+		mntmListarSolicitud.setEnabled(true);
+		if (Bolsa.generadorCodSolicitud == 1)
+		{
+			mntmListarSolicitud.setEnabled(false);
+		}
 		mntmListarSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListSolicitudesEmpleados listSolicitudesEmpleados = new ListSolicitudesEmpleados();
@@ -101,6 +86,11 @@ public class Principal extends JFrame {
 		mnPersona.add(mntmListarSolicitud);
 		
 		mntmListarPersonas = new JMenuItem("Listar personas");
+		mntmListarPersonas.setEnabled(true);
+		if (Bolsa.generadorCodPersona == 1)
+		{
+			mntmListarPersonas.setEnabled(false);
+		}
 		mntmListarPersonas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListPersonas listpersonas = new ListPersonas();
@@ -114,6 +104,11 @@ public class Principal extends JFrame {
 		menuBar.add(mnEmpresa);
 		
 		mntmCrearOferta = new JMenuItem("Crear oferta");
+		mntmCrearOferta.setEnabled(true);
+		if (Bolsa.generadorCodEmpresa == 1)
+		{
+			mntmCrearOferta.setEnabled(false);
+		}
 		mntmCrearOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearSolicitud crearsolicitud = new CrearSolicitud();
@@ -124,6 +119,11 @@ public class Principal extends JFrame {
 		mnEmpresa.add(mntmCrearOferta);
 		
 		mntmListarOfertas = new JMenuItem("Listar ofertas");
+		mntmListarOfertas.setEnabled(true);
+		if (Bolsa.generadorCodSolicitud == 1)
+		{
+			mntmListarOfertas.setEnabled(false);
+		}
 		mntmListarOfertas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListOfertas listofertas = new ListOfertas();
@@ -134,6 +134,11 @@ public class Principal extends JFrame {
 		mnEmpresa.add(mntmListarOfertas);
 		
 		mntmListarEmpresas = new JMenuItem("Listar empresas");
+		mntmListarEmpresas.setEnabled(true);
+		if (Bolsa.generadorCodEmpresa == 1)
+		{
+			mntmListarEmpresas.setEnabled(false);
+		}
 		mntmListarEmpresas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListEmpresas listempresas = new ListEmpresas();
@@ -190,6 +195,28 @@ public class Principal extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FileOutputStream bolsaTrabajoOut;
+				ObjectOutputStream bolsaTrabajoWrite;
+					try {
+						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
+						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
+						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
+						Login login = new Login();
+						login.setVisible(true);
+						dispose();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+			}
+		});
+		btnCerrarSesion.setBounds(10, 538, 170, 41);
+		panel.add(btnCerrarSesion);
 	}
-
 }

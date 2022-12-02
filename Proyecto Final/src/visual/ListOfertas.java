@@ -131,7 +131,7 @@ public class ListOfertas extends JDialog {
 				aux = (Oferta) Bolsa.getinstance().getListsolicitudes().get(i);
 				rows[0] = aux.getCodigo();
 				rows[1] = aux.getInfo().getNombreEmpresa();
-				rows[2] = aux.getPuesto();
+				rows[2] = aux.getEspecialidad();
 				rows[3] = aux.getTiempo();
 				rows[4] = aux.getCantpuestos();
 						
