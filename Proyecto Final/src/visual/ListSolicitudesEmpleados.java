@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Bolsa;
+import logico.Persona;
+import logico.Solicitud;
 import logico.SolicitudEmpleado;
 
 import javax.swing.JScrollPane;
@@ -32,9 +34,6 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 	private static Object[] rows;
 	private SolicitudEmpleado aux = null;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			ListSolicitudesEmpleados dialog = new ListSolicitudesEmpleados();
@@ -45,9 +44,6 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public ListSolicitudesEmpleados() {
 		setTitle("Lista de Solicitudes de Empleados");
 		setBounds(100, 100, 450, 300);
@@ -128,14 +124,14 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 	private void loadSolicitudes() {
 		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
-		for (int i = 0; i < Bolsa.getinstance().getListsolicitudes().size(); i++) {
-			if(Bolsa.getinstance().getListsolicitudes().get(i) instanceof SolicitudEmpleado) {
-				aux = (SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(i);
-				rows[0] = aux.getCodigo();
-				rows[1] = aux.getInfo().getNombre();
-				rows[2] = aux.getEspecialidad();
-				rows[3] = aux.getTiempo();
-				rows[4] = aux.getInfo().getCampolaboral();
+		for (Solicitud auxSoli : Bolsa.getinstance().getListsolicitudes()) {
+			if(auxSoli instanceof SolicitudEmpleado) {
+				Persona auxPersona = ((SolicitudEmpleado) auxSoli).getInfo();
+				rows[0] = auxSoli.getCodigo();
+				rows[1] = auxPersona.getNombre();
+				rows[2] = auxSoli.getEspecialidad();
+				rows[3] = auxSoli.getTiempo();
+				rows[4] = auxPersona.getCampolaboral();
 				model.addRow(rows);
 			}
 		}

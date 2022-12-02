@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import javax.swing.JButton;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Principal extends JFrame {
 
@@ -37,7 +39,27 @@ public class Principal extends JFrame {
 	private JMenuItem mntmCrearSolicitud;
 	private JButton btnCerrarSesion;
 
-	public Principal() {		
+	public Principal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				FileOutputStream bolsaTrabajoOut;
+				ObjectOutputStream bolsaTrabajoWrite;
+					try {
+						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
+						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
+						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
+						Login login = new Login();
+						login.setVisible(true);
+						bolsaTrabajoOut.close();
+						bolsaTrabajoWrite.close();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+			}
+		});		
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -73,9 +95,9 @@ public class Principal extends JFrame {
 		}
 		mntmListarSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListSolicitudesEmpleados listSolicitudesEmpleados = new ListSolicitudesEmpleados();
-				listSolicitudesEmpleados.setModal(true);
-				listSolicitudesEmpleados.setVisible(true);
+				ListSolicitudesEmpleados listSolicitudEmpleado = new ListSolicitudesEmpleados();
+				listSolicitudEmpleado.setModal(true);
+				listSolicitudEmpleado.setVisible(true);
 			}
 		});
 		mnPersona.add(mntmListarSolicitud);
@@ -203,6 +225,8 @@ public class Principal extends JFrame {
 						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
 						Login login = new Login();
 						login.setVisible(true);
+						bolsaTrabajoOut.close();
+						bolsaTrabajoWrite.close();
 						dispose();
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();

@@ -120,7 +120,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private Persona postulado = null;
 	private Empresa empresa = null;
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			CrearSolicitud dialog = new CrearSolicitud();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -128,7 +128,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public CrearSolicitud() {
 		setTitle("Crear Solicitud");
@@ -793,53 +793,58 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						{
 							if (postulado instanceof Obrero)
 							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.toString(), "Obrero", modalidad, 
+								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
 										tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-										Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.toString()));
+										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
 							}
 							else if (postulado instanceof Tecnico)
 							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.toString(), "Tecnico", modalidad, 
+								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
 										tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
 										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-										Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.toString()));
+										postulado);
 							}
 							else if (postulado instanceof Universitario)
 							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.toString(), "Universitario", modalidad, 
+								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
 										tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
 										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-										Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.toString()));
+										postulado);
 							}
 						}
 						else if (rbtnOferta.isSelected())
 						{
 							if (rbtnTecnicoCL.isSelected())
 							{
-								auxSoli = new Oferta(txtCodigo.toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
+								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
 										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
 										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.toString()));
+										empresa);
 							}
 							else if (rbtnUniversitarioCL.isSelected())
 							{
-								auxSoli = new Oferta(txtCodigo.toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
+								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
 										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
 										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.toString()));
+										empresa);
 							}
 							else if (rbtnTecnicoCL.isSelected())
 							{
-								auxSoli = new Oferta(txtCodigo.toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
+								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
 										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
 										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.toString()));
+										empresa);
 							}
 
 						}
-						Bolsa.getinstance().registrarSolicitud(auxSoli);
-						clean();
+						
+						if (auxSoli != null)
+						{
+							Bolsa.getinstance().registrarSolicitud(auxSoli);
+							JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+						}
+						
+						//clean();
 
 					}
 				});
