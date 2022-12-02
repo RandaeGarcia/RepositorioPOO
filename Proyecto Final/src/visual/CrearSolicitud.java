@@ -30,12 +30,13 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
-public class CrearSolicitud extends JDialog {
+public class CrearSolicitud extends JDialog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -98,11 +99,10 @@ public class CrearSolicitud extends JDialog {
 	private JComboBox<String> cbxEmpresa;
 	private JTextField txtCodigo;
 	private JTextField txtProvincia;
-	private JComboBox cbxEspecialidadObrero;
-	private JComboBox cbxEspecialidadUniversitario;
-	private JComboBox cbxEspecialidadTecnico;
+	private JComboBox<String> cbxEspecialidadObrero;
+	private JComboBox<String> cbxEspecialidadUniversitario;
+	private JComboBox<String> cbxEspecialidadTecnico;
 
-	private Solicitud local = null;
 	private String modalidad = null;
 	private String tiempo = null;
 	private String provincia = null;
@@ -525,21 +525,21 @@ public class CrearSolicitud extends JDialog {
 			lblEspecialidad.setBounds(10, 14, 104, 14);
 			pnlSolicitudPost.add(lblEspecialidad);
 
-			cbxEspecialidadTecnico = new JComboBox();
-			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Cocina", 
+			cbxEspecialidadTecnico = new JComboBox<String>();
+			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", 
 					"Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", 
 					"Refigeracion", "Tecnologia"}));
 			cbxEspecialidadTecnico.setBounds(106, 11, 160, 20);
 			pnlSolicitudPost.add(cbxEspecialidadTecnico);
 
-			cbxEspecialidadUniversitario = new JComboBox();
-			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
+			cbxEspecialidadUniversitario = new JComboBox<String>();
+			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
 					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
 			cbxEspecialidadUniversitario.setBounds(106, 11, 160, 20);
 			pnlSolicitudPost.add(cbxEspecialidadUniversitario);
 
-			cbxEspecialidadObrero = new JComboBox();
-			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", 
+			cbxEspecialidadObrero = new JComboBox<String>();
+			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
 					"Cocinero", "Electricista", "Constructor", "Chofer"}));
 			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
 			pnlSolicitudPost.add(cbxEspecialidadObrero);

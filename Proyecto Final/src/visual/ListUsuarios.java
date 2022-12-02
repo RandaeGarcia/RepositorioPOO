@@ -33,9 +33,6 @@ public class ListUsuarios extends JDialog implements Serializable {
 	private JButton btnEliminar;
 	private Usuario aux = null;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			ListUsuarios dialog = new ListUsuarios();
@@ -46,9 +43,6 @@ public class ListUsuarios extends JDialog implements Serializable {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public ListUsuarios() {
 		setTitle("Lista de Usuarios");
 		setBounds(100, 100, 450, 300);

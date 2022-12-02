@@ -45,7 +45,7 @@ public class Registros extends JDialog {
 	private JTextField txttelefono;
 	private JLabel lblareadetrabajo;
 	private JSpinner spnExperiencia;
-	private JComboBox cbxAreaTrabajo;
+	private JComboBox<String> cbxAreaTrabajo;
 	private JLabel lblexperiencia;
 	private JTextField txtOficiosConocidos;
 	private JButton btnAgregar;
@@ -68,21 +68,20 @@ public class Registros extends JDialog {
 	private JLabel lblNewLabel_14;
 	private JTextField txtCorreoempresa;
 	private JLabel lblNewLabel_15;
-	private JComboBox cbxProvinciaEmpresa;
+	private JComboBox<String> cbxProvinciaEmpresa;
 	private JPanel panelpersona;
 	private JPanel panel2;
-	private JComboBox cbxCarrera;
+	private JComboBox<String> cbxCarrera;
 	private JSpinner spnFechaGraduacion;
 	private JSpinner spnfechanacimiento;
 	private ArrayList<String> Oficios;
-	private JComboBox cbxprovincia;
-	private JComboBox cbxEspecialidadObrero;
+	private JComboBox<String> cbxprovincia;
+	private JComboBox<String> cbxEspecialidadObrero;
 	private JLabel lblNewLabel_17;
-	private JComboBox cbxAreaTrabajoEmpresa;
-	private JComboBox cbxEspecialidadUniversitario;
-	private JComboBox cbxEspecialidadTecnico;
-	private String especialidad = null;
-
+	private JComboBox<String> cbxAreaTrabajoEmpresa;
+	private JComboBox<String> cbxEspecialidadUniversitario;
+	private JComboBox<String> cbxEspecialidadTecnico;
+	
 	public static void main(String[] args) {
 		try {
 			Registros dialog = new Registros();
@@ -279,8 +278,8 @@ public class Registros extends JDialog {
 			panel_1.add(txtCorreo);
 			txtCorreo.setColumns(10);
 			
-			cbxprovincia = new JComboBox();
-			cbxprovincia.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Azua", "Bahoruco", "Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", "Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", "Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", "Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", "San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez", "Santo Domingo", "Valverde"}));
+			cbxprovincia = new JComboBox<String>();
+			cbxprovincia.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Azua", "Bahoruco", "Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", "Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", "Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", "Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", "San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez", "Santo Domingo", "Valverde"}));
 			cbxprovincia.setBounds(218, 160, 230, 20);
 			panel_1.add(cbxprovincia);
 			
@@ -293,21 +292,21 @@ public class Registros extends JDialog {
 			lblNewLabel_16.setBounds(218, 252, 92, 14);
 			panel_1.add(lblNewLabel_16);
 			
-			cbxEspecialidadTecnico = new JComboBox();
-			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Cocina", "Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", "Refigeracion", "Tecnologia"}));
+			cbxEspecialidadTecnico = new JComboBox<String>();
+			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", "Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", "Refigeracion", "Tecnologia"}));
 			cbxEspecialidadTecnico.setBounds(218, 281, 230, 20);
 			panel_1.add(cbxEspecialidadTecnico);
 			
-			cbxEspecialidadUniversitario = new JComboBox();
-			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
+			cbxEspecialidadUniversitario = new JComboBox<String>();
+			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
 					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
 			cbxEspecialidadUniversitario.setBounds(218, 281, 230, 20);
 			panel_1.add(cbxEspecialidadUniversitario);
 			
-			cbxEspecialidadObrero = new JComboBox();
+			cbxEspecialidadObrero = new JComboBox<String>();
 			cbxEspecialidadObrero.setBounds(218, 281, 230, 20);
 			panel_1.add(cbxEspecialidadObrero);
-			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Cocinero", "Electricista", "Constructor", "Chofer"}));
+			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocinero", "Electricista", "Constructor", "Chofer"}));
 			
 			panel2 = new JPanel();
 			panel2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -330,8 +329,8 @@ public class Registros extends JDialog {
 			lblexperiencia.setBounds(10, 65, 96, 14);
 			panel3.add(lblexperiencia);
 			
-			cbxAreaTrabajo = new JComboBox();
-			cbxAreaTrabajo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+			cbxAreaTrabajo = new JComboBox<String>();
+			cbxAreaTrabajo.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>"}));
 			cbxAreaTrabajo.setBounds(97, 22, 149, 20);
 			panel3.add(cbxAreaTrabajo);
 			
@@ -351,8 +350,8 @@ public class Registros extends JDialog {
 			lblcarrera.setBounds(10, 14, 61, 14);
 			panel4.add(lblcarrera);
 			
-			cbxCarrera = new JComboBox();
-			cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administraci\u00F3n Hotelera", "Arquitectura", "Comunicaci\u00F3n Social", "Derecho", "Direcci\u00F3n Empresarial", "Dise\u00F1o e Interiorismo", "Econom\u00EDa", "Eduaci\u00F3n", "Estomatolog\u00EDa", "Filosof\u00EDa", "Gesti\u00F3n Financiera y Auditor\u00EDa", "Ingenier\u00EDa Civil", "Ingenier\u00EDa Mec\u00E1nica", "Ingenier\u00EDa El\u00E9ctrica", "Ingenier\u00EDa Industrial y de Sistemas", "Ingenier\u00EDa en Mecatr\u00F3nica", "Ingenier\u00EDa de Ciencias de la Computaci\u00F3n", "Ingenier\u00EDa Telem\u00E1tica", "Ingenier\u00EDa Ambiental", "Medicina", "Marketing", "Nutici\u00F3n y Diet\u00E9tica", "Psicolog\u00EDa", "Terapia F\u00EDsica", "Trabajo Social", "Hospitalidad y Turismo"}));
+			cbxCarrera = new JComboBox<String>();
+			cbxCarrera.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>", "Administraci\u00F3n Hotelera", "Arquitectura", "Comunicaci\u00F3n Social", "Derecho", "Direcci\u00F3n Empresarial", "Dise\u00F1o e Interiorismo", "Econom\u00EDa", "Eduaci\u00F3n", "Estomatolog\u00EDa", "Filosof\u00EDa", "Gesti\u00F3n Financiera y Auditor\u00EDa", "Ingenier\u00EDa Civil", "Ingenier\u00EDa Mec\u00E1nica", "Ingenier\u00EDa El\u00E9ctrica", "Ingenier\u00EDa Industrial y de Sistemas", "Ingenier\u00EDa en Mecatr\u00F3nica", "Ingenier\u00EDa de Ciencias de la Computaci\u00F3n", "Ingenier\u00EDa Telem\u00E1tica", "Ingenier\u00EDa Ambiental", "Medicina", "Marketing", "Nutici\u00F3n y Diet\u00E9tica", "Psicolog\u00EDa", "Terapia F\u00EDsica", "Trabajo Social", "Hospitalidad y Turismo"}));
 			cbxCarrera.setBounds(81, 11, 188, 20);
 			panel4.add(cbxCarrera);
 			
@@ -453,8 +452,8 @@ public class Registros extends JDialog {
 		lblNewLabel_15.setBounds(10, 266, 65, 14);
 		panel_3.add(lblNewLabel_15);
 		
-		cbxProvinciaEmpresa = new JComboBox();
-		cbxProvinciaEmpresa.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Azua", "Bahoruco", "Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", "Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", "Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", "Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", "San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez", "Santo Domingo", "Valverde"}));
+		cbxProvinciaEmpresa = new JComboBox<String>();
+		cbxProvinciaEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Azua", "Bahoruco", "Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", "Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", "Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", "Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", "San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez", "Santo Domingo", "Valverde"}));
 		cbxProvinciaEmpresa.setBounds(10, 291, 230, 20);
 		panel_3.add(cbxProvinciaEmpresa);
 		
@@ -469,8 +468,8 @@ public class Registros extends JDialog {
 		lblNewLabel_17.setBounds(10, 326, 87, 14);
 		panel_3.add(lblNewLabel_17);
 		
-		cbxAreaTrabajoEmpresa = new JComboBox();
-		cbxAreaTrabajoEmpresa.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Turismo", "Medicina", "Economia", "Tecnologia"}));
+		cbxAreaTrabajoEmpresa = new JComboBox<String>();
+		cbxAreaTrabajoEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>", "Turismo", "Medicina", "Economia", "Tecnologia"}));
 		cbxAreaTrabajoEmpresa.setBounds(10, 351, 230, 20);
 		panel_3.add(cbxAreaTrabajoEmpresa);
 		cbxAreaTrabajoEmpresa.setEnabled(false);

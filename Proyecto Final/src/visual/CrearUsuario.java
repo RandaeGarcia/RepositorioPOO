@@ -17,9 +17,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.awt.event.ActionEvent;
 
-public class CrearUsuario extends JDialog {
+public class CrearUsuario extends JDialog implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -36,10 +37,7 @@ public class CrearUsuario extends JDialog {
 	private char[] auxContra = null;
 	private char[] auxConfirmacion = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			CrearUsuario dialog = new CrearUsuario();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -47,12 +45,10 @@ public class CrearUsuario extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
+	}*/
+	
 	public CrearUsuario() {
+	//public CrearUsuario(Usuario usuario) {
 		//local = usuario;
 		if (local == null)
 		{

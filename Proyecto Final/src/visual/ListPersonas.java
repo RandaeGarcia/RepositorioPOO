@@ -24,9 +24,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
-public class ListPersonas extends JDialog {
+public class ListPersonas extends JDialog implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton btncancelar;
 	private JButton btnEliminar;
@@ -37,9 +39,6 @@ public class ListPersonas extends JDialog {
 	private static Object[] rows;
 	private Persona aux = null;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			ListPersonas dialog = new ListPersonas();
@@ -50,9 +49,6 @@ public class ListPersonas extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public ListPersonas() {
 		setTitle("Lista de Personas");
 		setBounds(100, 100, 450, 300);

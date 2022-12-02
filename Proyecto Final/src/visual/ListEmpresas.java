@@ -20,9 +20,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
-public class ListEmpresas extends JDialog {
+public class ListEmpresas extends JDialog implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnCancelar;
 	private JButton btnEliminar;
@@ -31,9 +33,6 @@ public class ListEmpresas extends JDialog {
 	private static Object[] rows;
 	private Empresa aux = null;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			ListEmpresas dialog = new ListEmpresas();
@@ -44,9 +43,6 @@ public class ListEmpresas extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public ListEmpresas() {
 		setTitle("Lista de Empresas");
 		setBounds(100, 100, 450, 300);
