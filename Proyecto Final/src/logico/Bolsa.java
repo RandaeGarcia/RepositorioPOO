@@ -12,10 +12,10 @@ public class Bolsa implements Serializable {
 	private ArrayList<Persona> listpersonas;
 	private static Bolsa bolsa = null;
 	private static Usuario loginUser;
-	public static int generadorCodEmpresa;
-	public static int generadorCodPersona;
-	public static int generadorCodUsuario;
-	public static int generadorCodSolicitud;
+	private int generadorCodEmpresa;
+	private int generadorCodPersona;
+	private int generadorCodUsuario;
+	private int generadorCodSolicitud;
 	
 	private Bolsa() {
 		super();
@@ -23,12 +23,16 @@ public class Bolsa implements Serializable {
 		this.listpersonas = new ArrayList<>();
 		this.listsolicitudes = new ArrayList<>();
 		this.listusuarios = new ArrayList<>();
+		this.generadorCodEmpresa = 1;
+		this.generadorCodPersona = 1;
+		this.generadorCodSolicitud = 1;
+		this.generadorCodUsuario = 0;
 	}
 	
 	public static Bolsa getinstance() {
 		if(bolsa == null) {
-			Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-" + String.valueOf(Bolsa.generadorCodUsuario));
 			bolsa = new Bolsa();
+			Usuario auxUsu = new Usuario("admin", "admin", "Administrador", "USU-" + String.valueOf(Bolsa.getinstance().generadorCodUsuario).toString());
 			bolsa.registrarUsuario(auxUsu);
 		}
 		return bolsa;
@@ -64,6 +68,78 @@ public class Bolsa implements Serializable {
 
 	public void setListpersonas(Persona newpersona) {
 		listpersonas.add(newpersona);
+	}
+	
+	public int getGeneradorCodEmpresa() {
+		return generadorCodEmpresa;
+	}
+
+	public int getGeneradorCodPersona() {
+		return generadorCodPersona;
+	}
+
+	public int getGeneradorCodUsuario() {
+		return generadorCodUsuario;
+	}
+
+	public int getGeneradorCodSolicitud() {
+		return generadorCodSolicitud;
+	}
+	
+	public boolean emailRepetido(String email) {
+		boolean aux = false;
+		for (Empresa empresa : listempresas) {
+			if(empresa.getEmail().equalsIgnoreCase(email)) {
+				aux = true;
+			}
+		}
+		for (Persona persona : listpersonas) {
+			if(persona.getEmail().equalsIgnoreCase(email)) {
+				aux = true;
+			}
+		}
+		
+		return aux;
+	}
+	
+	public boolean nombreOrCedulaRepetidos(String texto) {
+		boolean aux = false;
+		
+		for (Empresa empresa : listempresas) {
+			if(empresa.getNombreEmpresa().equalsIgnoreCase(texto)) {
+				aux = true;
+			}
+		}
+		
+		for (Persona persona : listpersonas) {
+			if(persona.getCedula().equalsIgnoreCase(texto)) {
+				aux = true;
+			}
+		}
+		
+		return aux;
+	}
+
+	public int cantSolicitudesEmpleados() {
+		int cant = 0;
+		for (Solicitud solicitud : listsolicitudes) {
+			if(solicitud instanceof SolicitudEmpleado) {
+				cant++;
+			}
+		}
+		
+		return cant;
+	}
+	
+	public int cantOfertas() {
+		int cant = 0;
+		for (Solicitud solicitud : listsolicitudes) {
+			if(solicitud instanceof Oferta) {
+				cant++;
+			}
+		}
+		
+		return cant;
 	}
 	
 	public boolean verificarLogin(String userName, String password)
@@ -168,10 +244,4 @@ public class Bolsa implements Serializable {
 		return aux;
 	}
 
-	public void conteoGeneradores() {
-		generadorCodEmpresa = listempresas.size();
-		generadorCodPersona = listpersonas.size();
-		generadorCodUsuario = listusuarios.size()+1;
-		generadorCodSolicitud = listsolicitudes.size();
-	}
 }

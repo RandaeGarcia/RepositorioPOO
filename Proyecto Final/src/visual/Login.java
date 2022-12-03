@@ -45,7 +45,6 @@ public class Login extends JFrame {
 					bolsaTrabajoRead = new ObjectInputStream(bolsaTrabajoIn);
 					Bolsa aux = (Bolsa) bolsaTrabajoRead.readObject();
 					Bolsa.setBolsa(aux);
-					Bolsa.getinstance().conteoGeneradores();
 					bolsaTrabajoIn.close();
 					bolsaTrabajoRead.close();
 				} catch (FileNotFoundException e) {

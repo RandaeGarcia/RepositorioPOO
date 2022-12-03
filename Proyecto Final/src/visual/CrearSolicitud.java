@@ -235,7 +235,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 
 			txtCodigo = new JTextField();
 			txtCodigo.setEnabled(false);
-			txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.generadorCodSolicitud));
+			txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
 			txtCodigo.setBounds(339, 8, 186, 20);
 			panel_1.add(txtCodigo);
 			txtCodigo.setColumns(10);
@@ -899,7 +899,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	}
 
 	private void clean() {
-		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.generadorCodSolicitud));
+		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
 		cbxEspecialidad.setSelectedIndex(1);
 		spnSalario.setValue(0);
 		spnPorcentaje.setValue(50);

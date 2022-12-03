@@ -412,7 +412,7 @@ public class Registros extends JDialog {
 		
 		txtcodigo = new JTextField();
 		txtcodigo.setBounds(10, 51, 230, 20);
-		txtcodigo.setText("EMP-"+Bolsa.generadorCodEmpresa);
+		txtcodigo.setText("EMP-"+Bolsa.getinstance().getGeneradorCodEmpresa());
 		panel_3.add(txtcodigo);
 		txtcodigo.setColumns(10);
 		
@@ -533,39 +533,58 @@ public class Registros extends JDialog {
 				btnregistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Persona auxPersona = null;
-						if (rdbtnPersona.isSelected()) {
-							String sexoaux = "";
-							if (rdbtnFemenino.isSelected()) {
-								sexoaux = "Femenino";
+						if(!Bolsa.getinstance().nombreOrCedulaRepetidos(txtCedula.getText()) && !Bolsa.getinstance().nombreOrCedulaRepetidos(txtNombreEmpresa.getText())
+								&& !Bolsa.getinstance().emailRepetido(txtCorreo.getText()) && !Bolsa.getinstance().emailRepetido(txtCorreoempresa.getText())) {
+							if (rdbtnPersona.isSelected()) {
+								String sexoaux = "";
+								if (rdbtnFemenino.isSelected()) {
+									sexoaux = "Femenino";
+								}
+								else {
+									sexoaux = "Masculino";
+								}
+								
+								if (rdbtnTecnico.isSelected()) {
+									 auxPersona = new Tecnico(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux,
+											 cbxEspecialidadTecnico.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), 
+											cbxAreaTrabajo.getSelectedItem().toString(), (int) spnExperiencia.getValue());
+								}
+								if (rdbtnUniversitario.isSelected()) {
+									auxPersona = new Universitario(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), 
+											sexoaux, cbxEspecialidadUniversitario.getSelectedItem().toString(), txtCorreo.getText(), 
+											(Date) spnfechanacimiento.getValue(), cbxCarrera.getSelectedItem().toString(), (int) spnFechaGraduacion.getValue());
+								}
+								if (rdbtnObrero.isSelected()) {
+									auxPersona = new Obrero(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
+											cbxEspecialidadObrero.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), oficios);
+								}
+								Bolsa.getinstance().registrarPersona(auxPersona);
+								JOptionPane.showMessageDialog(null, "Registro de persona satisfactorio.", "Información", JOptionPane.INFORMATION_MESSAGE);
 							}
 							else {
-								sexoaux = "Masculino";
+								Empresa auxEmpresa = new Empresa(txtcodigo.getText(), txtNombreEmpresa.getText(), cbxAreaTrabajoEmpresa.getSelectedItem().toString(), txtTelefonoEmpresa.getText(), 
+										txtCorreoempresa.getText(), cbxProvinciaEmpresa.getSelectedItem().toString());
+								Bolsa.getinstance().registrarEmpresa(auxEmpresa);
+								JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 							}
-							
-							if (rdbtnTecnico.isSelected()) {
-								 auxPersona = new Tecnico(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux,
-										 cbxEspecialidadTecnico.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), 
-										cbxAreaTrabajo.getSelectedItem().toString(), (int) spnExperiencia.getValue());
-							}
-							if (rdbtnUniversitario.isSelected()) {
-								auxPersona = new Universitario(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), 
-										sexoaux, cbxEspecialidadUniversitario.getSelectedItem().toString(), txtCorreo.getText(), 
-										(Date) spnfechanacimiento.getValue(), cbxCarrera.getSelectedItem().toString(), (int) spnFechaGraduacion.getValue());
-							}
-							if (rdbtnObrero.isSelected()) {
-								auxPersona = new Obrero(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
-										cbxEspecialidadObrero.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), oficios);
-							}
-							Bolsa.getinstance().registrarPersona(auxPersona);
-							JOptionPane.showMessageDialog(null, "Registro de persona satisfactorio.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							clean();
 						}
-						else {
-							Empresa auxEmpresa = new Empresa(txtcodigo.getText(), txtNombreEmpresa.getText(), cbxAreaTrabajoEmpresa.getSelectedItem().toString(), txtTelefonoEmpresa.getText(), 
-									txtCorreoempresa.getText(), cbxProvinciaEmpresa.getSelectedItem().toString());
-							Bolsa.getinstance().registrarEmpresa(auxEmpresa);
-							JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+						else if(rdbtnPersona.isSelected()) {
+							if(Bolsa.getinstance().nombreOrCedulaRepetidos(txtCedula.getText()) && !txtCedula.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Cédula ya registrada. Intente de nuevo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
+							if(Bolsa.getinstance().emailRepetido(txtCorreo.getText()) && !txtCorreo.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Correo ya registrado. Intente de nuevo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
-						clean();
+						else if(rdbtnEmpresa.isSelected()) {
+							if(Bolsa.getinstance().nombreOrCedulaRepetidos(txtNombreEmpresa.getText()) && !txtNombreEmpresa.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Nombre de empresa ya registrado. Intente de nuevo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
+							if(Bolsa.getinstance().emailRepetido(txtCorreoempresa.getText()) && !txtCorreoempresa.getText().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Correo ya registrado. Intente de nuevo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
 					}
 				});
 				btnregistrar.setActionCommand("OK");

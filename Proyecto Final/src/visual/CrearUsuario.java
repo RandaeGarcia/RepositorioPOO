@@ -107,7 +107,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 					txtCodigo = new JTextField();
 					txtCodigo.setEnabled(false);
 					txtCodigo.setColumns(10);
-					txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
+					txtCodigo.setText("USU-" + String.valueOf(Bolsa.getinstance().getGeneradorCodUsuario()));
 					txtCodigo.setBounds(87, 13, 186, 17);
 					panel_1.add(txtCodigo);
 				}
@@ -235,7 +235,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 	}
 
 	private void clean() {
-		txtCodigo.setText("USU-" + String.valueOf(Bolsa.generadorCodUsuario));
+		txtCodigo.setText("USU-" + String.valueOf(Bolsa.getinstance().getGeneradorCodUsuario()));
 		txtUserName.setText("");
 		pswContra.setText("");
 		pswConfirmacion.setText("");

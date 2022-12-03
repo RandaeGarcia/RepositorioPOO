@@ -41,15 +41,6 @@ public class ListPersonas extends JDialog implements Serializable {
 	private JButton btnmodificar;
 	private int rowselected = -1;
 
-	public static void main(String[] args) {
-		try {
-			ListPersonas dialog = new ListPersonas();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public ListPersonas() {
 		setTitle("Lista de Personas");
@@ -120,7 +111,7 @@ public class ListPersonas extends JDialog implements Serializable {
 							if(aux != null) {
 								option = JOptionPane.showConfirmDialog(null,"Se modificaran el telefono e email. ¿Desea continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
 								if(option == JOptionPane.OK_OPTION){
-									ModificarPersona modificar = new ModificarPersona(Bolsa.getinstance().getListpersonas().get(rowselected));
+									ModificarPersona modificar = new ModificarPersona(Bolsa.getinstance().getListpersonas().get(rowselected),null);
 									modificar.setModal(true);
 									modificar.setVisible(true);
 									btnEliminar.setEnabled(false);

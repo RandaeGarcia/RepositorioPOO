@@ -19,8 +19,6 @@ import java.io.ObjectOutputStream;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Principal extends JFrame {
 
@@ -75,7 +73,7 @@ public class Principal extends JFrame {
 		
 		mntmCrearSolicitud = new JMenuItem("Crear solicitud");
 		mntmCrearSolicitud.setEnabled(true);
-		if (Bolsa.generadorCodPersona == 0)
+		if (Bolsa.getinstance().getListpersonas().size() == 0)
 		{
 			mntmCrearSolicitud.setEnabled(false);
 		}
@@ -90,7 +88,7 @@ public class Principal extends JFrame {
 		
 		mntmListarSolicitud = new JMenuItem("Listar solicitudes");
 		mntmListarSolicitud.setEnabled(true);
-		if (Bolsa.generadorCodSolicitud == 0)
+		if (Bolsa.getinstance().cantSolicitudesEmpleados() == 0)
 		{
 			mntmListarSolicitud.setEnabled(false);
 		}
@@ -105,7 +103,7 @@ public class Principal extends JFrame {
 		
 		mntmListarPersonas = new JMenuItem("Listar personas");
 		mntmListarPersonas.setEnabled(true);
-		if (Bolsa.generadorCodPersona == 0)
+		if (Bolsa.getinstance().getListpersonas().size() == 0)
 		{
 			mntmListarPersonas.setEnabled(false);
 		}
@@ -114,6 +112,10 @@ public class Principal extends JFrame {
 				ListPersonas listpersonas = new ListPersonas();
 				listpersonas.setModal(true);
 				listpersonas.setVisible(true);
+				if(Bolsa.getinstance().getListpersonas().size() == 0) {
+					mntmListarPersonas.setEnabled(false);
+					mntmCrearSolicitud.setEnabled(false);
+				}
 			}
 		});
 		mnPersona.add(mntmListarPersonas);
@@ -123,7 +125,7 @@ public class Principal extends JFrame {
 		
 		mntmCrearOferta = new JMenuItem("Crear oferta");
 		mntmCrearOferta.setEnabled(true);
-		if (Bolsa.generadorCodEmpresa == 0)
+		if (Bolsa.getinstance().getListempresas().size() == 0)
 		{
 			mntmCrearOferta.setEnabled(false);
 		}
@@ -138,7 +140,7 @@ public class Principal extends JFrame {
 		
 		mntmListarOfertas = new JMenuItem("Listar ofertas");
 		mntmListarOfertas.setEnabled(true);
-		if (Bolsa.generadorCodSolicitud == 0)
+		if (Bolsa.getinstance().cantOfertas() == 0)
 		{
 			mntmListarOfertas.setEnabled(false);
 		}
@@ -153,7 +155,7 @@ public class Principal extends JFrame {
 		
 		mntmListarEmpresas = new JMenuItem("Listar empresas");
 		mntmListarEmpresas.setEnabled(true);
-		if (Bolsa.generadorCodEmpresa == 0)
+		if (Bolsa.getinstance().getListempresas().size() == 0)
 		{
 			mntmListarEmpresas.setEnabled(false);
 		}
@@ -162,6 +164,10 @@ public class Principal extends JFrame {
 				ListEmpresas listempresas = new ListEmpresas();
 				listempresas.setModal(true);
 				listempresas.setVisible(true);
+				if(Bolsa.getinstance().getListempresas().size() == 0) {
+					mntmListarEmpresas.setEnabled(false);
+					mntmCrearOferta.setEnabled(false);
+				}
 			}
 		});
 		mnEmpresa.add(mntmListarEmpresas);
@@ -178,6 +184,14 @@ public class Principal extends JFrame {
 				Registros registrar = new Registros();
 				registrar.setModal(true);
 				registrar.setVisible(true);
+				if(Bolsa.getinstance().getListempresas().size() != 0) {
+					mntmCrearOferta.setEnabled(true);
+					mntmListarEmpresas.setEnabled(true);
+				}
+				if(Bolsa.getinstance().getListpersonas().size() != 0) {
+					mntmCrearSolicitud.setEnabled(true);
+					mntmListarPersonas.setEnabled(true);
+				}
 			}
 		});
 		mnAdministracion.add(mntmRegistrar);

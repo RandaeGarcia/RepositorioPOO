@@ -46,5 +46,13 @@ public class Empresa implements Serializable{
 	public String getCampolaboral() {
 		return campolaboral;
 	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 }
