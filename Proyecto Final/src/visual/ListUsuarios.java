@@ -32,6 +32,7 @@ public class ListUsuarios extends JDialog implements Serializable {
 	private static Object[] rows;
 	private JButton btnEliminar;
 	private Usuario aux = null;
+	private JButton btnmodificar;
 
 	public static void main(String[] args) {
 		try {
@@ -70,6 +71,7 @@ public class ListUsuarios extends JDialog implements Serializable {
 							rowselected = table.getSelectedRow();
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
+								btnmodificar.setEnabled(true);
 								aux = Bolsa.getinstance().buscarUsuarioByCode(table.getValueAt(rowselected, 0).toString());
 							}
 						}
@@ -88,6 +90,7 @@ public class ListUsuarios extends JDialog implements Serializable {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Eliminar");
+				btnEliminar.setEnabled(false);
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int option;
@@ -95,12 +98,34 @@ public class ListUsuarios extends JDialog implements Serializable {
 							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar al usuario seleccionado? ", "Confirmación", JOptionPane.YES_NO_OPTION);
 							if(option == JOptionPane.OK_OPTION){
 								Bolsa.getinstance().getListusuarios().remove(aux);
+								btnmodificar.setEnabled(false);
 								btnEliminar.setEnabled(false);
 								loadUsuarios();
 							}
 						}
 					}
 				});
+				{
+					btnmodificar = new JButton("Modificar");
+					btnmodificar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int option;
+							if(aux != null) {
+								option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea modificar al usuario seleccionado? ", "Confirmación", JOptionPane.YES_NO_OPTION);
+								if(option == JOptionPane.OK_OPTION){
+									CrearUsuario modusuario = new CrearUsuario(aux);
+									modusuario.setModal(true);
+									modusuario.setVisible(true);
+									btnmodificar.setEnabled(false);
+									btnEliminar.setEnabled(false);
+									loadUsuarios();
+								}
+							}
+						}
+					});
+					btnmodificar.setEnabled(false);
+					buttonPane.add(btnmodificar);
+				}
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
 				getRootPane().setDefaultButton(btnEliminar);

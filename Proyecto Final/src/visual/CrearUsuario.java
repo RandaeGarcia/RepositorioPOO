@@ -24,30 +24,20 @@ public class CrearUsuario extends JDialog implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtUserName;
+	private JTextField txtUserName = new JTextField();
 	private JPasswordField pswContra;
-	private JButton btnRegistrar;
+	private JButton btnRegistrar = new JButton();
 	private JButton btnCancelar;
-	private JRadioButton rdbtnSecre;
-	private JRadioButton rdbtnAdmin;
+	private JRadioButton rdbtnSecre = new JRadioButton();
+	private JRadioButton rdbtnAdmin = new JRadioButton();
 	private String tipo = null;
-	private JTextField txtCodigo;
-	private Usuario local = null;
+	private JTextField txtCodigo = new JTextField();
 	private JPasswordField pswConfirmacion;
 	private char[] auxContra = null;
 	private char[] auxConfirmacion = null;
 
-	/*public static void main(String[] args) {
-		try {
-			CrearUsuario dialog = new CrearUsuario();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 	
-	public CrearUsuario() {
+	public CrearUsuario(Usuario local) {
 	//public CrearUsuario(Usuario usuario) {
 		//local = usuario;
 		if (local == null)
@@ -56,8 +46,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 		}
 		else 
 		{
-			setTitle("Modificar Usuario");
-			txtUserName.setEnabled(false);
+			loadUsuario(local);
 		}
 		setBounds(100, 100, 346, 277);
 		setLocationRelativeTo(null);
@@ -84,6 +73,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 					rdbtnAdmin.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							rdbtnSecre.setSelected(false);
+							rdbtnAdmin.setSelected(true);
 							tipo = rdbtnAdmin.getText().toString();
 						}
 					});
@@ -95,6 +85,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 					rdbtnSecre.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							rdbtnAdmin.setSelected(false);
+							rdbtnSecre.setSelected(true);
 							tipo = rdbtnSecre.getText().toString();
 						}
 					});
@@ -136,7 +127,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 				pswContra.setBounds(87, 71, 186, 17);
 				panel_1.add(pswContra);
 				{
-					JLabel lblContase = new JLabel("Contase\u00F1a:");
+					JLabel lblContase = new JLabel("Contrase\u00F1a:");
 					lblContase.setBounds(10, 72, 76, 14);
 					panel_1.add(lblContase);
 				}
@@ -187,14 +178,10 @@ public class CrearUsuario extends JDialog implements Serializable{
 								{
 									JOptionPane.showMessageDialog(null, "Seleccione Puesto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 								}
-							}
-							else
+							}else
 							{
-								local.setPassword(auxContra.toString());
-								local.setCodigo(txtCodigo.toString());
-								local.setUsername(txtUserName.toString());
-								local.setTipo(tipo);
-								Bolsa.getinstance().modificarUsuario(local);
+								local.setPassword(String.valueOf(auxContra));
+								JOptionPane.showMessageDialog(null, "Contraseña modificada correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 								dispose();
 							}
 						}
@@ -220,22 +207,29 @@ public class CrearUsuario extends JDialog implements Serializable{
 			}
 		}
 
-		loadUsuario();
+		loadUsuario(local);
 	}
 
-	private void loadUsuario()
+	private void loadUsuario(Usuario local)
 	{
 		if (local != null)
 		{
+			setTitle("Modificar Usuario");
+			btnRegistrar.setText("Modificar");
+			txtUserName.setEnabled(false);
+			
 			txtCodigo.setText(local.getCodigo());
 			txtUserName.setText(local.getUsername());
-			if (tipo.equalsIgnoreCase(rdbtnAdmin.getText()))
+			if (local.getTipo().equalsIgnoreCase("administrador"))
 			{
+				rdbtnAdmin.setEnabled(true);
 				rdbtnAdmin.setSelected(true);
-			}
-			else if (tipo.equalsIgnoreCase(rdbtnSecre.getText()))
+				rdbtnSecre.setEnabled(false);
+			}else 
 			{
 				rdbtnSecre.setSelected(true);
+				rdbtnSecre.setEnabled(true);
+				rdbtnAdmin.setEnabled(false);
 			}
 		}
 	}

@@ -69,6 +69,14 @@ public abstract class Persona implements Serializable{
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	
 }

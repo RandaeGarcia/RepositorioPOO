@@ -12,10 +12,10 @@ public class Bolsa implements Serializable {
 	private ArrayList<Persona> listpersonas;
 	private static Bolsa bolsa = null;
 	private static Usuario loginUser;
-	public static int generadorCodEmpresa = 1;
-	public static int generadorCodPersona = 1;
-	public static int generadorCodUsuario = 1;
-	public static int generadorCodSolicitud = 1;
+	public static int generadorCodEmpresa;
+	public static int generadorCodPersona;
+	public static int generadorCodUsuario;
+	public static int generadorCodSolicitud;
 	
 	private Bolsa() {
 		super();
@@ -50,24 +50,12 @@ public class Bolsa implements Serializable {
 		return listusuarios;
 	}
 
-	public void setListusuarios(Usuario newusuario) {
-		listusuarios.add(newusuario);
-	}
-
 	public ArrayList<Solicitud> getListsolicitudes() {
 		return listsolicitudes;
 	}
 
-	public void setListsolicitudes(Solicitud newsolicitud) {
-		listsolicitudes.add(newsolicitud);
-	}
-
 	public ArrayList<Empresa> getListempresas() {
 		return listempresas;
-	}
-
-	public void setListempresas(Empresa newempresa) {
-		listempresas.add(newempresa);
 	}
 
 	public ArrayList<Persona> getListpersonas() {
@@ -139,29 +127,6 @@ public class Bolsa implements Serializable {
 		}			
 	}
 
-	public void modificarUsuario(Usuario local) {
-		int pos = buscarPosUsuario(local.getCodigo());
-		listusuarios.remove(pos);
-		listusuarios.add(local);
-	}
-
-	private int buscarPosUsuario(String codigo) {
-		int pos = 0;
-		int ind = 0;
-		boolean find = false;
-		ArrayList<Usuario> auxUsu = listusuarios;
-		while (!find)
-		{
-			if (auxUsu.get(ind).getCodigo().equals(codigo))
-			{
-				find = true;
-				pos = ind;
-			}
-			ind++;
-		}
-		return pos;
-	}
-	
 	public Usuario buscarUsuarioByCode(String codigo) {
 		Usuario aux = null;
 		for (Usuario usuario : listusuarios) {
@@ -206,7 +171,7 @@ public class Bolsa implements Serializable {
 	public void conteoGeneradores() {
 		generadorCodEmpresa = listempresas.size();
 		generadorCodPersona = listpersonas.size();
-		generadorCodUsuario = listusuarios.size();
+		generadorCodUsuario = listusuarios.size()+1;
 		generadorCodSolicitud = listsolicitudes.size();
 	}
 }

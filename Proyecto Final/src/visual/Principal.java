@@ -19,6 +19,8 @@ import java.io.ObjectOutputStream;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Principal extends JFrame {
 
@@ -42,15 +44,13 @@ public class Principal extends JFrame {
 	public Principal() {
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosed(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 				FileOutputStream bolsaTrabajoOut;
 				ObjectOutputStream bolsaTrabajoWrite;
 					try {
 						bolsaTrabajoOut = new FileOutputStream("bolsaTrabajo.dat");
 						bolsaTrabajoWrite = new ObjectOutputStream(bolsaTrabajoOut);
 						bolsaTrabajoWrite.writeObject(Bolsa.getinstance());
-						Login login = new Login();
-						login.setVisible(true);
 						bolsaTrabajoOut.close();
 						bolsaTrabajoWrite.close();
 					} catch (FileNotFoundException e1) {
@@ -59,7 +59,8 @@ public class Principal extends JFrame {
 						e1.printStackTrace();
 					}
 			}
-		});		
+		});
+		
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -74,7 +75,7 @@ public class Principal extends JFrame {
 		
 		mntmCrearSolicitud = new JMenuItem("Crear solicitud");
 		mntmCrearSolicitud.setEnabled(true);
-		if (Bolsa.generadorCodPersona == 1)
+		if (Bolsa.generadorCodPersona == 0)
 		{
 			mntmCrearSolicitud.setEnabled(false);
 		}
@@ -89,7 +90,7 @@ public class Principal extends JFrame {
 		
 		mntmListarSolicitud = new JMenuItem("Listar solicitudes");
 		mntmListarSolicitud.setEnabled(true);
-		if (Bolsa.generadorCodSolicitud == 1)
+		if (Bolsa.generadorCodSolicitud == 0)
 		{
 			mntmListarSolicitud.setEnabled(false);
 		}
@@ -104,7 +105,7 @@ public class Principal extends JFrame {
 		
 		mntmListarPersonas = new JMenuItem("Listar personas");
 		mntmListarPersonas.setEnabled(true);
-		if (Bolsa.generadorCodPersona == 1)
+		if (Bolsa.generadorCodPersona == 0)
 		{
 			mntmListarPersonas.setEnabled(false);
 		}
@@ -122,7 +123,7 @@ public class Principal extends JFrame {
 		
 		mntmCrearOferta = new JMenuItem("Crear oferta");
 		mntmCrearOferta.setEnabled(true);
-		if (Bolsa.generadorCodEmpresa == 1)
+		if (Bolsa.generadorCodEmpresa == 0)
 		{
 			mntmCrearOferta.setEnabled(false);
 		}
@@ -137,7 +138,7 @@ public class Principal extends JFrame {
 		
 		mntmListarOfertas = new JMenuItem("Listar ofertas");
 		mntmListarOfertas.setEnabled(true);
-		if (Bolsa.generadorCodSolicitud == 1)
+		if (Bolsa.generadorCodSolicitud == 0)
 		{
 			mntmListarOfertas.setEnabled(false);
 		}
@@ -152,7 +153,7 @@ public class Principal extends JFrame {
 		
 		mntmListarEmpresas = new JMenuItem("Listar empresas");
 		mntmListarEmpresas.setEnabled(true);
-		if (Bolsa.generadorCodEmpresa == 1)
+		if (Bolsa.generadorCodEmpresa == 0)
 		{
 			mntmListarEmpresas.setEnabled(false);
 		}
@@ -188,7 +189,7 @@ public class Principal extends JFrame {
 		}
 		mntmCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearUsuario crearusuario = new CrearUsuario();
+				CrearUsuario crearusuario = new CrearUsuario(null);
 				crearusuario.setModal(true);
 				crearusuario.setVisible(true);
 			}
@@ -235,7 +236,7 @@ public class Principal extends JFrame {
 					}
 			}
 		});
-		btnCerrarSesion.setBounds(10, 538, 170, 41);
+		btnCerrarSesion.setBounds(704, 538, 170, 41);
 		panel.add(btnCerrarSesion);
 	}
 }

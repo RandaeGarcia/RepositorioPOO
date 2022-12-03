@@ -34,16 +34,6 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 	private static Object[] rows;
 	private SolicitudEmpleado aux = null;
 
-	public static void main(String[] args) {
-		try {
-			ListSolicitudesEmpleados dialog = new ListSolicitudesEmpleados();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public ListSolicitudesEmpleados() {
 		setTitle("Lista de Solicitudes de Empleados");
 		setBounds(100, 100, 450, 300);
@@ -61,7 +51,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					model = new DefaultTableModel();
-					String[] columnas = {"Código","Solicitante","Campo laboral","Puesto","Tiempo"};
+					String[] columnas = {"Código","Solicitante","Campo laboral","Puesto","Tiempo","Estado"};
 					model.setColumnIdentifiers(columnas);
 					table = new JTable();
 					table.addMouseListener(new MouseAdapter() {
@@ -132,6 +122,11 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				rows[2] = auxSoli.getEspecialidad();
 				rows[3] = auxSoli.getTiempo();
 				rows[4] = auxPersona.getCampolaboral();
+				if(auxSoli.isEstado()) {
+					rows[5] = "Pendiente";
+				}else {
+					rows[5] = "Cumplida";
+				}
 				model.addRow(rows);
 			}
 		}

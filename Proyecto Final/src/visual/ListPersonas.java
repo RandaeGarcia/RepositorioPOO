@@ -38,6 +38,8 @@ public class ListPersonas extends JDialog implements Serializable {
 	private static DefaultTableModel model;
 	private static Object[] rows;
 	private Persona aux = null;
+	private JButton btnmodificar;
+	private int rowselected = -1;
 
 	public static void main(String[] args) {
 		try {
@@ -73,10 +75,11 @@ public class ListPersonas extends JDialog implements Serializable {
 					table.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
-							int rowselected = -1;
+							rowselected = -1;
 							rowselected = table.getSelectedRow();
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
+								btnmodificar.setEnabled(true);
 								aux = Bolsa.getinstance().buscarPersonaByCedula(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
@@ -99,15 +102,37 @@ public class ListPersonas extends JDialog implements Serializable {
 					public void actionPerformed(ActionEvent e) {
 						int option;
 						if(aux != null) {
-							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar la cuenta seleccionada? ", "Confirmación", JOptionPane.YES_NO_OPTION);
+							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar el perfil seleccionado? ", "Confirmación", JOptionPane.YES_NO_OPTION);
 							if(option == JOptionPane.OK_OPTION){
 								Bolsa.getinstance().getListpersonas().remove(aux);
+								btnmodificar.setEnabled(false);
 								btnEliminar.setEnabled(false);
 								loadPersonas();
 							}
 						}
 					}
 				});
+				{
+					btnmodificar = new JButton("Modificar");
+					btnmodificar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int option;
+							if(aux != null) {
+								option = JOptionPane.showConfirmDialog(null,"Se modificaran el telefono e email. ¿Desea continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+								if(option == JOptionPane.OK_OPTION){
+									ModificarPersona modificar = new ModificarPersona(Bolsa.getinstance().getListpersonas().get(rowselected));
+									modificar.setModal(true);
+									modificar.setVisible(true);
+									btnEliminar.setEnabled(false);
+									btnmodificar.setEnabled(false);
+									loadPersonas();
+								}
+							}
+						}
+					});
+					btnmodificar.setEnabled(false);
+					buttonPane.add(btnmodificar);
+				}
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);

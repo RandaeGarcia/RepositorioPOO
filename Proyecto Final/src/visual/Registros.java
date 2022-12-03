@@ -74,7 +74,7 @@ public class Registros extends JDialog {
 	private JComboBox<String> cbxCarrera;
 	private JSpinner spnFechaGraduacion;
 	private JSpinner spnfechanacimiento;
-	private ArrayList<String> Oficios;
+	private ArrayList<String> oficios;
 	private JComboBox<String> cbxprovincia;
 	private JComboBox<String> cbxEspecialidadObrero;
 	private JLabel lblNewLabel_17;
@@ -82,16 +82,6 @@ public class Registros extends JDialog {
 	private JComboBox<String> cbxEspecialidadUniversitario;
 	private JComboBox<String> cbxEspecialidadTecnico;
 	
-	public static void main(String[] args) {
-		try {
-			Registros dialog = new Registros();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public Registros() {
 		setTitle("Registro");
 		setBounds(100, 100, 512, 569);
@@ -134,7 +124,7 @@ public class Registros extends JDialog {
 			panel_1.add(lblNewLabel_5);
 			
 			JLabel lblNewLabel_6 = new JLabel("Sexo:");
-			lblNewLabel_6.setBounds(10, 252, 46, 14);
+			lblNewLabel_6.setBounds(10, 197, 46, 14);
 			panel_1.add(lblNewLabel_6);
 			
 			JLabel lblNewLabel_7 = new JLabel("Provincia:");
@@ -142,12 +132,13 @@ public class Registros extends JDialog {
 			panel_1.add(lblNewLabel_7);
 			
 			JLabel lblNewLabel_8 = new JLabel("Nivel Estudios:");
-			lblNewLabel_8.setBounds(10, 210, 92, 14);
+			lblNewLabel_8.setBounds(10, 283, 92, 14);
 			panel_1.add(lblNewLabel_8);
 			
 			
 			
 			rdbtnTecnico = new JRadioButton("T\u00E9cnico:");
+			rdbtnTecnico.setSelected(true);
 			rdbtnTecnico.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -174,7 +165,7 @@ public class Registros extends JDialog {
 					cbxEspecialidadUniversitario.setEnabled(false);
 				}
 			});
-			rdbtnTecnico.setBounds(114, 206, 92, 23);
+			rdbtnTecnico.setBounds(114, 279, 92, 23);
 			panel_1.add(rdbtnTecnico);
 			
 			rdbtnUniversitario = new JRadioButton("Universitario");
@@ -204,7 +195,7 @@ public class Registros extends JDialog {
 					cbxEspecialidadTecnico.setEnabled(false);
 				}
 			});
-			rdbtnUniversitario.setBounds(218, 206, 109, 23);
+			rdbtnUniversitario.setBounds(218, 279, 109, 23);
 			panel_1.add(rdbtnUniversitario);
 			
 			rdbtnObrero = new JRadioButton("Obrero");
@@ -235,7 +226,7 @@ public class Registros extends JDialog {
 					
 				}
 			});
-			rdbtnObrero.setBounds(339, 206, 109, 23);
+			rdbtnObrero.setBounds(339, 279, 109, 23);
 			panel_1.add(rdbtnObrero);
 			
 			txtCedula = new JTextField();
@@ -260,7 +251,7 @@ public class Registros extends JDialog {
 					rdbtnMasculino.setSelected(true);
 				}
 			});
-			rdbtnMasculino.setBounds(10, 280, 38, 23);
+			rdbtnMasculino.setBounds(10, 225, 38, 23);
 			panel_1.add(rdbtnMasculino);
 			
 			rdbtnFemenino = new JRadioButton("F");
@@ -270,7 +261,7 @@ public class Registros extends JDialog {
 					rdbtnMasculino.setSelected(false);
 				}
 			});
-			rdbtnFemenino.setBounds(64, 280, 54, 23);
+			rdbtnFemenino.setBounds(64, 225, 54, 23);
 			panel_1.add(rdbtnFemenino);
 			
 			txtCorreo = new JTextField();
@@ -289,22 +280,22 @@ public class Registros extends JDialog {
 			txttelefono.setColumns(10);
 			
 			JLabel lblNewLabel_16 = new JLabel("Especialidad:");
-			lblNewLabel_16.setBounds(218, 252, 92, 14);
+			lblNewLabel_16.setBounds(218, 197, 92, 14);
 			panel_1.add(lblNewLabel_16);
 			
 			cbxEspecialidadTecnico = new JComboBox<String>();
 			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", "Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", "Refigeracion", "Tecnologia"}));
-			cbxEspecialidadTecnico.setBounds(218, 281, 230, 20);
+			cbxEspecialidadTecnico.setBounds(218, 226, 230, 20);
 			panel_1.add(cbxEspecialidadTecnico);
 			
 			cbxEspecialidadUniversitario = new JComboBox<String>();
 			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
 					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
-			cbxEspecialidadUniversitario.setBounds(218, 281, 230, 20);
+			cbxEspecialidadUniversitario.setBounds(218, 226, 230, 20);
 			panel_1.add(cbxEspecialidadUniversitario);
 			
 			cbxEspecialidadObrero = new JComboBox<String>();
-			cbxEspecialidadObrero.setBounds(218, 281, 230, 20);
+			cbxEspecialidadObrero.setBounds(218, 226, 230, 20);
 			panel_1.add(cbxEspecialidadObrero);
 			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocinero", "Electricista", "Constructor", "Chofer"}));
 			
@@ -382,15 +373,19 @@ public class Registros extends JDialog {
 			btnAgregar = new JButton("Agregar");
 			btnAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Oficios.add(txtOficiosConocidos.getText());
-					txtOficiosConocidos.setText("");
+					if(repeticionOficios(txtOficiosConocidos.getText())) {
+						oficios.add(txtOficiosConocidos.getText());
+						txtOficiosConocidos.setText("");
+					}else {
+						JOptionPane.showMessageDialog(null, "Oficio previamente ingresado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			});
 			btnAgregar.setBounds(316, 26, 89, 23);
 			panel5.add(btnAgregar);
 		}
 		
-		Oficios = new ArrayList<>();
+		oficios = new ArrayList<>();
 		panel3.setVisible(true);
 		panel5.setVisible(false);
 		panel4.setVisible(false);
@@ -488,6 +483,7 @@ public class Registros extends JDialog {
 			}
 			{
 				rdbtnPersona = new JRadioButton("Persona");
+				rdbtnPersona.setSelected(true);
 				rdbtnPersona.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setBounds(100, 100, 512, 567);
@@ -558,7 +554,7 @@ public class Registros extends JDialog {
 							}
 							if (rdbtnObrero.isSelected()) {
 								auxPersona = new Obrero(txtNombre.getText(), txtCedula.getText(), txttelefono.getText(), cbxprovincia.getSelectedItem().toString(), sexoaux, 
-										cbxEspecialidadObrero.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), Oficios);
+										cbxEspecialidadObrero.getSelectedItem().toString(), txtCorreo.getText(), (Date) spnfechanacimiento.getValue(), oficios);
 							}
 							Bolsa.getinstance().registrarPersona(auxPersona);
 							JOptionPane.showMessageDialog(null, "Registro de persona satisfactorio.", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -597,8 +593,8 @@ public class Registros extends JDialog {
 		panel5.setVisible(false);
 		panel4.setVisible(false);
 		
-		rdbtnPersona.setSelected(false);
-		rdbtnTecnico.setSelected(false);
+		rdbtnPersona.setSelected(true);
+		rdbtnTecnico.setSelected(true);
 		rdbtnUniversitario.setSelected(false);
 		rdbtnObrero.setSelected(false);
 		rdbtnEmpresa.setSelected(false);
@@ -626,6 +622,17 @@ public class Registros extends JDialog {
 		txtOficiosConocidos.setEnabled(false);
 		txtOficiosConocidos.setText("");
 		btnAgregar.setEnabled(false);
-		Oficios.removeAll(Oficios);
+		oficios.removeAll(oficios);
+	}
+	
+	private boolean repeticionOficios(String text) {
+		boolean aux = true;
+		for (String oficio : oficios) {
+			if(oficio.equalsIgnoreCase(text)) {
+				aux = false;
+			}
+		}
+		
+		return aux;
 	}
 }
