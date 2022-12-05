@@ -7,7 +7,7 @@ public abstract class Solicitud implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	protected String codigo;
-	protected String campLab;
+	protected String nivelEst;
 	protected String modalidad;
 	protected String tiempo;
 	protected String especialidad;
@@ -21,12 +21,12 @@ public abstract class Solicitud implements Serializable{
 	protected Usuario creador;
 	protected boolean estado;
 	
-	public Solicitud(String codigo, String campLab, String modalidad, String tiempo, String especialidad, String ubicacion,
+	public Solicitud(String codigo, String nivelEst, String modalidad, String tiempo, String especialidad, String ubicacion,
 			ArrayList<String> idiomas, String sexo, int exp, String dispMov, String vehiculoPropio, String licencia,
 			Usuario creador, boolean estado) {
 		super();
 		this.codigo = codigo;
-		this.campLab = campLab;
+		this.nivelEst = nivelEst;
 		this.modalidad = modalidad;
 		this.tiempo = tiempo;
 		this.especialidad = especialidad;
@@ -53,8 +53,8 @@ public abstract class Solicitud implements Serializable{
 		return codigo;
 	}
 	
-	public String getCampLab() {
-		return codigo;
+	public String getNivelEst() {
+		return nivelEst;
 	}
 
 	public String getModalidad() {
@@ -155,7 +155,7 @@ public abstract class Solicitud implements Serializable{
 			califPostulado++;
 		}
 		califOferta++;
-		if (auxPostulado.getInfo().getCampolaboral().equalsIgnoreCase(auxOferta.getCampLab()))
+		if (auxPostulado.getInfo().getNivelEst().equalsIgnoreCase(auxOferta.getNivelEst()))
 		{
 			califPostulado++;
 		}

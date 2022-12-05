@@ -11,12 +11,12 @@ public abstract class Persona implements Serializable{
 	protected String telefono;
 	protected String pais;
 	protected String sexo;
-	protected String campolaboral;
+	protected String nivelEst;
 	protected String email;
 	protected boolean estado;
 	protected Date fechaNacimiento;
 	
-	public Persona(String nombre, String cedula, String telefono, String pais, String sexo, String campolaboral,
+	public Persona(String nombre, String cedula, String telefono, String pais, String sexo, String nivelEst,
 			String email, Date fechaNacimiento) {
 		super();
 		this.nombre = nombre;
@@ -24,7 +24,7 @@ public abstract class Persona implements Serializable{
 		this.telefono = telefono;
 		this.pais = pais;
 		this.sexo = sexo;
-		this.campolaboral = campolaboral;
+		this.nivelEst = nivelEst;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
 		this.estado = true;
@@ -58,8 +58,8 @@ public abstract class Persona implements Serializable{
 		return sexo;
 	}
 
-	public String getCampolaboral() {
-		return campolaboral;
+	public String getNivelEst() {
+		return nivelEst;
 	}
 
 	public String getEmail() {

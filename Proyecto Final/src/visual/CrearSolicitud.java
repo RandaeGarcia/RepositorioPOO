@@ -24,7 +24,6 @@ import logico.Solicitud;
 import logico.SolicitudEmpleado;
 import logico.Tecnico;
 import logico.Universitario;
-import logico.Usuario;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -55,7 +54,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private JRadioButton rdbtnIngles;
 	private JRadioButton rdbtnEspanol;
 	private JSpinner spnSalario;
-	private JComboBox<String> cbxEspecialidad;
 	private JRadioButton rbtnSiDM;
 	private JRadioButton rbtnNoDM;
 	private JRadioButton rdbtnNoLM;
@@ -120,19 +118,83 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private Persona postulado = null;
 	private Empresa empresa = null;
 
-	/*public static void main(String[] args) {
-		try {
-			CrearSolicitud dialog = new CrearSolicitud();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-
-	public CrearSolicitud() {
+	public CrearSolicitud(Solicitud local) {
 		setTitle("Crear Solicitud");
 		setBounds(100, 100, 587, 553);
+		if (local != null)
+		{
+			setTitle("Modificar Solicitud");
+			if (local instanceof SolicitudEmpleado)
+			{
+				setBounds(100, 100, 587, 499);
+				pnlSolicitudPost.setBounds(10, 187, 541, 221);
+				pnlPostulado.setBounds(10, 53, 541, 123);
+				postulado = ((SolicitudEmpleado) local).getInfo();
+				loadPostulado();
+				loadSolicitud((SolicitudEmpleado) local);
+				rbtnOferta.setSelected(false);
+				lblCedula.setVisible(true);
+				lblCodigo.setVisible(false);
+				lblNombre.setVisible(true);
+				lblEmpresa.setVisible(false);
+				lblSalarioMin.setVisible(true);
+				lblSalarioMax.setVisible(false);
+				lblProv.setVisible(false);
+				lblProv.setEnabled(false);
+				cbxProvEncuesta.setVisible(false);
+				cbxProvEncuesta.setEnabled(false);
+				rdbtnAmbosModalidad.setVisible(false);
+				rdbtnAmbosLM.setVisible(false);
+				rdbtnAmbosVP.setVisible(false);
+				rdbtnAmbosDM.setVisible(false);
+				rdbtnAmbosModalidad.setEnabled(false);
+				rdbtnAmbosLM.setEnabled(false);
+				rdbtnAmbosVP.setEnabled(false);
+				rdbtnAmbosDM.setEnabled(false);
+				rdbtnAmbosTiempo.setEnabled(false);
+				rdbtnAmbosTiempo.setVisible(false);
+				spnPuestosDisp.setVisible(false);
+				spnPuestosDisp.setEnabled(false);
+				lblPuestoDisp.setVisible(false);
+				lblPuestoDisp.setEnabled(false);
+			}
+			else
+			{
+				setBounds(100, 100, 587, 557);
+				pnlPostulado.setBounds(10, 53, 541, 96);
+				pnlSolicitudPost.setBounds(10, 160, 541, 302);
+				empresa = ((Oferta) local).getInfo();
+				loadEmpresa();
+				loadOferta((Oferta) local);
+				rbtnPostulacion.setSelected(false);
+				lblCedula.setVisible(false);
+				lblCodigo.setVisible(true);
+				lblNombre.setVisible(false);
+				lblEmpresa.setVisible(true);
+				lblSalarioMin.setVisible(false);
+				lblSalarioMax.setVisible(true);
+				lblProv.setVisible(true);
+				lblProv.setEnabled(true);
+				cbxProvEncuesta.setVisible(true);
+				cbxProvEncuesta.setEnabled(true);
+				rdbtnAmbosModalidad.setVisible(true);
+				rdbtnAmbosLM.setVisible(true);
+				rdbtnAmbosVP.setVisible(true);
+				rdbtnAmbosDM.setVisible(true);
+				rdbtnAmbosTiempo.setVisible(true);
+				rdbtnAmbosModalidad.setEnabled(true);
+				rdbtnAmbosLM.setEnabled(true);
+				rdbtnAmbosVP.setEnabled(true);
+				rdbtnAmbosDM.setEnabled(true);
+				rdbtnAmbosTiempo.setEnabled(true);
+				spnPuestosDisp.setVisible(true);
+				spnPuestosDisp.setEnabled(true);
+				lblPuestoDisp.setVisible(true);
+				lblPuestoDisp.setEnabled(true);
+			}
+			rbtnOferta.setEnabled(false);
+			rbtnPostulacion.setEnabled(false);
+		}
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.GRAY);
@@ -165,8 +227,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 					setBounds(100, 100, 587, 499);
 					setLocationRelativeTo(null);
 					pnlSolicitudPost.setBounds(10, 187, 541, 221);
-					rbtnOferta.setSelected(false);
 					pnlPostulado.setBounds(10, 53, 541, 123);
+					rbtnOferta.setSelected(false);
 					lblCedula.setVisible(true);
 					lblCodigo.setVisible(false);
 					lblNombre.setVisible(true);
@@ -321,6 +383,10 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlPostulado.add(cbxEmpresa);
 
 			JButton btnBuscar = new JButton("Buscar");
+			if (local != null)
+			{
+				btnBuscar.setEnabled(false);
+			}
 			btnBuscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int opcion;
@@ -341,6 +407,11 @@ public class CrearSolicitud extends JDialog implements Serializable {
 									Registros registrar = new Registros();
 									registrar.setModal(true);
 									registrar.setVisible(true);
+									postulado = Bolsa.getinstance().buscarPersonaByCedula(txtIdentificacion.getText());
+									if (postulado != null)
+									{
+										loadPostulado();
+									}
 								}
 							}
 						}
@@ -359,6 +430,11 @@ public class CrearSolicitud extends JDialog implements Serializable {
 									Registros registrar = new Registros();
 									registrar.setModal(true);
 									registrar.setVisible(true);
+									empresa = Bolsa.getinstance().buscarEmpresaByCode(txtIdentificacion.getText());
+									if (empresa != null)
+									{
+										loadEmpresa();
+									}
 								}
 							}
 						}
@@ -786,66 +862,127 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnCrear = new JButton("Crear");
+				if (local != null)
+				{
+					btnCrear.setText("Modificar");
+				}
 				btnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						Solicitud auxSoli = null;
-						if (rbtnPostulacion.isSelected())
+						if (local == null)
 						{
-							if (postulado instanceof Obrero)
+							if (rbtnPostulacion.isSelected())
 							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
-										tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
+								if (postulado instanceof Obrero)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
+											tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
+								}
+								else if (postulado instanceof Tecnico)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
+											tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											postulado);
+								}
+								else if (postulado instanceof Universitario)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
+											tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											postulado);
+								}
 							}
-							else if (postulado instanceof Tecnico)
+							else if (rbtnOferta.isSelected())
 							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
-										tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-										postulado);
-							}
-							else if (postulado instanceof Universitario)
-							{
-								auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
-										tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-										vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-										postulado);
-							}
-						}
-						else if (rbtnOferta.isSelected())
-						{
-							if (rbtnTecnicoCL.isSelected())
-							{
-								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
-										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										empresa);
-							}
-							else if (rbtnUniversitarioCL.isSelected())
-							{
-								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
-										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										empresa);
-							}
-							else if (rbtnTecnicoCL.isSelected())
-							{
-								auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
-										provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-										licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-										empresa);
+								if (rbtnTecnicoCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
+								else if (rbtnUniversitarioCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
+								else if (rbtnTecnicoCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
 							}
 
+							if (auxSoli != null)
+							{
+								Bolsa.getinstance().registrarSolicitud(auxSoli);
+								JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+							clean();
 						}
-						
-						if (auxSoli != null)
+						else
 						{
-							Bolsa.getinstance().registrarSolicitud(auxSoli);
-							JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+							if (local instanceof SolicitudEmpleado)
+							{
+								if (postulado instanceof Obrero)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
+											tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
+								}
+								else if (postulado instanceof Tecnico)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
+											tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											postulado);
+								}
+								else if (postulado instanceof Universitario)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
+											tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											postulado);
+								}
+								Bolsa.getinstance().modificarSolicitud(auxSoli);
+								ListSolicitudesEmpleados.loadSolicitudes();
+							}
+							else
+							{
+								if (rbtnTecnicoCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
+								else if (rbtnUniversitarioCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
+								else if (rbtnTecnicoCL.isSelected())
+								{
+									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											empresa);
+								}
+								Bolsa.getinstance().modificarSolicitud(auxSoli);
+								ListOfertas.loadOfertas();
+							}
+							JOptionPane.showMessageDialog(null, "Modificacion satisfactoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
 						}
-						
-						//clean();
-
 					}
 				});
 				btnCrear.setActionCommand("OK");
@@ -873,11 +1010,11 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			txtCorreo.setText(postulado.getEmail());
 			txtTelefono.setText(postulado.getTelefono());
 			txtProvincia.setText(postulado.getPais());
-			if (postulado.getCampolaboral().equalsIgnoreCase("Obrero"))
+			if (postulado.getNivelEst().equalsIgnoreCase("Obrero"))
 			{
 				rbtnObrero.setSelected(true);
 			}
-			else if (postulado.getCampolaboral().equalsIgnoreCase("Tecnico"))
+			else if (postulado.getNivelEst().equalsIgnoreCase("Tecnico"))
 			{
 				rbtnTecnico.setSelected(true);
 			}
@@ -900,37 +1037,54 @@ public class CrearSolicitud extends JDialog implements Serializable {
 
 	private void clean() {
 		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
-		cbxEspecialidad.setSelectedIndex(1);
+		
+		cbxEspecialidadObrero.setSelectedIndex(0);
+		cbxEspecialidadTecnico.setSelectedIndex(0);
+		cbxEspecialidadUniversitario.setSelectedIndex(0);
+		
 		spnSalario.setValue(0);
+		
 		spnPorcentaje.setValue(50);
+		
 		spnExp.setValue(0);
+		
 		spnPuestosDisp.setValue(0);
+		
 		cbxProvEncuesta.setSelectedIndex(0);
+		
 		rdbtnSiLM.setSelected(false);
 		rdbtnNoLM.setSelected(false);
 		rdbtnAmbosLM.setSelected(false);
+		
 		rdbtnRemoto.setSelected(false);
 		rdbtnPresencial.setSelected(false);
 		rdbtnAmbosModalidad.setSelected(false);
+		
 		rdbtnCompleto.setSelected(false);
 		rdbtnMedio.setSelected(false);
 		rdbtnAmbosTiempo.setSelected(false);
+		
 		rbtnUniversitarioCL.setSelected(false);
 		rbtnTecnicoCL.setSelected(false);
 		rbtnObreroCL.setSelected(false);
+		
 		rdbtnMasculino.setSelected(false);
 		rdbtnFemenino.setSelected(false);
 		rbtnAmbosSexo.setSelected(false);
+		
 		rbtnNoDM.setSelected(false);
 		rbtnSiDM.setSelected(false);
 		rdbtnAmbosDM.setSelected(false);
+		
 		rbtnSiVP.setSelected(false);
 		rbtnNoVP.setSelected(false);
 		rdbtnAmbosVP.setSelected(false);
+		
 		rdbtnOtros.setSelected(false);
 		rdbtnFrances.setSelected(false);
 		rdbtnEspanol.setSelected(false);
 		rdbtnIngles.setSelected(false);
+		
 		rbtnPostulacion.setSelected(false);
 		rbtnOferta.setSelected(false);
 
@@ -950,8 +1104,208 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		experiencia = 0;
 		postulado = null;
 		empresa = null;
-
+		
+		txtCodigo.setText(null);
+		txtNombre.setText(null);
+		txtTelefono.setText(null);
+		txtCorreo.setText(null);
+		txtProvincia.setText(null);
+		rbtnObrero.setSelected(false);
+		rbtnTecnico.setSelected(false);
+		rbtnUniversitario.setSelected(false);
+		
 		setBounds(100, 100, 587, 137);
 		setLocationRelativeTo(null);
+	}
+	
+	private void loadSolicitud(SolicitudEmpleado local)
+	{
+		spnSalario.setValue(local.getSalariomin());
+		spnExp.setValue(local.getExp());
+		
+		if (local.getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
+		{
+			cbxEspecialidadObrero.setVisible(false);
+			cbxEspecialidadUniversitario.setVisible(false);
+			cbxEspecialidadTecnico.setVisible(true);
+			cbxEspecialidadTecnico.setSelectedItem(local.getEspecialidad().toString());
+		}
+		else if (local.getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
+		{
+			cbxEspecialidadObrero.setVisible(true);
+			cbxEspecialidadUniversitario.setVisible(false);
+			cbxEspecialidadTecnico.setVisible(false);
+			cbxEspecialidadObrero.setSelectedItem(local.getEspecialidad().toString());
+		}
+		else
+		{
+			cbxEspecialidadObrero.setVisible(false);
+			cbxEspecialidadUniversitario.setVisible(true);
+			cbxEspecialidadTecnico.setVisible(false);
+			cbxEspecialidadUniversitario.setSelectedItem(local.getEspecialidad().toString());
+		}
+		
+		if (local.getVehiculoPropio().equalsIgnoreCase("Si"))
+		{
+			rbtnSiVP.setSelected(true);
+		}
+		else
+		{
+			rbtnNoVP.setSelected(true);
+		}
+		
+		if (local.getLicencia().equalsIgnoreCase("Si"))
+		{
+			rdbtnSiLM.setSelected(true);
+		}
+		else
+		{
+			rdbtnNoLM.setSelected(true);
+		}
+		
+		if (local.getDispMov().equalsIgnoreCase("Si"))
+		{
+			rbtnSiDM.setSelected(true);
+		}
+		else
+		{
+			rbtnNoDM.setSelected(true);
+		}
+		
+		if (local.getModalidad().equalsIgnoreCase("Remoto"))
+		{
+			rdbtnRemoto.setSelected(true);
+		}
+		else
+		{
+			rdbtnPresencial.setSelected(true);
+		}
+		
+		if (local.getTiempo().equalsIgnoreCase("Completo"))
+		{
+			rdbtnCompleto.setSelected(true);
+		}
+		else
+		{
+			rdbtnMedio.setSelected(true);
+		}
+		
+		if (local.getSexo().equalsIgnoreCase("Masculino"))
+		{
+			rdbtnMasculino.setSelected(true);
+		}
+		else
+		{
+			rdbtnFemenino.setSelected(true);
+		}
+	}
+	
+	private void loadOferta(Oferta local)
+	{
+		spnSalario.setValue(local.getSalariomax());
+		spnExp.setValue(local.getExp());
+		spnPorcentaje.setValue(local.getMatchpercent());
+		spnPuestosDisp.setValue(local.getCantpuestos());
+		cbxProvEncuesta.setSelectedItem(local.getUbicacion());
+		
+		if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
+		{
+			cbxEspecialidadObrero.setVisible(false);
+			cbxEspecialidadUniversitario.setVisible(false);
+			cbxEspecialidadTecnico.setVisible(true);
+			cbxEspecialidadTecnico.setSelectedItem(local.getEspecialidad().toString());
+		}
+		else if (local.getNivelEst().equalsIgnoreCase("Obrero"))
+		{
+			cbxEspecialidadObrero.setVisible(true);
+			cbxEspecialidadUniversitario.setVisible(false);
+			cbxEspecialidadTecnico.setVisible(false);
+			cbxEspecialidadObrero.setSelectedItem(local.getEspecialidad().toString());
+		}
+		else
+		{
+			cbxEspecialidadObrero.setVisible(false);
+			cbxEspecialidadUniversitario.setVisible(true);
+			cbxEspecialidadTecnico.setVisible(false);
+			cbxEspecialidadUniversitario.setSelectedItem(local.getEspecialidad().toString());
+		}
+		
+		if (local.getVehiculoPropio().equalsIgnoreCase("Si"))
+		{
+			rbtnSiVP.setSelected(true);
+		}
+		else if (local.getVehiculoPropio().equalsIgnoreCase("No"))
+		{
+			rbtnNoVP.setSelected(true);
+		}
+		else
+		{
+			rdbtnAmbosVP.setSelected(true);
+		}
+		
+		if (local.getLicencia().equalsIgnoreCase("Si"))
+		{
+			rdbtnSiLM.setSelected(true);
+		}
+		else if (local.getLicencia().equalsIgnoreCase("No"))
+		{
+			rdbtnNoLM.setSelected(true);
+		}
+		else
+		{
+			rdbtnAmbosLM.setSelected(true);
+		}
+		
+		if (local.getDispMov().equalsIgnoreCase("Si"))
+		{
+			rbtnSiDM.setSelected(true);
+		}
+		else if (local.getDispMov().equalsIgnoreCase("No"))
+		{
+			rbtnNoDM.setSelected(true);
+		}
+		else
+		{
+			rdbtnAmbosDM.setSelected(true);
+		}
+		
+		if (local.getModalidad().equalsIgnoreCase("Remoto"))
+		{
+			rdbtnRemoto.setSelected(true);
+		}
+		else if (local.getModalidad().equalsIgnoreCase("Presencial"))
+		{
+			rdbtnPresencial.setSelected(true);
+		}
+		else
+		{
+			rdbtnAmbosModalidad.setSelected(true);
+		}
+		
+		if (local.getTiempo().equalsIgnoreCase("Completo"))
+		{
+			rdbtnCompleto.setSelected(true);
+		}
+		else if (local.getTiempo().equalsIgnoreCase("Medio"))
+		{
+			rdbtnMedio.setSelected(true);
+		}
+		else
+		{
+			rdbtnAmbosTiempo.setSelected(true);
+		}
+		
+		if (local.getSexo().equalsIgnoreCase("Masculino"))
+		{
+			rdbtnMasculino.setSelected(true);
+		}
+		else if (local.getSexo().equalsIgnoreCase("Femenino"))
+		{
+			rdbtnFemenino.setSelected(true);
+		}
+		else
+		{
+			rbtnAmbosSexo.setSelected(true);
+		}
 	}
 }

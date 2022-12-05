@@ -32,7 +32,8 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] rows;
-	private SolicitudEmpleado aux = null;
+	private Solicitud aux = null;
+	private JButton btnModificar;
 
 	public ListSolicitudesEmpleados() {
 		setTitle("Lista de Solicitudes de Empleados");
@@ -51,7 +52,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					model = new DefaultTableModel();
-					String[] columnas = {"Código","Solicitante","Campo laboral","Puesto","Tiempo","Estado"};
+					String[] columnas = {"Código","Solicitante","Nivel Est.","Puesto","Tiempo","Estado"};
 					model.setColumnIdentifiers(columnas);
 					table = new JTable();
 					table.addMouseListener(new MouseAdapter() {
@@ -61,11 +62,12 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 							rowselected = table.getSelectedRow();
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
+								btnModificar.setEnabled(true);
 								aux = (SolicitudEmpleado) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
 					});
-					
+
 					table.setBorder(new EmptyBorder(0, 0, 0, 0));
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					table.setModel(model);
@@ -88,6 +90,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 							if(option == JOptionPane.OK_OPTION){
 								Bolsa.getinstance().getListsolicitudes().remove(aux);
 								btnEliminar.setEnabled(false);
+								btnModificar.setEnabled(false);
 								loadSolicitudes();
 							}
 						}
@@ -96,6 +99,21 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
 				getRootPane().setDefaultButton(btnEliminar);
+				
+				btnModificar = new JButton("Modificar");
+				btnModificar.setEnabled(false);
+				btnModificar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(aux != null) {
+							CrearSolicitud modifOferta = new CrearSolicitud(aux);
+							modifOferta.setModal(true);
+							modifOferta.setVisible(true);
+							btnEliminar.setEnabled(false);
+							btnModificar.setEnabled(false);
+						}
+					}
+				});
+				buttonPane.add(btnModificar);
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
@@ -111,7 +129,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 		loadSolicitudes();
 	}
 
-	private void loadSolicitudes() {
+	public static void loadSolicitudes() {
 		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
 		for (Solicitud auxSoli : Bolsa.getinstance().getListsolicitudes()) {
@@ -119,9 +137,10 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				Persona auxPersona = ((SolicitudEmpleado) auxSoli).getInfo();
 				rows[0] = auxSoli.getCodigo();
 				rows[1] = auxPersona.getNombre();
-				rows[2] = auxSoli.getEspecialidad();
-				rows[3] = auxSoli.getTiempo();
-				rows[4] = auxPersona.getCampolaboral();
+				rows[2] = auxSoli.getNivelEst();
+				rows[3] = auxSoli.getEspecialidad();
+				rows[4] = auxSoli.getTiempo();
+				rows[5] = auxPersona.getNivelEst();
 				if(auxSoli.isEstado()) {
 					rows[5] = "Pendiente";
 				}else {

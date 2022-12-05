@@ -79,7 +79,7 @@ public class Principal extends JFrame {
 		}
 		mntmCrearSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearSolicitud crearsolicitud = new CrearSolicitud();
+				CrearSolicitud crearsolicitud = new CrearSolicitud(null);
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}
@@ -131,7 +131,7 @@ public class Principal extends JFrame {
 		}
 		mntmCrearOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearSolicitud crearsolicitud = new CrearSolicitud();
+				CrearSolicitud crearsolicitud = new CrearSolicitud(null);
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}

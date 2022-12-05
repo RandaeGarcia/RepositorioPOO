@@ -244,4 +244,26 @@ public class Bolsa implements Serializable {
 		return aux;
 	}
 
+	public void modificarSolicitud(Solicitud modificar) {
+		int pos = -1;
+		pos = posSolicitud(modificar.getCodigo());
+		listsolicitudes.remove(pos);
+		listsolicitudes.add(modificar);
+		
+	}
+
+	private int posSolicitud(String codigo) {
+		int ind = -1;
+		boolean find = false;
+		while (ind < listsolicitudes.size() && find)
+		{
+			if (listsolicitudes.get(ind).getCodigo().contentEquals(codigo))
+			{
+				find = true;
+			}
+			ind++;
+		}
+		return ind;
+	}
+
 }

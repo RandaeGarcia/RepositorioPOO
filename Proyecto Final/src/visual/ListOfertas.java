@@ -30,7 +30,8 @@ public class ListOfertas extends JDialog implements Serializable{
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] rows;
-	private Oferta aux = null;
+	private Solicitud aux = null;
+	private JButton btnModificar;
 
 	public static void main(String[] args) {
 		try {
@@ -95,11 +96,28 @@ public class ListOfertas extends JDialog implements Serializable{
 							if(option == JOptionPane.OK_OPTION){
 								Bolsa.getinstance().getListsolicitudes().remove(aux);
 								btnEliminar.setEnabled(false);
+								btnModificar.setEnabled(false);
 								loadOfertas();
 							}
 						}
 					}
 				});
+				{
+					btnModificar = new JButton("Modificar");
+					btnModificar.setEnabled(false);
+					btnModificar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							if(aux != null) {
+								CrearSolicitud modifOferta = new CrearSolicitud(aux);
+								modifOferta.setVisible(true);
+								modifOferta.setModal(true);
+								btnEliminar.setEnabled(false);
+								btnModificar.setEnabled(false);
+							}
+						}
+					});
+					buttonPane.add(btnModificar);
+				}
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
@@ -119,18 +137,17 @@ public class ListOfertas extends JDialog implements Serializable{
 		loadOfertas();
 	}
 
-	private void loadOfertas() {
+	public static void loadOfertas() {
 		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
-		for (int i = 0; i < Bolsa.getinstance().getListsolicitudes().size(); i++) {
-			if(Bolsa.getinstance().getListsolicitudes().get(i) instanceof Oferta) {
-				aux = (Oferta) Bolsa.getinstance().getListsolicitudes().get(i);
-				rows[0] = aux.getCodigo();
-				rows[1] = aux.getInfo().getNombreEmpresa();
-				rows[2] = aux.getEspecialidad();
-				rows[3] = aux.getTiempo();
-				rows[4] = aux.getCantpuestos();
-						
+		for (Solicitud auxSoli : Bolsa.getinstance().getListsolicitudes())			
+		{
+			if(auxSoli instanceof Oferta) {
+				rows[0] = auxSoli.getCodigo();
+				rows[1] = ((Oferta) auxSoli).getInfo().getNombreEmpresa();
+				rows[2] = auxSoli.getEspecialidad();
+				rows[3] = auxSoli.getTiempo();
+				rows[4] = ((Oferta) auxSoli).getCantpuestos();
 				model.addRow(rows);
 			}
 		}
