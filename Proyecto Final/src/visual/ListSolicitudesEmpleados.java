@@ -63,7 +63,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
 								btnModificar.setEnabled(true);
-								aux = (SolicitudEmpleado) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
+								aux = Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
 					});
