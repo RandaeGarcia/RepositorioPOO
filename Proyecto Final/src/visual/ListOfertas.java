@@ -33,16 +33,6 @@ public class ListOfertas extends JDialog implements Serializable{
 	private Solicitud aux = null;
 	private JButton btnModificar;
 
-	public static void main(String[] args) {
-		try {
-			ListOfertas dialog = new ListOfertas();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public ListOfertas() {
 		setTitle("Lista de Ofertas");
 		setBounds(100, 100, 450, 300);
@@ -70,6 +60,7 @@ public class ListOfertas extends JDialog implements Serializable{
 							rowselected = table.getSelectedRow();
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
+								btnModificar.setEnabled(true);
 								aux = (Oferta) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
@@ -102,26 +93,25 @@ public class ListOfertas extends JDialog implements Serializable{
 						}
 					}
 				});
-				{
-					btnModificar = new JButton("Modificar");
-					btnModificar.setEnabled(false);
-					btnModificar.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent arg0) {
-							if(aux != null) {
-								CrearSolicitud modifOferta = new CrearSolicitud(aux);
-								modifOferta.setVisible(true);
-								modifOferta.setModal(true);
-								btnEliminar.setEnabled(false);
-								btnModificar.setEnabled(false);
-							}
-						}
-					});
-					buttonPane.add(btnModificar);
-				}
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
 				getRootPane().setDefaultButton(btnEliminar);
+				
+				btnModificar = new JButton("Modificar");
+				btnModificar.setEnabled(false);
+				btnModificar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if(aux != null) {
+							CrearSolicitud modifOferta = new CrearSolicitud(aux);
+							modifOferta.setModal(true);
+							modifOferta.setVisible(true);
+							btnEliminar.setEnabled(false);
+							btnModificar.setEnabled(false);
+						}
+					}
+				});
+				buttonPane.add(btnModificar);
 			}
 			{
 				btnCancelar = new JButton("Cancelar");

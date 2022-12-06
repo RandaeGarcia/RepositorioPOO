@@ -63,7 +63,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
 								btnModificar.setEnabled(true);
-								aux = Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
+								aux = (SolicitudEmpleado) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(rowselected, 0).toString());
 							}
 						}
 					});
@@ -105,9 +105,9 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(aux != null) {
-							CrearSolicitud modifOferta = new CrearSolicitud(aux);
-							modifOferta.setModal(true);
-							modifOferta.setVisible(true);
+							CrearSolicitud modifSolicitud = new CrearSolicitud(aux);
+							modifSolicitud.setModal(true);
+							modifSolicitud.setVisible(true);
 							btnEliminar.setEnabled(false);
 							btnModificar.setEnabled(false);
 						}

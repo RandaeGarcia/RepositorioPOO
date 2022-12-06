@@ -117,8 +117,10 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private int experiencia = 0;
 	private Persona postulado = null;
 	private Empresa empresa = null;
-
-	public CrearSolicitud(Solicitud local) {
+	private Solicitud local = null;
+	
+	public CrearSolicitud(Solicitud modSolicitud) {
+		local = modSolicitud;
 		setTitle("Crear Solicitud");
 		setBounds(100, 100, 587, 553);
 		if (local != null)
@@ -132,7 +134,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				postulado = ((SolicitudEmpleado) local).getInfo();
 				loadPostulado();
 				loadSolicitud((SolicitudEmpleado) local);
-				rbtnOferta.setSelected(false);
+				/*rbtnOferta.setSelected(false);
 				lblCedula.setVisible(true);
 				lblCodigo.setVisible(false);
 				lblNombre.setVisible(true);
@@ -156,7 +158,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				spnPuestosDisp.setVisible(false);
 				spnPuestosDisp.setEnabled(false);
 				lblPuestoDisp.setVisible(false);
-				lblPuestoDisp.setEnabled(false);
+				lblPuestoDisp.setEnabled(false);*/
 			}
 			else
 			{
