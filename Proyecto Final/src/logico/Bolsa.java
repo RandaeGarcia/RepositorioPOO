@@ -19,10 +19,10 @@ public class Bolsa implements Serializable {
 	
 	private Bolsa() {
 		super();
-		this.listempresas = new ArrayList<>();
-		this.listpersonas = new ArrayList<>();
-		this.listsolicitudes = new ArrayList<>();
-		this.listusuarios = new ArrayList<>();
+		listempresas = new ArrayList<>();
+		listpersonas = new ArrayList<>();
+		listsolicitudes = new ArrayList<>();
+		listusuarios = new ArrayList<>();
 		this.generadorCodEmpresa = 1;
 		this.generadorCodPersona = 1;
 		this.generadorCodSolicitud = 1;
@@ -53,21 +53,33 @@ public class Bolsa implements Serializable {
 	public ArrayList<Usuario> getListusuarios() {
 		return listusuarios;
 	}
+	
+	public void setListusuarios(ArrayList<Usuario> listusuarios) {
+		this.listusuarios = listusuarios;
+	}
 
 	public ArrayList<Solicitud> getListsolicitudes() {
 		return listsolicitudes;
 	}
+	
+	public void setListsolicitudes(ArrayList<Solicitud> listsolicitudes) {
+		this.listsolicitudes = listsolicitudes;
+	}
 
 	public ArrayList<Empresa> getListempresas() {
 		return listempresas;
+	}
+	
+	public void setListempresass(ArrayList<Empresa> listempresas) {
+		this.listempresas = listempresas;
 	}
 
 	public ArrayList<Persona> getListpersonas() {
 		return listpersonas;
 	}
 
-	public void setListpersonas(Persona newpersona) {
-		listpersonas.add(newpersona);
+	public void setListpersonas(ArrayList<Persona> listpersonas) {
+		this.listpersonas = listpersonas;
 	}
 	
 	public int getGeneradorCodEmpresa() {
@@ -249,7 +261,6 @@ public class Bolsa implements Serializable {
 		pos = posSolicitud(modificar.getCodigo());
 		listsolicitudes.remove(pos);
 		listsolicitudes.add(modificar);
-		
 	}
 
 	private int posSolicitud(String codigo) {
