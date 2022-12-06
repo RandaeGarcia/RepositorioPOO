@@ -1,6 +1,8 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
@@ -40,6 +42,7 @@ public class Principal extends JFrame {
 	private JButton btnCerrarSesion;
 
 	public Principal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("maletinicono.png"));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

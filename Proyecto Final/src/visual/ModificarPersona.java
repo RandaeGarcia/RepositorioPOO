@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import logico.*;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,6 +30,7 @@ public class ModificarPersona extends JDialog {
 
 
 	public ModificarPersona(Persona persona, Empresa empresa) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("registroicono.png"));
 		if(persona != null) {
 			setTitle("Modificación a "+persona.getNombre());
 		}else {

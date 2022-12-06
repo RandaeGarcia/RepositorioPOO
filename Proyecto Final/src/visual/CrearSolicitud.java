@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.border.LineBorder;
 
 import logico.Bolsa;
@@ -120,6 +122,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private Solicitud local = null;
 	
 	public CrearSolicitud(Solicitud modSolicitud) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("iconosolicitudes.png"));
 		local = modSolicitud;
 		setTitle("Crear Solicitud");
 		setBounds(100, 100, 587, 553);

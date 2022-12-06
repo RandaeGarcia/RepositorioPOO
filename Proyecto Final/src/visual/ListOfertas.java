@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -34,8 +35,9 @@ public class ListOfertas extends JDialog implements Serializable{
 	private JButton btnModificar;
 
 	public ListOfertas() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("listicon.png"));
 		setTitle("Lista de Ofertas");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 350);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

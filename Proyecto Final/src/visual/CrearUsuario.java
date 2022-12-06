@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -38,6 +39,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 
 	
 	public CrearUsuario(Usuario local) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("registroicono.png"));
 	//public CrearUsuario(Usuario usuario) {
 		//local = usuario;
 		if (local == null)

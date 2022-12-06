@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -83,6 +84,7 @@ public class Registros extends JDialog {
 	private JComboBox<String> cbxEspecialidadTecnico;
 	
 	public Registros() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("registroicono.png"));
 		setTitle("Registro");
 		setBounds(100, 100, 512, 569);
 		setLocationRelativeTo(null);

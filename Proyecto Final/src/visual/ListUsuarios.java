@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class ListUsuarios extends JDialog implements Serializable {
 	}
 
 	public ListUsuarios() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("listicon.png"));
 		setTitle("Lista de Usuarios");
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
@@ -86,7 +88,9 @@ public class ListUsuarios extends JDialog implements Serializable {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setBorder(null);
+			FlowLayout fl_buttonPane = new FlowLayout(FlowLayout.RIGHT);
+			buttonPane.setLayout(fl_buttonPane);
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Eliminar");

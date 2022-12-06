@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
+import java.awt.Toolkit;
 
 public class ListEmpresas extends JDialog implements Serializable{
 
@@ -46,8 +47,9 @@ public class ListEmpresas extends JDialog implements Serializable{
 	}
 
 	public ListEmpresas() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("listicon.png"));
 		setTitle("Lista de Empresas");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 350);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
