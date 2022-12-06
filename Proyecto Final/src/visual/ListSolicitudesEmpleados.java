@@ -105,6 +105,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(aux != null) {
+							aux = (SolicitudEmpleado) aux;
 							CrearSolicitud modifSolicitud = new CrearSolicitud(aux);
 							modifSolicitud.setModal(true);
 							modifSolicitud.setVisible(true);

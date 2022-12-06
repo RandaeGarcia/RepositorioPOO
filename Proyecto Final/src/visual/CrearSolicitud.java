@@ -123,80 +123,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		local = modSolicitud;
 		setTitle("Crear Solicitud");
 		setBounds(100, 100, 587, 553);
-		if (local != null)
-		{
-			setTitle("Modificar Solicitud");
-			if (local instanceof SolicitudEmpleado)
-			{
-				setBounds(100, 100, 587, 499);
-				pnlSolicitudPost.setBounds(10, 187, 541, 221);
-				pnlPostulado.setBounds(10, 53, 541, 123);
-				postulado = ((SolicitudEmpleado) local).getInfo();
-				loadPostulado();
-				loadSolicitud((SolicitudEmpleado) local);
-				/*rbtnOferta.setSelected(false);
-				lblCedula.setVisible(true);
-				lblCodigo.setVisible(false);
-				lblNombre.setVisible(true);
-				lblEmpresa.setVisible(false);
-				lblSalarioMin.setVisible(true);
-				lblSalarioMax.setVisible(false);
-				lblProv.setVisible(false);
-				lblProv.setEnabled(false);
-				cbxProvEncuesta.setVisible(false);
-				cbxProvEncuesta.setEnabled(false);
-				rdbtnAmbosModalidad.setVisible(false);
-				rdbtnAmbosLM.setVisible(false);
-				rdbtnAmbosVP.setVisible(false);
-				rdbtnAmbosDM.setVisible(false);
-				rdbtnAmbosModalidad.setEnabled(false);
-				rdbtnAmbosLM.setEnabled(false);
-				rdbtnAmbosVP.setEnabled(false);
-				rdbtnAmbosDM.setEnabled(false);
-				rdbtnAmbosTiempo.setEnabled(false);
-				rdbtnAmbosTiempo.setVisible(false);
-				spnPuestosDisp.setVisible(false);
-				spnPuestosDisp.setEnabled(false);
-				lblPuestoDisp.setVisible(false);
-				lblPuestoDisp.setEnabled(false);*/
-			}
-			else
-			{
-				setBounds(100, 100, 587, 557);
-				pnlPostulado.setBounds(10, 53, 541, 96);
-				pnlSolicitudPost.setBounds(10, 160, 541, 302);
-				empresa = ((Oferta) local).getInfo();
-				loadEmpresa();
-				loadOferta((Oferta) local);
-				rbtnPostulacion.setSelected(false);
-				lblCedula.setVisible(false);
-				lblCodigo.setVisible(true);
-				lblNombre.setVisible(false);
-				lblEmpresa.setVisible(true);
-				lblSalarioMin.setVisible(false);
-				lblSalarioMax.setVisible(true);
-				lblProv.setVisible(true);
-				lblProv.setEnabled(true);
-				cbxProvEncuesta.setVisible(true);
-				cbxProvEncuesta.setEnabled(true);
-				rdbtnAmbosModalidad.setVisible(true);
-				rdbtnAmbosLM.setVisible(true);
-				rdbtnAmbosVP.setVisible(true);
-				rdbtnAmbosDM.setVisible(true);
-				rdbtnAmbosTiempo.setVisible(true);
-				rdbtnAmbosModalidad.setEnabled(true);
-				rdbtnAmbosLM.setEnabled(true);
-				rdbtnAmbosVP.setEnabled(true);
-				rdbtnAmbosDM.setEnabled(true);
-				rdbtnAmbosTiempo.setEnabled(true);
-				spnPuestosDisp.setVisible(true);
-				spnPuestosDisp.setEnabled(true);
-				lblPuestoDisp.setVisible(true);
-				lblPuestoDisp.setEnabled(true);
-			}
-			rbtnOferta.setEnabled(false);
-			rbtnPostulacion.setEnabled(false);
-		}
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.GRAY);
@@ -1002,6 +928,82 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				buttonPane.add(btnCancelar);
 			}
 		}
+		if (local != null)
+		{
+			setTitle("Modificar Solicitud");
+			if (local instanceof SolicitudEmpleado)
+			{
+				setBounds(100, 100, 587, 499);
+				txtCodigo.setEnabled(false);
+				txtCodigo.setText(local.getCodigo());
+				pnlSolicitudPost.setBounds(10, 187, 541, 221);
+				pnlPostulado.setBounds(10, 53, 541, 123);
+				//postulado = ((SolicitudEmpleado) local).getInfo();
+				loadPostulado();
+				loadSolicitud((SolicitudEmpleado) local);
+				/*rbtnOferta.setSelected(false);
+				lblCedula.setVisible(true);
+				lblCodigo.setVisible(false);
+				lblNombre.setVisible(true);
+				lblEmpresa.setVisible(false);
+				lblSalarioMin.setVisible(true);
+				lblSalarioMax.setVisible(false);
+				lblProv.setVisible(false);
+				lblProv.setEnabled(false);
+				cbxProvEncuesta.setVisible(false);
+				cbxProvEncuesta.setEnabled(false);
+				rdbtnAmbosModalidad.setVisible(false);
+				rdbtnAmbosLM.setVisible(false);
+				rdbtnAmbosVP.setVisible(false);
+				rdbtnAmbosDM.setVisible(false);
+				rdbtnAmbosModalidad.setEnabled(false);
+				rdbtnAmbosLM.setEnabled(false);
+				rdbtnAmbosVP.setEnabled(false);
+				rdbtnAmbosDM.setEnabled(false);
+				rdbtnAmbosTiempo.setEnabled(false);
+				rdbtnAmbosTiempo.setVisible(false);
+				spnPuestosDisp.setVisible(false);
+				spnPuestosDisp.setEnabled(false);
+				lblPuestoDisp.setVisible(false);
+				lblPuestoDisp.setEnabled(false);*/
+			}
+			else
+			{
+				setBounds(100, 100, 587, 557);
+				pnlPostulado.setBounds(10, 53, 541, 96);
+				pnlSolicitudPost.setBounds(10, 160, 541, 302);
+				empresa = ((Oferta) local).getInfo();
+				loadEmpresa();
+				loadOferta((Oferta) local);
+				rbtnPostulacion.setSelected(false);
+				lblCedula.setVisible(false);
+				lblCodigo.setVisible(true);
+				lblNombre.setVisible(false);
+				lblEmpresa.setVisible(true);
+				lblSalarioMin.setVisible(false);
+				lblSalarioMax.setVisible(true);
+				lblProv.setVisible(true);
+				lblProv.setEnabled(true);
+				cbxProvEncuesta.setVisible(true);
+				cbxProvEncuesta.setEnabled(true);
+				rdbtnAmbosModalidad.setVisible(true);
+				rdbtnAmbosLM.setVisible(true);
+				rdbtnAmbosVP.setVisible(true);
+				rdbtnAmbosDM.setVisible(true);
+				rdbtnAmbosTiempo.setVisible(true);
+				rdbtnAmbosModalidad.setEnabled(true);
+				rdbtnAmbosLM.setEnabled(true);
+				rdbtnAmbosVP.setEnabled(true);
+				rdbtnAmbosDM.setEnabled(true);
+				rdbtnAmbosTiempo.setEnabled(true);
+				spnPuestosDisp.setVisible(true);
+				spnPuestosDisp.setEnabled(true);
+				lblPuestoDisp.setVisible(true);
+				lblPuestoDisp.setEnabled(true);
+			}
+			rbtnOferta.setEnabled(false);
+			rbtnPostulacion.setEnabled(false);
+		}
 	}
 
 	private void loadPostulado()
@@ -1125,14 +1127,14 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		spnSalario.setValue(local.getSalariomin());
 		spnExp.setValue(local.getExp());
 		
-		if (local.getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
+		if (local.getInfo() instanceof Tecnico)
 		{
 			cbxEspecialidadObrero.setVisible(false);
 			cbxEspecialidadUniversitario.setVisible(false);
 			cbxEspecialidadTecnico.setVisible(true);
 			cbxEspecialidadTecnico.setSelectedItem(local.getEspecialidad().toString());
 		}
-		else if (local.getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
+		else if (local.getInfo() instanceof Obrero)
 		{
 			cbxEspecialidadObrero.setVisible(true);
 			cbxEspecialidadUniversitario.setVisible(false);
