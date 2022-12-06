@@ -54,7 +54,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					model = new DefaultTableModel();
-					String[] columnas = {"Código","Solicitante","Nivel Est.","Puesto","Tiempo","Estado"};
+					String[] columnas = {"Código","Solicitante","Nivel Est.","Especialidad","Tiempo","Estado"};
 					model.setColumnIdentifiers(columnas);
 					table = new JTable();
 					table.addMouseListener(new MouseAdapter() {

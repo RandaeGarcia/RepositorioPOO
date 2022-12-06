@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -14,8 +15,6 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import java.awt.Toolkit;
-
-import javax.swing.border.LineBorder;
 
 import logico.Bolsa;
 import logico.Empresa;
@@ -66,37 +65,30 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private JRadioButton rdbtnMedio;
 	private JRadioButton rbtnSiVP;
 	private JRadioButton rbtnNoVP;
-	private JPanel pnlPostulado;
-	private JPanel pnlSolicitudPost;
+	private JPanel pnlSolicitante;
+	private JPanel pnlEncuesta;
 	private JRadioButton rdbtnAmbosModalidad;
 	private JRadioButton rdbtnAmbosLM;
 	private JRadioButton rdbtnAmbosVP;
 	private JRadioButton rdbtnAmbosDM;
 	private JLabel lblProv;
 	private JComboBox<String> cbxProvEncuesta;
-	private JLabel lblPuestoDisp;
 	private JSpinner spnPuestosDisp;
-	private JLabel lblSalarioMax;
 	private JLabel lblSexo;
 	private JRadioButton rdbtnMasculino;
 	private JRadioButton rdbtnFemenino;
 	private JRadioButton rbtnAmbosSexo;
 	private JLabel lblExp;
 	private JSpinner spnExp;
-	private JLabel lblPorcentajeMatch;
 	private JSpinner spnPorcentaje;
-	private JLabel lblCampoLab;
 	private JRadioButton rbtnTecnicoCL;
 	private JRadioButton rbtnObreroCL;
 	private JRadioButton rbtnUniversitarioCL;
-	private JLabel lblSalarioMin;
+	private JLabel lblSalario;
 	private JRadioButton rdbtnAmbosTiempo;
-	private JLabel lblCodigo;
-	private JLabel lblEmpresa;
 	private JTextField txtTelefono;
-	private JLabel lblCedula;
+	private JLabel lblIdentificacion;
 	private JLabel lblNombre;
-	private JComboBox<String> cbxEmpresa;
 	private JTextField txtCodigo;
 	private JTextField txtProvincia;
 	private JComboBox<String> cbxEspecialidadObrero;
@@ -120,12 +112,26 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private Persona postulado = null;
 	private Empresa empresa = null;
 	private Solicitud local = null;
-	
+
 	public CrearSolicitud(Solicitud modSolicitud) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("iconosolicitudes.png"));
 		local = modSolicitud;
 		setTitle("Crear Solicitud");
-		setBounds(100, 100, 587, 553);
+		setBounds(100, 100, 587, 137);
+		if (local != null)
+		{
+			setTitle("Modificar Solicitud");
+			if (local instanceof SolicitudEmpleado)
+			{
+				setBounds(100, 100, 587, 499);
+				postulado = ((SolicitudEmpleado) local).getInfo();
+			}
+			else
+			{
+				setBounds(100, 100, 587, 557);
+				empresa = ((Oferta) local).getInfo();
+			}
+		}
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.GRAY);
@@ -153,74 +159,62 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			panel_1.add(label);
 
 			rbtnPostulacion = new JRadioButton("Postulacion");
+			if (local != null)
+			{
+				rbtnPostulacion.setEnabled(false);
+				if (local instanceof SolicitudEmpleado)
+				{
+					rbtnPostulacion.setSelected(true);
+				}
+			}
 			rbtnPostulacion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setBounds(100, 100, 587, 499);
+					lblIdentificacion.setText("Cedula:");
+					lblNombre.setText("Nombre:");
+					lblSalario.setText("Salario Minimo");
 					setLocationRelativeTo(null);
-					pnlSolicitudPost.setBounds(10, 187, 541, 221);
-					pnlPostulado.setBounds(10, 53, 541, 123);
+					pnlEncuesta.setBounds(10, 187, 541, 221);
+					pnlSolicitante.setBounds(10, 53, 541, 123);
 					rbtnOferta.setSelected(false);
-					lblCedula.setVisible(true);
-					lblCodigo.setVisible(false);
-					lblNombre.setVisible(true);
-					lblEmpresa.setVisible(false);
-					lblSalarioMin.setVisible(true);
-					lblSalarioMax.setVisible(false);
 					lblProv.setVisible(false);
-					lblProv.setEnabled(false);
 					cbxProvEncuesta.setVisible(false);
-					cbxProvEncuesta.setEnabled(false);
 					rdbtnAmbosModalidad.setVisible(false);
 					rdbtnAmbosLM.setVisible(false);
 					rdbtnAmbosVP.setVisible(false);
 					rdbtnAmbosDM.setVisible(false);
-					rdbtnAmbosModalidad.setEnabled(false);
-					rdbtnAmbosLM.setEnabled(false);
-					rdbtnAmbosVP.setEnabled(false);
-					rdbtnAmbosDM.setEnabled(false);
-					rdbtnAmbosTiempo.setEnabled(false);
 					rdbtnAmbosTiempo.setVisible(false);
-					spnPuestosDisp.setVisible(false);
-					spnPuestosDisp.setEnabled(false);
-					lblPuestoDisp.setVisible(false);
-					lblPuestoDisp.setEnabled(false);
 				}
 			});
 			rbtnPostulacion.setBounds(55, 7, 93, 23);
 			panel_1.add(rbtnPostulacion);
 
 			rbtnOferta = new JRadioButton("Oferta Trabajo");
+			if (local != null)
+			{
+				rbtnOferta.setEnabled(false);
+				if (local instanceof Oferta)
+				{
+					rbtnOferta.setSelected(true);
+				}
+			}
 			rbtnOferta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setBounds(100, 100, 587, 557);
-					pnlPostulado.setBounds(10, 53, 541, 96);
-					pnlSolicitudPost.setBounds(10, 160, 541, 302);
+					lblIdentificacion.setText("Codigo:");
+					lblNombre.setText("Empresa:");
+					lblSalario.setText("Salario Maximo");
+					pnlEncuesta.setBounds(10, 160, 541, 302);
 					setLocationRelativeTo(null);
+					pnlSolicitante.setBounds(10, 53, 541, 96);
 					rbtnPostulacion.setSelected(false);
-					lblCedula.setVisible(false);
-					lblCodigo.setVisible(true);
-					lblNombre.setVisible(false);
-					lblEmpresa.setVisible(true);
-					lblSalarioMin.setVisible(false);
-					lblSalarioMax.setVisible(true);
 					lblProv.setVisible(true);
-					lblProv.setEnabled(true);
 					cbxProvEncuesta.setVisible(true);
-					cbxProvEncuesta.setEnabled(true);
 					rdbtnAmbosModalidad.setVisible(true);
 					rdbtnAmbosLM.setVisible(true);
 					rdbtnAmbosVP.setVisible(true);
 					rdbtnAmbosDM.setVisible(true);
 					rdbtnAmbosTiempo.setVisible(true);
-					rdbtnAmbosModalidad.setEnabled(true);
-					rdbtnAmbosLM.setEnabled(true);
-					rdbtnAmbosVP.setEnabled(true);
-					rdbtnAmbosDM.setEnabled(true);
-					rdbtnAmbosTiempo.setEnabled(true);
-					spnPuestosDisp.setVisible(true);
-					spnPuestosDisp.setEnabled(true);
-					lblPuestoDisp.setVisible(true);
-					lblPuestoDisp.setEnabled(true);
 				}
 			});
 			rbtnOferta.setBounds(150, 7, 126, 23);
@@ -229,89 +223,49 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			txtCodigo = new JTextField();
 			txtCodigo.setEnabled(false);
 			txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
+			if (local != null)
+			{
+				txtCodigo.setText(local.getCodigo().toString());
+			}
 			txtCodigo.setBounds(339, 8, 186, 20);
 			panel_1.add(txtCodigo);
 			txtCodigo.setColumns(10);
 
-			pnlPostulado = new JPanel();
-			pnlPostulado.setBounds(10, 53, 541, 96);
-			panel.add(pnlPostulado);
-			pnlPostulado.setLayout(null);
+			pnlSolicitante = new JPanel();
+			pnlSolicitante.setBounds(10, 53, 541, 96);
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					pnlSolicitante.setBounds(10, 53, 541, 96);
+				}
+				else
+				{
+					pnlSolicitante.setBounds(10, 53, 541, 123);
+				}
+			}
+			panel.add(pnlSolicitante);
+			pnlSolicitante.setLayout(null);
 
-			lblCedula = new JLabel("Cedula:");
-			lblCedula.setBounds(10, 11, 46, 14);
-			pnlPostulado.add(lblCedula);
+			lblIdentificacion = new JLabel("Cedula:");
+			lblIdentificacion.setBounds(10, 11, 46, 14);
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					lblIdentificacion.setText("Codigo:");;
+				}
+			}
+			pnlSolicitante.add(lblIdentificacion);
 
 			txtIdentificacion = new JTextField();
 			txtIdentificacion.setBounds(80, 10, 186, 17);
-			pnlPostulado.add(txtIdentificacion);
+			if (local != null)
+			{
+				txtIdentificacion.setEnabled(false);
+			}
+			pnlSolicitante.add(txtIdentificacion);
 			txtIdentificacion.setColumns(10);
-
-			lblNombre = new JLabel("Nombre:");
-			lblNombre.setBounds(10, 41, 60, 14);
-			pnlPostulado.add(lblNombre);
-
-			txtNombre = new JTextField();
-			txtNombre.setEnabled(false);
-			txtNombre.setColumns(10);
-			txtNombre.setBounds(80, 38, 186, 17);
-			pnlPostulado.add(txtNombre);
-
-			JLabel lblCorreo = new JLabel("Correo:");
-			lblCorreo.setBounds(10, 69, 46, 14);
-			pnlPostulado.add(lblCorreo);
-
-			txtCorreo = new JTextField();
-			txtCorreo.setEnabled(false);
-			txtCorreo.setColumns(10);
-			txtCorreo.setBounds(80, 66, 186, 20);
-			pnlPostulado.add(txtCorreo);
-
-			JLabel lblTelefono = new JLabel("Telefono:");
-			lblTelefono.setBounds(276, 41, 60, 14);
-			pnlPostulado.add(lblTelefono);
-
-			JLabel lblProvincia = new JLabel("Provincia:");
-			lblProvincia.setBounds(276, 69, 60, 14);
-			pnlPostulado.add(lblProvincia);
-
-			JLabel lblCampoLaboral = new JLabel("Nivel Estudios");
-			lblCampoLaboral.setBounds(10, 97, 91, 14);
-			pnlPostulado.add(lblCampoLaboral);
-
-			rbtnTecnico = new JRadioButton("Tecnico");
-			rbtnTecnico.setEnabled(false);
-			rbtnTecnico.setBounds(107, 93, 78, 23);
-			pnlPostulado.add(rbtnTecnico);
-
-			rbtnObrero = new JRadioButton("Obrero");
-			rbtnObrero.setEnabled(false);
-			rbtnObrero.setBounds(185, 93, 66, 23);
-			pnlPostulado.add(rbtnObrero);
-
-			rbtnUniversitario = new JRadioButton("Universitario");
-			rbtnUniversitario.setEnabled(false);
-			rbtnUniversitario.setBounds(253, 93, 109, 23);
-			pnlPostulado.add(rbtnUniversitario);
-
-			lblCodigo = new JLabel("Codigo:");
-			lblCodigo.setBounds(10, 11, 46, 14);
-			pnlPostulado.add(lblCodigo);
-
-			lblEmpresa = new JLabel("Empresa:");
-			lblEmpresa.setBounds(10, 41, 60, 14);
-			pnlPostulado.add(lblEmpresa);
-
-			txtTelefono = new JTextField();
-			txtTelefono.setEnabled(false);
-			txtTelefono.setBounds(339, 38, 186, 17);
-			pnlPostulado.add(txtTelefono);
-			txtTelefono.setColumns(10);
-
-			cbxEmpresa = new JComboBox<String>();
-			cbxEmpresa.setEnabled(false);
-			cbxEmpresa.setBounds(80, 38, 186, 17);
-			pnlPostulado.add(cbxEmpresa);
 
 			JButton btnBuscar = new JButton("Buscar");
 			if (local != null)
@@ -371,22 +325,111 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						}
 					}
 				}
-
-
 			});
 			btnBuscar.setBounds(276, 7, 89, 23);
-			pnlPostulado.add(btnBuscar);
+			pnlSolicitante.add(btnBuscar);
+
+			lblNombre = new JLabel("Nombre:");
+			lblNombre.setBounds(10, 41, 60, 14);
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					lblNombre.setText("Empresa:");
+				}
+			}
+			pnlSolicitante.add(lblNombre);
+
+			txtNombre = new JTextField();
+			txtNombre.setEnabled(false);
+			txtNombre.setColumns(10);
+			txtNombre.setBounds(80, 38, 186, 17);
+			pnlSolicitante.add(txtNombre);
+
+			JLabel lblCorreo = new JLabel("Correo:");
+			lblCorreo.setBounds(10, 69, 46, 14);
+			pnlSolicitante.add(lblCorreo);
+
+			txtCorreo = new JTextField();
+			txtCorreo.setEnabled(false);
+			txtCorreo.setColumns(10);
+			txtCorreo.setBounds(80, 66, 186, 20);
+			pnlSolicitante.add(txtCorreo);
+
+			JLabel lblTelefono = new JLabel("Telefono:");
+			lblTelefono.setBounds(276, 41, 60, 14);
+			pnlSolicitante.add(lblTelefono);
+
+			txtTelefono = new JTextField();
+			txtTelefono.setEnabled(false);
+			txtTelefono.setBounds(339, 38, 186, 17);
+			pnlSolicitante.add(txtTelefono);
+			txtTelefono.setColumns(10);
+
+			JLabel lblProvincia = new JLabel("Provincia:");
+			lblProvincia.setBounds(276, 69, 60, 14);
+			pnlSolicitante.add(lblProvincia);
 
 			txtProvincia = new JTextField();
 			txtProvincia.setEnabled(false);
 			txtProvincia.setColumns(10);
 			txtProvincia.setBounds(339, 68, 186, 17);
-			pnlPostulado.add(txtProvincia);
+			pnlSolicitante.add(txtProvincia);
 
-			pnlSolicitudPost = new JPanel();
-			pnlSolicitudPost.setBounds(10, 160, 541, 302);
-			panel.add(pnlSolicitudPost);
-			pnlSolicitudPost.setLayout(null);
+			JLabel lblCampoLaboral = new JLabel("Nivel Estudios");
+			lblCampoLaboral.setBounds(10, 97, 91, 14);
+			pnlSolicitante.add(lblCampoLaboral);
+
+			rbtnTecnico = new JRadioButton("Tecnico");
+			rbtnTecnico.setEnabled(false);
+			rbtnTecnico.setBounds(107, 93, 78, 23);
+			pnlSolicitante.add(rbtnTecnico);
+
+			rbtnObrero = new JRadioButton("Obrero");
+			rbtnObrero.setEnabled(false);
+			rbtnObrero.setBounds(185, 93, 66, 23);
+			pnlSolicitante.add(rbtnObrero);
+
+			rbtnUniversitario = new JRadioButton("Universitario");
+			rbtnUniversitario.setEnabled(false);
+			rbtnUniversitario.setBounds(253, 93, 109, 23);
+			pnlSolicitante.add(rbtnUniversitario);
+
+			pnlEncuesta = new JPanel();
+			pnlEncuesta.setBounds(10, 160, 541, 302);
+			if (local != null)
+			{
+				if (local instanceof SolicitudEmpleado)
+				{
+					pnlEncuesta.setBounds(10, 187, 541, 221);
+				}
+				else
+				{
+					pnlEncuesta.setBounds(10, 160, 541, 302);
+				}
+			}
+			panel.add(pnlEncuesta);
+			pnlEncuesta.setLayout(null);
+
+			lblSalario = new JLabel("Salario Minimo:");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					lblSalario.setText("Salario Maximo");
+				}
+			}
+			lblSalario.setBounds(10, 42, 92, 14);
+			pnlEncuesta.add(lblSalario);
+
+			spnSalario = new JSpinner();
+			spnSalario.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			spnSalario.setBounds(106, 39, 81, 20);
+			pnlEncuesta.add(spnSalario);
+
+			JLabel lblLicenciaManejo = new JLabel("Licencia Manejo:");
+			lblLicenciaManejo.setBounds(10, 145, 104, 14);
+			pnlEncuesta.add(lblLicenciaManejo);
 
 			rdbtnSiLM = new JRadioButton("Si");
 			rdbtnSiLM.addActionListener(new ActionListener() {
@@ -396,70 +439,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 					licencia = "Si";				}
 			});
 			rdbtnSiLM.setBounds(106, 141, 81, 23);
-			pnlSolicitudPost.add(rdbtnSiLM);
-
-			JLabel lblTiempo = new JLabel("Tiempo:");
-			lblTiempo.setBounds(10, 94, 46, 14);
-			pnlSolicitudPost.add(lblTiempo);
-
-			rdbtnCompleto = new JRadioButton("Completo");
-			rdbtnCompleto.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnMedio.setSelected(false);
-					rdbtnAmbosTiempo.setSelected(false);
-					tiempo = "Completo";
-				}
-			});
-			rdbtnCompleto.setBounds(106, 90, 81, 23);
-			pnlSolicitudPost.add(rdbtnCompleto);
-
-			rdbtnMedio = new JRadioButton("Medio");
-			rdbtnMedio.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnCompleto.setSelected(false);
-					rdbtnAmbosTiempo.setSelected(false);
-					tiempo = "Medio";
-				}
-			});
-			rdbtnMedio.setBounds(197, 90, 81, 23);
-			pnlSolicitudPost.add(rdbtnMedio);
-
-			JLabel lblModalidad = new JLabel("Modalidad:");
-			lblModalidad.setBounds(10, 120, 69, 14);
-			pnlSolicitudPost.add(lblModalidad);
-
-			rdbtnRemoto = new JRadioButton("Remoto");
-			rdbtnRemoto.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnPresencial.setSelected(false);
-					rdbtnAmbosModalidad.setSelected(false);
-					modalidad = "Remoto";					
-				}
-			});
-			rdbtnRemoto.setBounds(106, 116, 81, 23);
-			pnlSolicitudPost.add(rdbtnRemoto);
-
-			rdbtnPresencial = new JRadioButton("Presencial");
-			rdbtnPresencial.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnRemoto.setSelected(false);
-					rdbtnAmbosModalidad.setSelected(false);
-					modalidad = "Presencial";
-				}
-			});
-			rdbtnPresencial.setBounds(197, 116, 91, 23);
-			pnlSolicitudPost.add(rdbtnPresencial);
-
-			rdbtnAmbosModalidad = new JRadioButton("Ambos");
-			rdbtnAmbosModalidad.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnRemoto.setSelected(false);
-					rdbtnPresencial.setSelected(false);
-					modalidad = "Ambos";
-				}
-			});
-			rdbtnAmbosModalidad.setBounds(290, 116, 81, 23);
-			pnlSolicitudPost.add(rdbtnAmbosModalidad);
+			pnlEncuesta.add(rdbtnSiLM);
 
 			rdbtnNoLM = new JRadioButton("No");
 			rdbtnNoLM.addActionListener(new ActionListener() {
@@ -470,15 +450,117 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnNoLM.setBounds(197, 141, 69, 23);
-			pnlSolicitudPost.add(rdbtnNoLM);
+			pnlEncuesta.add(rdbtnNoLM);
 
-			JLabel lblLicenciaManejo = new JLabel("Licencia Manejo:");
-			lblLicenciaManejo.setBounds(10, 145, 104, 14);
-			pnlSolicitudPost.add(lblLicenciaManejo);
+			rdbtnAmbosLM = new JRadioButton("Ambos");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					rdbtnAmbosLM.setVisible(true);
+				}
+			}
+			rdbtnAmbosLM.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnSiLM.setSelected(false);
+					rdbtnNoLM.setSelected(false);
+					licencia = "Ambos";
+				}
+			});
+			rdbtnAmbosLM.setBounds(290, 141, 69, 23);
+			pnlEncuesta.add(rdbtnAmbosLM);
+
+			JLabel lblTiempo = new JLabel("Tiempo:");
+			lblTiempo.setBounds(10, 94, 46, 14);
+			pnlEncuesta.add(lblTiempo);
+
+			rdbtnCompleto = new JRadioButton("Completo");
+			rdbtnCompleto.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnMedio.setSelected(false);
+					rdbtnAmbosTiempo.setSelected(false);
+					tiempo = "Completo";
+				}
+			});
+			rdbtnCompleto.setBounds(106, 90, 81, 23);
+			pnlEncuesta.add(rdbtnCompleto);
+
+			rdbtnMedio = new JRadioButton("Medio");
+			rdbtnMedio.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnCompleto.setSelected(false);
+					rdbtnAmbosTiempo.setSelected(false);
+					tiempo = "Medio";
+				}
+			});
+			rdbtnMedio.setBounds(197, 90, 81, 23);
+			pnlEncuesta.add(rdbtnMedio);
+
+			rdbtnAmbosTiempo = new JRadioButton("Ambos");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					rdbtnAmbosTiempo.setVisible(true);
+				}
+			}
+			rdbtnAmbosTiempo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnCompleto.setSelected(false);
+					rdbtnMedio.setSelected(false);
+					tiempo = "Ambos";
+				}
+			});
+			rdbtnAmbosTiempo.setBounds(290, 90, 81, 23);
+			pnlEncuesta.add(rdbtnAmbosTiempo);
+
+			JLabel lblModalidad = new JLabel("Modalidad:");
+			lblModalidad.setBounds(10, 120, 69, 14);
+			pnlEncuesta.add(lblModalidad);
+
+			rdbtnRemoto = new JRadioButton("Remoto");
+			rdbtnRemoto.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnPresencial.setSelected(false);
+					rdbtnAmbosModalidad.setSelected(false);
+					modalidad = "Remoto";					
+				}
+			});
+			rdbtnRemoto.setBounds(106, 116, 81, 23);
+			pnlEncuesta.add(rdbtnRemoto);
+
+			rdbtnPresencial = new JRadioButton("Presencial");
+			rdbtnPresencial.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnRemoto.setSelected(false);
+					rdbtnAmbosModalidad.setSelected(false);
+					modalidad = "Presencial";
+				}
+			});
+			rdbtnPresencial.setBounds(197, 116, 91, 23);
+			pnlEncuesta.add(rdbtnPresencial);
+
+			rdbtnAmbosModalidad = new JRadioButton("Ambos");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					rdbtnAmbosModalidad.setVisible(true);
+				}
+			}
+			rdbtnAmbosModalidad.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rdbtnRemoto.setSelected(false);
+					rdbtnPresencial.setSelected(false);
+					modalidad = "Ambos";
+				}
+			});
+			rdbtnAmbosModalidad.setBounds(290, 116, 81, 23);
+			pnlEncuesta.add(rdbtnAmbosModalidad);
 
 			JLabel lblVehiculoPropio = new JLabel("Vehiculo Propio:");
 			lblVehiculoPropio.setBounds(10, 171, 92, 14);
-			pnlSolicitudPost.add(lblVehiculoPropio);
+			pnlEncuesta.add(lblVehiculoPropio);
 
 			rbtnSiVP = new JRadioButton("Si");
 			rbtnSiVP.addActionListener(new ActionListener() {
@@ -489,7 +571,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnSiVP.setBounds(106, 167, 81, 23);
-			pnlSolicitudPost.add(rbtnSiVP);
+			pnlEncuesta.add(rbtnSiVP);
 
 			rbtnNoVP = new JRadioButton("No");
 			rbtnNoVP.addActionListener(new ActionListener() {
@@ -500,11 +582,29 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnNoVP.setBounds(197, 167, 68, 23);
-			pnlSolicitudPost.add(rbtnNoVP);
+			pnlEncuesta.add(rbtnNoVP);
+
+			rdbtnAmbosVP = new JRadioButton("Ambos");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					rdbtnAmbosVP.setVisible(true);
+				}
+			}
+			rdbtnAmbosVP.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rbtnSiVP.setSelected(false);
+					rbtnNoVP.setSelected(false);
+					vehiculo = "Ambos";
+				}
+			});
+			rdbtnAmbosVP.setBounds(290, 167, 68, 23);
+			pnlEncuesta.add(rdbtnAmbosVP);
 
 			JLabel lblDispMovilidad = new JLabel("Disp. Movilidad:");
 			lblDispMovilidad.setBounds(10, 196, 92, 14);
-			pnlSolicitudPost.add(lblDispMovilidad);
+			pnlEncuesta.add(lblDispMovilidad);
 
 			rbtnSiDM = new JRadioButton("Si");
 			rbtnSiDM.addActionListener(new ActionListener() {
@@ -515,7 +615,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnSiDM.setBounds(106, 192, 81, 23);
-			pnlSolicitudPost.add(rbtnSiDM);
+			pnlEncuesta.add(rbtnSiDM);
 
 			rbtnNoDM = new JRadioButton("No");
 			rbtnNoDM.addActionListener(new ActionListener() {
@@ -526,43 +626,115 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnNoDM.setBounds(197, 192, 81, 23);
-			pnlSolicitudPost.add(rbtnNoDM);
+			pnlEncuesta.add(rbtnNoDM);
+
+			rdbtnAmbosDM = new JRadioButton("Ambos");
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					rdbtnAmbosDM.setVisible(true);
+				}
+			}
+			rdbtnAmbosDM.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					rbtnNoDM.setSelected(false);
+					rbtnSiDM.setSelected(false);
+					dispManejo = "Ambos";
+				}
+			});
+			rdbtnAmbosDM.setBounds(290, 192, 81, 23);
+			pnlEncuesta.add(rdbtnAmbosDM);
 
 			JLabel lblEspecialidad = new JLabel("Especialidad:");
 			lblEspecialidad.setBounds(10, 14, 104, 14);
-			pnlSolicitudPost.add(lblEspecialidad);
-
+			pnlEncuesta.add(lblEspecialidad);
+			
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
+					{
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+				else if (local instanceof SolicitudEmpleado)
+				{
+					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
+					{
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+			}
 			cbxEspecialidadTecnico = new JComboBox<String>();
 			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", 
 					"Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", 
 					"Refigeracion", "Tecnologia"}));
 			cbxEspecialidadTecnico.setBounds(106, 11, 160, 20);
-			pnlSolicitudPost.add(cbxEspecialidadTecnico);
+			pnlEncuesta.add(cbxEspecialidadTecnico);
 
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					if (local.getNivelEst().equalsIgnoreCase("Universitario"));
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(true);
+					}
+				}
+				else if (local instanceof SolicitudEmpleado)
+				{
+					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(true);
+					}
+				}
+			}
 			cbxEspecialidadUniversitario = new JComboBox<String>();
 			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
 					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
 			cbxEspecialidadUniversitario.setBounds(106, 11, 160, 20);
-			pnlSolicitudPost.add(cbxEspecialidadUniversitario);
-
+			pnlEncuesta.add(cbxEspecialidadUniversitario);
+			
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					if (local.getNivelEst().equalsIgnoreCase("Obrero"))
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(true);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+				else if (local instanceof SolicitudEmpleado)
+				{
+					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(true);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+			}
 			cbxEspecialidadObrero = new JComboBox<String>();
 			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
 					"Cocinero", "Electricista", "Constructor", "Chofer"}));
 			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
-			pnlSolicitudPost.add(cbxEspecialidadObrero);
-
-			lblSalarioMin = new JLabel("Salario Minimo:");
-			lblSalarioMin.setBounds(10, 42, 92, 14);
-			pnlSolicitudPost.add(lblSalarioMin);
-
-			spnSalario = new JSpinner();
-			spnSalario.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-			spnSalario.setBounds(106, 39, 81, 20);
-			pnlSolicitudPost.add(spnSalario);
+			pnlEncuesta.add(cbxEspecialidadObrero);
 
 			JLabel lblIdioma = new JLabel("Idioma:");
 			lblIdioma.setBounds(10, 67, 46, 14);
-			pnlSolicitudPost.add(lblIdioma);
+			pnlEncuesta.add(lblIdioma);
 
 			rdbtnEspanol = new JRadioButton("Espa\u00F1ol");
 			rdbtnEspanol.addActionListener(new ActionListener() {
@@ -572,7 +744,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnEspanol.setBounds(106, 63, 81, 23);
-			pnlSolicitudPost.add(rdbtnEspanol);
+			pnlEncuesta.add(rdbtnEspanol);
 
 			rdbtnIngles = new JRadioButton("Ingles");
 			rdbtnIngles.addActionListener(new ActionListener() {
@@ -581,7 +753,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnIngles.setBounds(197, 63, 69, 23);
-			pnlSolicitudPost.add(rdbtnIngles);
+			pnlEncuesta.add(rdbtnIngles);
 
 			rdbtnFrances = new JRadioButton("Frances");
 			rdbtnFrances.addActionListener(new ActionListener() {
@@ -590,7 +762,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnFrances.setBounds(290, 63, 81, 23);
-			pnlSolicitudPost.add(rdbtnFrances);
+			pnlEncuesta.add(rdbtnFrances);
 
 			rdbtnOtros = new JRadioButton("Otros");
 			rdbtnOtros.addActionListener(new ActionListener() {
@@ -599,82 +771,56 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnOtros.setBounds(376, 63, 69, 23);
-			pnlSolicitudPost.add(rdbtnOtros);
-
-			rdbtnAmbosTiempo = new JRadioButton("Ambos");
-			rdbtnAmbosTiempo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnCompleto.setSelected(false);
-					rdbtnMedio.setSelected(false);
-					tiempo = "Ambos";
-				}
-			});
-			rdbtnAmbosTiempo.setBounds(290, 90, 81, 23);
-			pnlSolicitudPost.add(rdbtnAmbosTiempo);
-
-			rdbtnAmbosLM = new JRadioButton("Ambos");
-			rdbtnAmbosLM.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rdbtnSiLM.setSelected(false);
-					rdbtnNoLM.setSelected(false);
-					licencia = "Ambos";
-				}
-			});
-			rdbtnAmbosLM.setBounds(290, 141, 69, 23);
-			pnlSolicitudPost.add(rdbtnAmbosLM);
-
-			rdbtnAmbosVP = new JRadioButton("Ambos");
-			rdbtnAmbosVP.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rbtnSiVP.setSelected(false);
-					rbtnNoVP.setSelected(false);
-					vehiculo = "Ambos";
-				}
-			});
-			rdbtnAmbosVP.setBounds(290, 167, 68, 23);
-			pnlSolicitudPost.add(rdbtnAmbosVP);
-
-			rdbtnAmbosDM = new JRadioButton("Ambos");
-			rdbtnAmbosDM.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					rbtnNoDM.setSelected(false);
-					rbtnSiDM.setSelected(false);
-					dispManejo = "Ambos";
-				}
-			});
-			rdbtnAmbosDM.setBounds(290, 192, 81, 23);
-			pnlSolicitudPost.add(rdbtnAmbosDM);
+			pnlEncuesta.add(rdbtnOtros);
 
 			lblProv = new JLabel("Provincia:");
 			lblProv.setBounds(276, 14, 60, 14);
-			pnlSolicitudPost.add(lblProv);
+			if (local != null)
+			{
+				if (local instanceof SolicitudEmpleado)
+				{
+					lblProv.setVisible(false);
+				}
+				else
+				{
+					lblProv.setVisible(true);
+				}
+			}
+			pnlEncuesta.add(lblProv);
 
 			cbxProvEncuesta = new JComboBox<String>();
+			if (local != null)
+			{
+				if (local instanceof SolicitudEmpleado)
+				{
+					cbxProvEncuesta.setVisible(false);
+				}
+				else
+				{
+					cbxProvEncuesta.setVisible(true);
+				}
+			}
 			cbxProvEncuesta.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Az\u00FAa", "Barahona", "Distrito Nacional", 
 					"Independencia", "La Altagracia", "La Romana", "La Vega", "Puerto Plata", "Samana", "San Cristobal", "San Juan", 
 					"San Pedro de Macor\u00EDs", "Santiago", "Santo Domingo"}));
 			cbxProvEncuesta.setEnabled(false);
 			cbxProvEncuesta.setBounds(365, 11, 160, 20);
-			pnlSolicitudPost.add(cbxProvEncuesta);
+			pnlEncuesta.add(cbxProvEncuesta);
 			provincia = cbxProvEncuesta.getSelectedItem().toString();
 
-			lblPuestoDisp = new JLabel("Puestos Disp.:");
+			JLabel lblPuestoDisp = new JLabel("Puestos Disp.:");
 			lblPuestoDisp.setBounds(10, 275, 85, 14);
-			pnlSolicitudPost.add(lblPuestoDisp);
+			pnlEncuesta.add(lblPuestoDisp);
 
 			spnPuestosDisp = new JSpinner();
 			spnPuestosDisp.setModel(new SpinnerNumberModel(new Integer(1), new Integer(0), null, new Integer(1)));
 			spnPuestosDisp.setBounds(106, 272, 81, 20);
-			pnlSolicitudPost.add(spnPuestosDisp);
+			pnlEncuesta.add(spnPuestosDisp);
 			puestosDisp = Integer.valueOf(spnPuestosDisp.getValue().toString());
-
-			lblSalarioMax = new JLabel("Salario Maximo:");
-			lblSalarioMax.setBounds(10, 42, 92, 14);
-			pnlSolicitudPost.add(lblSalarioMax);
 
 			lblSexo = new JLabel("Sexo:");
 			lblSexo.setBounds(10, 222, 46, 14);
-			pnlSolicitudPost.add(lblSexo);
+			pnlEncuesta.add(lblSexo);
 
 			rdbtnMasculino = new JRadioButton("Masculino");
 			rdbtnMasculino.addActionListener(new ActionListener() {
@@ -685,7 +831,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnMasculino.setBounds(106, 218, 89, 23);
-			pnlSolicitudPost.add(rdbtnMasculino);
+			pnlEncuesta.add(rdbtnMasculino);
 
 			rdbtnFemenino = new JRadioButton("Femenino");
 			rdbtnFemenino.addActionListener(new ActionListener() {
@@ -696,7 +842,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rdbtnFemenino.setBounds(197, 218, 81, 23);
-			pnlSolicitudPost.add(rdbtnFemenino);
+			pnlEncuesta.add(rdbtnFemenino);
 
 			rbtnAmbosSexo = new JRadioButton("Ambos");
 			rbtnAmbosSexo.addActionListener(new ActionListener() {
@@ -707,31 +853,31 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnAmbosSexo.setBounds(290, 218, 81, 23);
-			pnlSolicitudPost.add(rbtnAmbosSexo);
+			pnlEncuesta.add(rbtnAmbosSexo);
 
 			lblExp = new JLabel("A\u00F1os Exp.:");
 			lblExp.setBounds(276, 42, 104, 14);
-			pnlSolicitudPost.add(lblExp);
+			pnlEncuesta.add(lblExp);
 
 			spnExp = new JSpinner();
 			spnExp.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spnExp.setBounds(365, 39, 81, 20);
-			pnlSolicitudPost.add(spnExp);
+			pnlEncuesta.add(spnExp);
 			experiencia = Integer.valueOf(spnExp.getValue().toString());
 
-			lblPorcentajeMatch = new JLabel("Puntaje:");
+			JLabel lblPorcentajeMatch = new JLabel("Puntaje:");
 			lblPorcentajeMatch.setBounds(276, 275, 104, 14);
-			pnlSolicitudPost.add(lblPorcentajeMatch);
+			pnlEncuesta.add(lblPorcentajeMatch);
 
 			spnPorcentaje = new JSpinner();
 			spnPorcentaje.setModel(new SpinnerNumberModel(new Integer(50), new Integer(0), null, new Integer(1)));
 			spnPorcentaje.setBounds(365, 272, 81, 20);
-			pnlSolicitudPost.add(spnPorcentaje);
+			pnlEncuesta.add(spnPorcentaje);
 			porcentaje = Float.valueOf(spnPorcentaje.getValue().toString()) / 100;
 
-			lblCampoLab = new JLabel("Nivel Estudios:");
-			lblCampoLab.setBounds(10, 247, 91, 14);
-			pnlSolicitudPost.add(lblCampoLab);
+			JLabel lblNivelEst = new JLabel("Nivel Estudios:");
+			lblNivelEst.setBounds(10, 247, 91, 14);
+			pnlEncuesta.add(lblNivelEst);
 
 			rbtnTecnicoCL = new JRadioButton("Tecnico");
 			rbtnTecnicoCL.addActionListener(new ActionListener() {
@@ -749,7 +895,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnTecnicoCL.setBounds(106, 243, 78, 23);
-			pnlSolicitudPost.add(rbtnTecnicoCL);
+			pnlEncuesta.add(rbtnTecnicoCL);
 
 			rbtnObreroCL = new JRadioButton("Obrero");
 			rbtnObreroCL.addActionListener(new ActionListener() {
@@ -767,7 +913,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnObreroCL.setBounds(197, 243, 66, 23);
-			pnlSolicitudPost.add(rbtnObreroCL);
+			pnlEncuesta.add(rbtnObreroCL);
 
 			rbtnUniversitarioCL = new JRadioButton("Universitario");
 			rbtnUniversitarioCL.addActionListener(new ActionListener() {
@@ -785,7 +931,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				}
 			});
 			rbtnUniversitarioCL.setBounds(290, 243, 109, 23);
-			pnlSolicitudPost.add(rbtnUniversitarioCL);
+			pnlEncuesta.add(rbtnUniversitarioCL);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -855,7 +1001,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 								Bolsa.getinstance().registrarSolicitud(auxSoli);
 								JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 							}
-							
+
 							clean();
 						}
 						else
@@ -933,79 +1079,19 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		}
 		if (local != null)
 		{
-			setTitle("Modificar Solicitud");
 			if (local instanceof SolicitudEmpleado)
 			{
-				setBounds(100, 100, 587, 499);
-				txtCodigo.setEnabled(false);
-				txtCodigo.setText(local.getCodigo());
-				pnlSolicitudPost.setBounds(10, 187, 541, 221);
-				pnlPostulado.setBounds(10, 53, 541, 123);
-				//postulado = ((SolicitudEmpleado) local).getInfo();
 				loadPostulado();
 				loadSolicitud((SolicitudEmpleado) local);
-				/*rbtnOferta.setSelected(false);
-				lblCedula.setVisible(true);
-				lblCodigo.setVisible(false);
-				lblNombre.setVisible(true);
-				lblEmpresa.setVisible(false);
-				lblSalarioMin.setVisible(true);
-				lblSalarioMax.setVisible(false);
-				lblProv.setVisible(false);
-				lblProv.setEnabled(false);
-				cbxProvEncuesta.setVisible(false);
-				cbxProvEncuesta.setEnabled(false);
-				rdbtnAmbosModalidad.setVisible(false);
-				rdbtnAmbosLM.setVisible(false);
-				rdbtnAmbosVP.setVisible(false);
-				rdbtnAmbosDM.setVisible(false);
-				rdbtnAmbosModalidad.setEnabled(false);
-				rdbtnAmbosLM.setEnabled(false);
-				rdbtnAmbosVP.setEnabled(false);
-				rdbtnAmbosDM.setEnabled(false);
-				rdbtnAmbosTiempo.setEnabled(false);
-				rdbtnAmbosTiempo.setVisible(false);
-				spnPuestosDisp.setVisible(false);
-				spnPuestosDisp.setEnabled(false);
-				lblPuestoDisp.setVisible(false);
-				lblPuestoDisp.setEnabled(false);*/
+				ListSolicitudesEmpleados.loadSolicitudes();
 			}
 			else
 			{
-				setBounds(100, 100, 587, 557);
-				pnlPostulado.setBounds(10, 53, 541, 96);
-				pnlSolicitudPost.setBounds(10, 160, 541, 302);
-				empresa = ((Oferta) local).getInfo();
 				loadEmpresa();
 				loadOferta((Oferta) local);
-				rbtnPostulacion.setSelected(false);
-				lblCedula.setVisible(false);
-				lblCodigo.setVisible(true);
-				lblNombre.setVisible(false);
-				lblEmpresa.setVisible(true);
-				lblSalarioMin.setVisible(false);
-				lblSalarioMax.setVisible(true);
-				lblProv.setVisible(true);
-				lblProv.setEnabled(true);
-				cbxProvEncuesta.setVisible(true);
-				cbxProvEncuesta.setEnabled(true);
-				rdbtnAmbosModalidad.setVisible(true);
-				rdbtnAmbosLM.setVisible(true);
-				rdbtnAmbosVP.setVisible(true);
-				rdbtnAmbosDM.setVisible(true);
-				rdbtnAmbosTiempo.setVisible(true);
-				rdbtnAmbosModalidad.setEnabled(true);
-				rdbtnAmbosLM.setEnabled(true);
-				rdbtnAmbosVP.setEnabled(true);
-				rdbtnAmbosDM.setEnabled(true);
-				rdbtnAmbosTiempo.setEnabled(true);
-				spnPuestosDisp.setVisible(true);
-				spnPuestosDisp.setEnabled(true);
-				lblPuestoDisp.setVisible(true);
-				lblPuestoDisp.setEnabled(true);
+				ListOfertas.loadOfertas();
 			}
-			rbtnOferta.setEnabled(false);
-			rbtnPostulacion.setEnabled(false);
+			
 		}
 	}
 
@@ -1013,6 +1099,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	{
 		if (postulado != null)
 		{
+			txtIdentificacion.setText(postulado.getCedula());
 			txtNombre.setText(postulado.getNombre());
 			txtCorreo.setText(postulado.getEmail());
 			txtTelefono.setText(postulado.getTelefono());
@@ -1035,6 +1122,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private void loadEmpresa() {
 		if (empresa != null)
 		{
+			txtIdentificacion.setText(empresa.getCodigo());
 			txtNombre.setText(empresa.getNombreEmpresa());
 			txtCorreo.setText(empresa.getEmail());
 			txtTelefono.setText(empresa.getTelefono());
@@ -1044,54 +1132,54 @@ public class CrearSolicitud extends JDialog implements Serializable {
 
 	private void clean() {
 		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
-		
+
 		cbxEspecialidadObrero.setSelectedIndex(0);
 		cbxEspecialidadTecnico.setSelectedIndex(0);
 		cbxEspecialidadUniversitario.setSelectedIndex(0);
-		
+
 		spnSalario.setValue(0);
-		
+
 		spnPorcentaje.setValue(50);
-		
+
 		spnExp.setValue(0);
-		
+
 		spnPuestosDisp.setValue(0);
-		
+
 		cbxProvEncuesta.setSelectedIndex(0);
-		
+
 		rdbtnSiLM.setSelected(false);
 		rdbtnNoLM.setSelected(false);
 		rdbtnAmbosLM.setSelected(false);
-		
+
 		rdbtnRemoto.setSelected(false);
 		rdbtnPresencial.setSelected(false);
 		rdbtnAmbosModalidad.setSelected(false);
-		
+
 		rdbtnCompleto.setSelected(false);
 		rdbtnMedio.setSelected(false);
 		rdbtnAmbosTiempo.setSelected(false);
-		
+
 		rbtnUniversitarioCL.setSelected(false);
 		rbtnTecnicoCL.setSelected(false);
 		rbtnObreroCL.setSelected(false);
-		
+
 		rdbtnMasculino.setSelected(false);
 		rdbtnFemenino.setSelected(false);
 		rbtnAmbosSexo.setSelected(false);
-		
+
 		rbtnNoDM.setSelected(false);
 		rbtnSiDM.setSelected(false);
 		rdbtnAmbosDM.setSelected(false);
-		
+
 		rbtnSiVP.setSelected(false);
 		rbtnNoVP.setSelected(false);
 		rdbtnAmbosVP.setSelected(false);
-		
+
 		rdbtnOtros.setSelected(false);
 		rdbtnFrances.setSelected(false);
 		rdbtnEspanol.setSelected(false);
 		rdbtnIngles.setSelected(false);
-		
+
 		rbtnPostulacion.setSelected(false);
 		rbtnOferta.setSelected(false);
 
@@ -1111,7 +1199,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		experiencia = 0;
 		postulado = null;
 		empresa = null;
-		
+
 		txtCodigo.setText(null);
 		txtNombre.setText(null);
 		txtTelefono.setText(null);
@@ -1120,39 +1208,39 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		rbtnObrero.setSelected(false);
 		rbtnTecnico.setSelected(false);
 		rbtnUniversitario.setSelected(false);
-		
+
 		setBounds(100, 100, 587, 137);
 		setLocationRelativeTo(null);
 	}
-	
-	private void loadSolicitud(SolicitudEmpleado local)
+
+	private void loadSolicitud(SolicitudEmpleado modificable)
 	{
-		spnSalario.setValue(local.getSalariomin());
-		spnExp.setValue(local.getExp());
-		
-		if (local.getInfo() instanceof Tecnico)
+		spnSalario.setValue(modificable.getSalariomin());
+		spnExp.setValue(modificable.getExp());
+
+		if (modificable.getInfo() instanceof Tecnico)
 		{
 			cbxEspecialidadObrero.setVisible(false);
 			cbxEspecialidadUniversitario.setVisible(false);
 			cbxEspecialidadTecnico.setVisible(true);
-			cbxEspecialidadTecnico.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadTecnico.setSelectedItem(modificable.getEspecialidad().toString());
 		}
-		else if (local.getInfo() instanceof Obrero)
+		else if (modificable.getInfo() instanceof Obrero)
 		{
 			cbxEspecialidadObrero.setVisible(true);
 			cbxEspecialidadUniversitario.setVisible(false);
 			cbxEspecialidadTecnico.setVisible(false);
-			cbxEspecialidadObrero.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadObrero.setSelectedItem(modificable.getEspecialidad().toString());
 		}
 		else
 		{
 			cbxEspecialidadObrero.setVisible(false);
 			cbxEspecialidadUniversitario.setVisible(true);
 			cbxEspecialidadTecnico.setVisible(false);
-			cbxEspecialidadUniversitario.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadUniversitario.setSelectedItem(modificable.getEspecialidad().toString());
 		}
-		
-		if (local.getVehiculoPropio().equalsIgnoreCase("Si"))
+
+		if (modificable.getVehiculoPropio().equalsIgnoreCase("Si"))
 		{
 			rbtnSiVP.setSelected(true);
 		}
@@ -1160,8 +1248,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rbtnNoVP.setSelected(true);
 		}
-		
-		if (local.getLicencia().equalsIgnoreCase("Si"))
+
+		if (modificable.getLicencia().equalsIgnoreCase("Si"))
 		{
 			rdbtnSiLM.setSelected(true);
 		}
@@ -1169,8 +1257,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnNoLM.setSelected(true);
 		}
-		
-		if (local.getDispMov().equalsIgnoreCase("Si"))
+
+		if (modificable.getDispMov().equalsIgnoreCase("Si"))
 		{
 			rbtnSiDM.setSelected(true);
 		}
@@ -1178,8 +1266,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rbtnNoDM.setSelected(true);
 		}
-		
-		if (local.getModalidad().equalsIgnoreCase("Remoto"))
+
+		if (modificable.getModalidad().equalsIgnoreCase("Remoto"))
 		{
 			rdbtnRemoto.setSelected(true);
 		}
@@ -1187,8 +1275,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnPresencial.setSelected(true);
 		}
-		
-		if (local.getTiempo().equalsIgnoreCase("Completo"))
+
+		if (modificable.getTiempo().equalsIgnoreCase("Completo"))
 		{
 			rdbtnCompleto.setSelected(true);
 		}
@@ -1196,52 +1284,44 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnMedio.setSelected(true);
 		}
-		
-		if (local.getSexo().equalsIgnoreCase("Masculino"))
-		{
-			rdbtnMasculino.setSelected(true);
-		}
-		else
-		{
-			rdbtnFemenino.setSelected(true);
-		}
+
 	}
-	
-	private void loadOferta(Oferta local)
+
+	private void loadOferta(Oferta ofrt)
 	{
-		spnSalario.setValue(local.getSalariomax());
-		spnExp.setValue(local.getExp());
-		spnPorcentaje.setValue(local.getMatchpercent());
-		spnPuestosDisp.setValue(local.getCantpuestos());
-		cbxProvEncuesta.setSelectedItem(local.getUbicacion());
-		
-		if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
+		spnSalario.setValue(ofrt.getSalariomax());
+		spnExp.setValue(ofrt.getExp());
+		spnPorcentaje.setValue(ofrt.getMatchpercent());
+		spnPuestosDisp.setValue(ofrt.getCantpuestos());
+		cbxProvEncuesta.setSelectedItem(ofrt.getUbicacion());
+
+		if (ofrt.getNivelEst().equalsIgnoreCase("Tecnico"))
 		{
 			cbxEspecialidadObrero.setVisible(false);
 			cbxEspecialidadUniversitario.setVisible(false);
 			cbxEspecialidadTecnico.setVisible(true);
-			cbxEspecialidadTecnico.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadTecnico.setSelectedItem(ofrt.getEspecialidad().toString());
 		}
-		else if (local.getNivelEst().equalsIgnoreCase("Obrero"))
+		else if (ofrt.getNivelEst().equalsIgnoreCase("Obrero"))
 		{
 			cbxEspecialidadObrero.setVisible(true);
 			cbxEspecialidadUniversitario.setVisible(false);
 			cbxEspecialidadTecnico.setVisible(false);
-			cbxEspecialidadObrero.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadObrero.setSelectedItem(ofrt.getEspecialidad().toString());
 		}
 		else
 		{
 			cbxEspecialidadObrero.setVisible(false);
 			cbxEspecialidadUniversitario.setVisible(true);
 			cbxEspecialidadTecnico.setVisible(false);
-			cbxEspecialidadUniversitario.setSelectedItem(local.getEspecialidad().toString());
+			cbxEspecialidadUniversitario.setSelectedItem(ofrt.getEspecialidad().toString());
 		}
-		
-		if (local.getVehiculoPropio().equalsIgnoreCase("Si"))
+
+		if (ofrt.getVehiculoPropio().equalsIgnoreCase("Si"))
 		{
 			rbtnSiVP.setSelected(true);
 		}
-		else if (local.getVehiculoPropio().equalsIgnoreCase("No"))
+		else if (ofrt.getVehiculoPropio().equalsIgnoreCase("No"))
 		{
 			rbtnNoVP.setSelected(true);
 		}
@@ -1249,12 +1329,12 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnAmbosVP.setSelected(true);
 		}
-		
-		if (local.getLicencia().equalsIgnoreCase("Si"))
+
+		if (ofrt.getLicencia().equalsIgnoreCase("Si"))
 		{
 			rdbtnSiLM.setSelected(true);
 		}
-		else if (local.getLicencia().equalsIgnoreCase("No"))
+		else if (ofrt.getLicencia().equalsIgnoreCase("No"))
 		{
 			rdbtnNoLM.setSelected(true);
 		}
@@ -1262,12 +1342,12 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnAmbosLM.setSelected(true);
 		}
-		
-		if (local.getDispMov().equalsIgnoreCase("Si"))
+
+		if (ofrt.getDispMov().equalsIgnoreCase("Si"))
 		{
 			rbtnSiDM.setSelected(true);
 		}
-		else if (local.getDispMov().equalsIgnoreCase("No"))
+		else if (ofrt.getDispMov().equalsIgnoreCase("No"))
 		{
 			rbtnNoDM.setSelected(true);
 		}
@@ -1275,12 +1355,12 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnAmbosDM.setSelected(true);
 		}
-		
-		if (local.getModalidad().equalsIgnoreCase("Remoto"))
+
+		if (ofrt.getModalidad().equalsIgnoreCase("Remoto"))
 		{
 			rdbtnRemoto.setSelected(true);
 		}
-		else if (local.getModalidad().equalsIgnoreCase("Presencial"))
+		else if (ofrt.getModalidad().equalsIgnoreCase("Presencial"))
 		{
 			rdbtnPresencial.setSelected(true);
 		}
@@ -1288,8 +1368,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnAmbosModalidad.setSelected(true);
 		}
-		
-		if (local.getTiempo().equalsIgnoreCase("Completo"))
+
+		if (ofrt.getTiempo().equalsIgnoreCase("Completo"))
 		{
 			rdbtnCompleto.setSelected(true);
 		}
@@ -1301,12 +1381,12 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		{
 			rdbtnAmbosTiempo.setSelected(true);
 		}
-		
-		if (local.getSexo().equalsIgnoreCase("Masculino"))
+
+		if (ofrt.getSexo().equalsIgnoreCase("Masculino"))
 		{
 			rdbtnMasculino.setSelected(true);
 		}
-		else if (local.getSexo().equalsIgnoreCase("Femenino"))
+		else if (ofrt.getSexo().equalsIgnoreCase("Femenino"))
 		{
 			rdbtnFemenino.setSelected(true);
 		}
