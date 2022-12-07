@@ -31,9 +31,6 @@ import javax.swing.DefaultComboBoxModel;
 
 public class Registros extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnCancelar;
@@ -323,7 +320,9 @@ public class Registros extends JDialog {
 			panel3.add(lblexperiencia);
 			
 			cbxAreaTrabajo = new JComboBox<String>();
-			cbxAreaTrabajo.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>"}));
+			cbxAreaTrabajo.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>", "Cocina", 
+					"Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", 
+					"Refigeracion", "Tecnologia"}));
 			cbxAreaTrabajo.setBounds(97, 22, 149, 20);
 			panel3.add(cbxAreaTrabajo);
 			

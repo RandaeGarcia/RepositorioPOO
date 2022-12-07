@@ -99,7 +99,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private String tiempo = null;
 	private String provincia = null;
 	private String sexo = null;
-	private ArrayList<String> idioma = null;
+	private ArrayList<String> idioma = new ArrayList<>();
 	private float salario = 0;
 	private String licencia = null;
 	private String vehiculo = null;
@@ -172,6 +172,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 					lblIdentificacion.setText("Cedula:");
 					lblNombre.setText("Nombre:");
 					lblSalario.setText("Salario Minimo");
+					rdbtnOtros.setText("Otros");
 					setLocationRelativeTo(null);
 					pnlEncuesta.setBounds(10, 187, 541, 221);
 					pnlSolicitante.setBounds(10, 53, 541, 123);
@@ -203,6 +204,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 					lblIdentificacion.setText("Codigo:");
 					lblNombre.setText("Empresa:");
 					lblSalario.setText("Salario Maximo");
+					rdbtnOtros.setText("Cualquiera");
 					pnlEncuesta.setBounds(10, 160, 541, 302);
 					setLocationRelativeTo(null);
 					pnlSolicitante.setBounds(10, 53, 541, 96);
@@ -670,9 +672,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
 			pnlEncuesta.add(cbxEspecialidadObrero);
 			
-			if (local != null)
-			{
-				if (local instanceof Oferta)
+				if (local instanceof Oferta || rbtnOferta.isSelected())
 				{
 					if (local.getNivelEst().equalsIgnoreCase("Universitario"))
 					{
@@ -693,7 +693,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						cbxEspecialidadUniversitario.setVisible(false);
 					}
 				}
-				else if (local instanceof SolicitudEmpleado)
+				else if (local instanceof SolicitudEmpleado || rbtnPostulacion.isSelected())
 				{
 					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
 					{
@@ -714,7 +714,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						cbxEspecialidadUniversitario.setVisible(false);
 					}
 				}
-			}
 
 			JLabel lblIdioma = new JLabel("Idioma:");
 			lblIdioma.setBounds(10, 67, 46, 14);
@@ -724,7 +723,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			rdbtnEspanol.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//idioma.add("Espa\u00F1ol");
+					idioma.add("Espa\u00F1ol");
 				}
 			});
 			rdbtnEspanol.setBounds(106, 63, 81, 23);
@@ -733,7 +732,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			rdbtnIngles = new JRadioButton("Ingles");
 			rdbtnIngles.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//idioma.add("Ingles");
+					idioma.add("Ingles");
 				}
 			});
 			rdbtnIngles.setBounds(197, 63, 69, 23);
@@ -742,16 +741,27 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			rdbtnFrances = new JRadioButton("Frances");
 			rdbtnFrances.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//idioma.add("Frances");
+					idioma.add("Frances".toString());
 				}
 			});
 			rdbtnFrances.setBounds(290, 63, 81, 23);
 			pnlEncuesta.add(rdbtnFrances);
 
 			rdbtnOtros = new JRadioButton("Otros");
+			if (local instanceof Oferta)
+			{
+				rdbtnOtros.setText("Cualquiera");
+			}
 			rdbtnOtros.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//idioma.add("Otros");
+					if (rbtnOferta.isSelected())
+					{
+						idioma.add("Cualquiera");
+					}
+					else
+					{
+						idioma.add("Otros");
+					}
 				}
 			});
 			rdbtnOtros.setBounds(376, 63, 69, 23);
@@ -932,6 +942,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						Solicitud auxSoli = null;
 						if (local == null)
 						{
+							if (!Bolsa.getinstance().nombreOrCedulaRepetidos(postulado.getCedula()))
+							{
 							if (rbtnPostulacion.isSelected())
 							{
 								if (postulado instanceof Obrero)
@@ -983,10 +995,15 @@ public class CrearSolicitud extends JDialog implements Serializable {
 							if (auxSoli != null)
 							{
 								Bolsa.getinstance().registrarSolicitud(auxSoli);
-								JOptionPane.showMessageDialog(null, "Registro de empresa satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Registro satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 							}
 
 							clean();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Registro no satisfactorio, Postulado/Empresa ya existente", "Información", JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
 						else
 						{

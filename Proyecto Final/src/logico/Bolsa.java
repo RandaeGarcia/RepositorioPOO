@@ -344,6 +344,21 @@ public class Bolsa implements Serializable {
 								califPostulado =+ 10;
 							}
 						}
+						
+						for (String auxIdiomas : Bolsa.getinstance().getListsolicitudes().get(ind).getIdiomas()) 
+						{
+							for (String idiomaOferta : auxOferta.getIdiomas()) {
+								if (auxIdiomas.equalsIgnoreCase(idiomaOferta))
+								{
+									califPostulado =+ 2;
+								}
+								
+								if (idiomaOferta.equalsIgnoreCase("Cualquiera") || auxIdiomas.equalsIgnoreCase("Otros"))
+								{
+									califPostulado =+ 4;
+								}
+							}
+						}
 					}
 					
 					if (califPostulado >= califMayor)
