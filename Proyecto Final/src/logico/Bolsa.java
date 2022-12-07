@@ -277,4 +277,115 @@ public class Bolsa implements Serializable {
 		return ind;
 	}
 
+	public void matcheoSolicitudes(Oferta auxOferta)
+	{
+		int vacantes = 0;
+		int posMayor = 0;
+		int puestosDisp = auxOferta.getCantpuestos();
+		int califPostulado = 0;
+		int califMayor = 0;
+		float califOferta = 100 / auxOferta.getMatchpercent();
+		boolean omitir = false;
+		SolicitudEmpleado auxPostulado = null;
+		
+		while (vacantes < puestosDisp && omitir)
+		{
+			califPostulado = 0;
+			for (int ind = 0; ind < Bolsa.getinstance().getListsolicitudes().size(); ind++) 
+			{
+				califPostulado = 0;
+				if (Bolsa.getinstance().getListsolicitudes().get(ind) instanceof SolicitudEmpleado)
+				{
+					if (Bolsa.getinstance().getListsolicitudes().get(ind).isEstado())
+					{
+						if (compareSiNoOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getTiempo(), auxOferta.getTiempo()))
+						{
+							califPostulado =+ 10;
+						}
+						
+						if (compareSiNoOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getModalidad(), auxOferta.getModalidad()))
+						{
+							califPostulado =+ 10;
+						}
+						
+						if (compareSiNoOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getLicencia(), auxOferta.getLicencia()))
+						{
+							califPostulado =+ 5;
+						}
+						
+						if (compareSiNoOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getVehiculoPropio(), auxOferta.getVehiculoPropio()))
+						{
+							califPostulado =+ 5;
+						}
+						
+						if (compareSiNoOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getDispMov(), auxOferta.getDispMov()))
+						{
+							califPostulado =+ 10;
+						}
+						
+						if (Bolsa.getinstance().getListsolicitudes().get(ind).getSexo().equalsIgnoreCase(auxOferta.getSexo()) || auxOferta.getSexo().equalsIgnoreCase("Ambos"))
+						{
+							califPostulado =+ 5;
+						}
+						
+						if (Bolsa.getinstance().getListsolicitudes().get(ind).getUbicacion().equalsIgnoreCase(auxOferta.getUbicacion()))
+						{
+							califPostulado =+ 20;
+						}
+						
+						/*if (Bolsa.getinstance().getListsolicitudes().get(ind).getSalariomin() <= auxOferta.getSalariomax())
+						{
+							califPostulado =+ 10;
+						}*/
+						
+						if (Bolsa.getinstance().getListsolicitudes().get(ind).getExp() >= auxOferta.getExp())
+						{
+							califPostulado =+ 5;
+						}
+						
+						if (Bolsa.getinstance().getListsolicitudes().get(ind).getNivelEst().equalsIgnoreCase(auxOferta.getNivelEst()))
+						{
+							if (Bolsa.getinstance().getListsolicitudes().get(ind).getEspecialidad().equalsIgnoreCase(auxOferta.getEspecialidad()))
+							{
+								califPostulado =+ 10;
+							}
+						}
+					}
+					
+					if (califPostulado >= califMayor)
+					{
+						califMayor = califPostulado;
+						posMayor = ind;
+						auxPostulado = (SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(ind);
+					}
+				}
+				
+				if (ind == Bolsa.getinstance().getListsolicitudes().size())
+				{
+					omitir = true;
+				}
+			}
+			vacantes++;
+			
+			if (califMayor >= califOferta)
+			{
+				auxOferta.getPostulados().add(auxPostulado);
+				Bolsa.getinstance().getListsolicitudes().get(posMayor).setEstado(false);
+				califMayor = 0;
+			}
+		}
+		
+		
+	}
+	
+
+	private boolean compareSiNoOpcion(String postulado, String oferta)
+	{
+		boolean compare = false;
+		if (postulado.equalsIgnoreCase(oferta) || oferta.equalsIgnoreCase("Ambos"))
+		{
+			compare = true;
+		}
+		return compare;
+	}
 }

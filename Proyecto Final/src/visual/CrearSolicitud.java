@@ -651,6 +651,27 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlEncuesta.add(lblEspecialidad);
 			
 			cbxEspecialidadTecnico = new JComboBox<String>();
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
+					{
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+				else if (local instanceof SolicitudEmpleado)
+				{
+					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
+					{
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+				}
+			}
 			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", 
 					"Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", 
 					"Refigeracion", "Tecnologia"}));
@@ -658,11 +679,33 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlEncuesta.add(cbxEspecialidadTecnico);
 
 			cbxEspecialidadUniversitario = new JComboBox<String>();
+			if (local != null)
+			{
+				if (local instanceof Oferta)
+				{
+					if (local.getNivelEst().equalsIgnoreCase("Universitario"));
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(true);
+					}
+				}
+				else if (local instanceof SolicitudEmpleado)
+				{
+					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(true);
+					}
+				}
+			}
 			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
 					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
 			cbxEspecialidadUniversitario.setBounds(106, 11, 160, 20);
 			pnlEncuesta.add(cbxEspecialidadUniversitario);
 			
+			cbxEspecialidadObrero = new JComboBox<String>();
 			if (local != null)
 			{
 				if (local instanceof Oferta)
@@ -684,7 +727,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 					}
 				}
 			}
-			cbxEspecialidadObrero = new JComboBox<String>();
 			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
 					"Cocinero", "Electricista", "Constructor", "Chofer"}));
 			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
@@ -836,28 +878,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			JLabel lblNivelEst = new JLabel("Nivel Estudios:");
 			lblNivelEst.setBounds(10, 247, 91, 14);
 			pnlEncuesta.add(lblNivelEst);
-			
-			if (local != null)
-			{
-				if (local instanceof Oferta)
-				{
-					if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
-					{
-						cbxEspecialidadTecnico.setVisible(true);
-						cbxEspecialidadObrero.setVisible(false);
-						cbxEspecialidadUniversitario.setVisible(false);
-					}
-				}
-				else if (local instanceof SolicitudEmpleado)
-				{
-					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
-					{
-						cbxEspecialidadTecnico.setVisible(true);
-						cbxEspecialidadObrero.setVisible(false);
-						cbxEspecialidadUniversitario.setVisible(false);
-					}
-				}
-			}
 
 			rbtnTecnicoCL = new JRadioButton("Tecnico");
 			rbtnTecnicoCL.addActionListener(new ActionListener() {
@@ -1072,27 +1092,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				ListOfertas.loadOfertas();
 			}
 			
-		}
-		if (local != null)
-		{
-			if (local instanceof Oferta)
-			{
-				if (local.getNivelEst().equalsIgnoreCase("Universitario"));
-				{
-					cbxEspecialidadTecnico.setVisible(false);
-					cbxEspecialidadObrero.setVisible(false);
-					cbxEspecialidadUniversitario.setVisible(true);
-				}
-			}
-			else if (local instanceof SolicitudEmpleado)
-			{
-				if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
-				{
-					cbxEspecialidadTecnico.setVisible(false);
-					cbxEspecialidadObrero.setVisible(false);
-					cbxEspecialidadUniversitario.setVisible(true);
-				}
-			}
 		}
 	}
 
