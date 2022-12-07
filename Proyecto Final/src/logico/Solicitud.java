@@ -100,4 +100,48 @@ public abstract class Solicitud implements Serializable{
 	public Usuario getCreador() {
 		return creador;
 	}
+
+	public void setNivelEst(String nivelEst) {
+		this.nivelEst = nivelEst;
+	}
+
+	public void setModalidad(String modalidad) {
+		this.modalidad = modalidad;
+	}
+
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public void setEspecialidad(String especialidad) {
+		this.especialidad = especialidad;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public void setIdiomas(ArrayList<String> idiomas) {
+		this.idiomas = idiomas;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+
+	public void setDispMov(String dispMov) {
+		this.dispMov = dispMov;
+	}
+
+	public void setVehiculoPropio(String vehiculoPropio) {
+		this.vehiculoPropio = vehiculoPropio;
+	}
+
+	public void setLicencia(String licencia) {
+		this.licencia = licencia;
+	}
 }

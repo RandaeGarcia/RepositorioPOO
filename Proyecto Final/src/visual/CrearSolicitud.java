@@ -100,8 +100,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	private String provincia = null;
 	private String sexo = null;
 	private ArrayList<String> idioma = null;
-	private float salMin = 0;
-	private float salMax = 0;
+	private float salario = 0;
 	private String licencia = null;
 	private String vehiculo = null;
 	private String dispManejo = null;
@@ -424,6 +423,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 
 			spnSalario = new JSpinner();
 			spnSalario.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			salario = Float.valueOf(spnSalario.getValue().toString());
 			spnSalario.setBounds(106, 39, 81, 20);
 			pnlEncuesta.add(spnSalario);
 
@@ -651,27 +651,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlEncuesta.add(lblEspecialidad);
 			
 			cbxEspecialidadTecnico = new JComboBox<String>();
-			if (local != null)
-			{
-				if (local instanceof Oferta)
-				{
-					if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
-					{
-						cbxEspecialidadTecnico.setVisible(true);
-						cbxEspecialidadObrero.setVisible(false);
-						cbxEspecialidadUniversitario.setVisible(false);
-					}
-				}
-				else if (local instanceof SolicitudEmpleado)
-				{
-					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
-					{
-						cbxEspecialidadTecnico.setVisible(true);
-						cbxEspecialidadObrero.setVisible(false);
-						cbxEspecialidadUniversitario.setVisible(false);
-					}
-				}
-			}
 			cbxEspecialidadTecnico.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Cocina", 
 					"Dise\u00F1o Grafico", "Enfermeria", "Electronica Basica", "Mantenimiento de PC", "Ofimatica", 
 					"Refigeracion", "Tecnologia"}));
@@ -679,15 +658,39 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlEncuesta.add(cbxEspecialidadTecnico);
 
 			cbxEspecialidadUniversitario = new JComboBox<String>();
+			
+			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
+					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
+			cbxEspecialidadUniversitario.setBounds(106, 11, 160, 20);
+			pnlEncuesta.add(cbxEspecialidadUniversitario);
+			
+			cbxEspecialidadObrero = new JComboBox<String>();
+			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
+					"Cocinero", "Electricista", "Constructor", "Chofer"}));
+			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
+			pnlEncuesta.add(cbxEspecialidadObrero);
+			
 			if (local != null)
 			{
 				if (local instanceof Oferta)
 				{
-					if (local.getNivelEst().equalsIgnoreCase("Universitario"));
+					if (local.getNivelEst().equalsIgnoreCase("Universitario"))
 					{
 						cbxEspecialidadTecnico.setVisible(false);
 						cbxEspecialidadObrero.setVisible(false);
 						cbxEspecialidadUniversitario.setVisible(true);
+					}
+					else if (local.getNivelEst().equalsIgnoreCase("Obrero"))
+					{
+						cbxEspecialidadTecnico.setVisible(false);
+						cbxEspecialidadObrero.setVisible(true);
+						cbxEspecialidadUniversitario.setVisible(false);
+					}
+					else if (local.getNivelEst().equalsIgnoreCase("Tecnico"))
+					{
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
+						cbxEspecialidadUniversitario.setVisible(false);
 					}
 				}
 				else if (local instanceof SolicitudEmpleado)
@@ -698,39 +701,20 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						cbxEspecialidadObrero.setVisible(false);
 						cbxEspecialidadUniversitario.setVisible(true);
 					}
-				}
-			}
-			cbxEspecialidadUniversitario.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Administracion", "Audiovisual", 
-					"Computo", "Electronica", "Redes", "Programacion", "Turismo", "Medicina", "Economia", "Tecnologia", "Publicidad"}));
-			cbxEspecialidadUniversitario.setBounds(106, 11, 160, 20);
-			pnlEncuesta.add(cbxEspecialidadUniversitario);
-			
-			cbxEspecialidadObrero = new JComboBox<String>();
-			if (local != null)
-			{
-				if (local instanceof Oferta)
-				{
-					if (local.getNivelEst().equalsIgnoreCase("Obrero"))
+					else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
 					{
 						cbxEspecialidadTecnico.setVisible(false);
 						cbxEspecialidadObrero.setVisible(true);
 						cbxEspecialidadUniversitario.setVisible(false);
 					}
-				}
-				else if (local instanceof SolicitudEmpleado)
-				{
-					if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
+					else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
 					{
-						cbxEspecialidadTecnico.setVisible(false);
-						cbxEspecialidadObrero.setVisible(true);
+						cbxEspecialidadTecnico.setVisible(true);
+						cbxEspecialidadObrero.setVisible(false);
 						cbxEspecialidadUniversitario.setVisible(false);
 					}
 				}
 			}
-			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
-					"Cocinero", "Electricista", "Constructor", "Chofer"}));
-			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
-			pnlEncuesta.add(cbxEspecialidadObrero);
 
 			JLabel lblIdioma = new JLabel("Idioma:");
 			lblIdioma.setBounds(10, 67, 46, 14);
@@ -954,20 +938,20 @@ public class CrearSolicitud extends JDialog implements Serializable {
 								{
 									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
 											tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, postulado);
 								}
 								else if (postulado instanceof Tecnico)
 								{
 									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
 											tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
 											postulado);
 								}
 								else if (postulado instanceof Universitario)
 								{
 									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
 											tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
 											postulado);
 								}
 							}
@@ -977,21 +961,21 @@ public class CrearSolicitud extends JDialog implements Serializable {
 								{
 									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
 											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salario, porcentaje, 
 											empresa);
 								}
 								else if (rbtnUniversitarioCL.isSelected())
 								{
 									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
-											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,									
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salario, porcentaje,
 											empresa);
 								}
 								else if (rbtnTecnicoCL.isSelected())
 								{
 									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
 											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
+											licencia, Bolsa.getLoginUser(), true, puestosDisp, salario, porcentaje, 
 											empresa);
 								}
 							}
@@ -1008,53 +992,97 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						{
 							if (local instanceof SolicitudEmpleado)
 							{
-								if (postulado instanceof Obrero)
+								if (((SolicitudEmpleado) modSolicitud).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
 								{
-									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
-											tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, postulado);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Tecnico");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									modSolicitud.setEstado(true);
+									((SolicitudEmpleado) modSolicitud).setSalariomin(salario);
 								}
-								else if (postulado instanceof Tecnico)
+								else if (((SolicitudEmpleado) modSolicitud).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
 								{
-									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
-											tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-											postulado);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Universitario");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									modSolicitud.setEstado(true);
+									((SolicitudEmpleado) modSolicitud).setSalariomin(salario);
 								}
-								else if (postulado instanceof Universitario)
+								else if (((SolicitudEmpleado) modSolicitud).getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
 								{
-									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
-											tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-											vehiculo, licencia, Bolsa.getLoginUser(), true, salMin, 
-											postulado);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Obrero");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									modSolicitud.setEstado(true);
+									((SolicitudEmpleado) modSolicitud).setSalariomin(salario);
 								}
-								Bolsa.getinstance().modificarSolicitud(auxSoli);
 								ListSolicitudesEmpleados.loadSolicitudes();
 							}
 							else
 							{
 								if (rbtnTecnicoCL.isSelected())
 								{
-									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
-											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-											empresa);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Tecnico");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									((Oferta) modSolicitud).setSalariomax(salario);
 								}
 								else if (rbtnUniversitarioCL.isSelected())
 								{
-									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), 
-											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-											empresa);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Universitario");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									((Oferta) modSolicitud).setSalariomax(salario);
 								}
 								else if (rbtnTecnicoCL.isSelected())
 								{
-									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), 
-											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
-											licencia, Bolsa.getLoginUser(), true, puestosDisp, salMax, porcentaje, 
-											empresa);
+									modSolicitud.setModalidad(modalidad);
+									modSolicitud.setTiempo(tiempo);
+									modSolicitud.setNivelEst("Obrero");
+									modSolicitud.setEspecialidad(cbxEspecialidadObrero.getSelectedItem().toString());
+									modSolicitud.setUbicacion(postulado.getPais());
+									modSolicitud.setSexo(sexo);
+									modSolicitud.setExp(experiencia);
+									modSolicitud.setDispMov(dispManejo);
+									modSolicitud.setVehiculoPropio(vehiculo);
+									modSolicitud.setLicencia(licencia);
+									((Oferta) modSolicitud).setSalariomax(salario);
 								}
-								//Bolsa.getinstance().modificarSolicitud(auxSoli);
 								ListOfertas.loadOfertas();
 							}
 							JOptionPane.showMessageDialog(null, "Modificacion satisfactoria", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -1131,8 +1159,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 	}
 
 	private void clean() {
-		txtCodigo.setText("SOLI-" + String.valueOf(Bolsa.getinstance().getGeneradorCodSolicitud()));
-
 		cbxEspecialidadObrero.setSelectedIndex(0);
 		cbxEspecialidadTecnico.setSelectedIndex(0);
 		cbxEspecialidadUniversitario.setSelectedIndex(0);
@@ -1188,8 +1214,8 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		provincia = null;
 		sexo = null;
 		idioma = null;
-		salMin = 0;
-		salMax = 0;
+		salario = 0;
+		salario = 0;
 		licencia = null;
 		vehiculo = null;
 		dispManejo = null;

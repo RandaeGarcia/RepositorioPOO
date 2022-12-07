@@ -50,4 +50,12 @@ public class Oferta extends Solicitud {
 	public Empresa getInfo() {
 		return info;
 	}
+
+	public void setSalariomax(float salariomax) {
+		this.salariomax = salariomax;
+	}
+
+	public void setMatchpercent(float matchpercent) {
+		this.matchpercent = matchpercent;
+	}
 }

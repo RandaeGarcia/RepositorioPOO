@@ -23,4 +23,12 @@ public class SolicitudEmpleado extends Solicitud {
 	public Persona getInfo() {
 		return info;
 	}
+
+	public void setSalariomin(float salariomin) {
+		this.salariomin = salariomin;
+	}
+
+	public void setInfo(Persona info) {
+		this.info = info;
+	}
 }

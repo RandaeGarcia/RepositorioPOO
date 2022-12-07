@@ -32,7 +32,9 @@ public class ListOfertas extends JDialog implements Serializable{
 	private static DefaultTableModel model;
 	private static Object[] rows;
 	private Solicitud aux = null;
+	private Oferta auxMatch = null;
 	private JButton btnModificar;
+	private JButton btnMatch;
 
 	public ListOfertas() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("listicon.png"));
@@ -63,6 +65,7 @@ public class ListOfertas extends JDialog implements Serializable{
 							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
 								btnModificar.setEnabled(true);
+								btnMatch.setEnabled(true);
 								aux = (Oferta) Bolsa.getinstance().buscarSolicitudByCode(table.getValueAt(table.getSelectedRow(), 0).toString());
 							}
 						}
@@ -90,6 +93,7 @@ public class ListOfertas extends JDialog implements Serializable{
 								Bolsa.getinstance().getListsolicitudes().remove(aux);
 								btnEliminar.setEnabled(false);
 								btnModificar.setEnabled(false);
+								btnMatch.setEnabled(false);
 								loadOfertas();
 							}
 						}
@@ -99,6 +103,24 @@ public class ListOfertas extends JDialog implements Serializable{
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
 				getRootPane().setDefaultButton(btnEliminar);
+				
+				btnMatch = new JButton("Ver Match");
+				btnMatch.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (aux != null)
+						{
+							auxMatch = Bolsa.getinstance().matcheoSolicitudes((Oferta) aux);
+							ListaMatch matcheo = new ListaMatch(auxMatch);
+							matcheo.setModal(true);
+							matcheo.setVisible(true);
+							btnEliminar.setEnabled(false);
+							btnModificar.setEnabled(false);
+							btnMatch.setEnabled(false);
+						}
+					}
+				});
+				btnMatch.setEnabled(false);
+				buttonPane.add(btnMatch);
 				
 				btnModificar = new JButton("Modificar");
 				btnModificar.setEnabled(false);
@@ -110,6 +132,7 @@ public class ListOfertas extends JDialog implements Serializable{
 							modifOferta.setVisible(true);
 							btnEliminar.setEnabled(false);
 							btnModificar.setEnabled(false);
+							btnMatch.setEnabled(false);
 						}
 					}
 				});
