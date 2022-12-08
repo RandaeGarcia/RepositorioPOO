@@ -35,16 +35,6 @@ public class ListUsuarios extends JDialog implements Serializable {
 	private Usuario aux = null;
 	private JButton btnmodificar;
 
-	public static void main(String[] args) {
-		try {
-			ListUsuarios dialog = new ListUsuarios();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public ListUsuarios() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("listicon.png"));
 		setTitle("Lista de Usuarios");
@@ -71,10 +61,13 @@ public class ListUsuarios extends JDialog implements Serializable {
 						public void mouseClicked(MouseEvent e) {
 							int rowselected = -1;
 							rowselected = table.getSelectedRow();
-							if(rowselected >= 0 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+							if(rowselected >= 1 && Bolsa.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 								btnEliminar.setEnabled(true);
 								btnmodificar.setEnabled(true);
 								aux = Bolsa.getinstance().buscarUsuarioByCode(table.getValueAt(rowselected, 0).toString());
+							}else {
+								btnEliminar.setEnabled(false);
+								btnmodificar.setEnabled(false);
 							}
 						}
 					});

@@ -19,11 +19,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JLabel;
 import java.awt.SystemColor;
 
 public class Principal extends JFrame {
@@ -33,7 +31,6 @@ public class Principal extends JFrame {
 	private JMenu mnPersona;
 	private JMenu mnAdministracion;
 	private JMenu mnEmpresa;
-	private JMenu mnReportes;
 	private JMenuItem mntmCrearUsuario;
 	private JMenuItem mntmRegistrar;
 	private JMenuItem mntmListarUsuarios;
@@ -70,7 +67,7 @@ public class Principal extends JFrame {
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setSize(549,413);
+		setSize(1000,700);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -180,9 +177,6 @@ public class Principal extends JFrame {
 		});
 		mnEmpresa.add(mntmListarEmpresas);
 		
-		mnReportes = new JMenu("Reportes");
-		menuBar.add(mnReportes);
-		
 		mnAdministracion = new JMenu("Administraci\u00F3n");
 		menuBar.add(mnAdministracion);
 		
@@ -237,7 +231,7 @@ public class Principal extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
 		btnCerrarSesion.setBackground(SystemColor.activeCaption);
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -259,11 +253,7 @@ public class Principal extends JFrame {
 					}
 			}
 		});
-		btnCerrarSesion.setBounds(408, 324, 125, 29);
+		btnCerrarSesion.setBounds(800, 580, 167, 48);
 		panel.add(btnCerrarSesion);
-		
-		JLabel lblFondo = new JLabel(new ImageIcon("bolsatrabajo.jpg"));
-		lblFondo.setBounds(0, 0, 530, 353);
-		panel.add(lblFondo);
 	}
 }
