@@ -161,11 +161,10 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			if (local != null)
 			{
 				rbtnPostulacion.setEnabled(false);
-			}
-			
-			if (local instanceof SolicitudEmpleado)
-			{
-				rbtnPostulacion.setSelected(true);
+				if (local instanceof SolicitudEmpleado)
+				{
+					rbtnPostulacion.setSelected(true);
+				}
 			}
 			rbtnPostulacion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -194,11 +193,10 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			if (local != null)
 			{
 				rbtnOferta.setEnabled(false);
-			}
-
-			if (local instanceof Oferta)
-			{
-				rbtnOferta.setSelected(true);
+				if (local instanceof Oferta)
+				{
+					rbtnOferta.setSelected(true);
+				}
 			}
 			rbtnOferta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
