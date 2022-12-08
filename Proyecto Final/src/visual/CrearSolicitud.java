@@ -739,30 +739,14 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			pnlEncuesta.add(lblIdioma);
 
 			rdbtnEspanol = new JRadioButton("Espa\u00F1ol");
-			rdbtnEspanol.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-
-					idioma.add("Espa\u00F1ol");
-				}
-			});
 			rdbtnEspanol.setBounds(106, 63, 81, 23);
 			pnlEncuesta.add(rdbtnEspanol);
 
 			rdbtnIngles = new JRadioButton("Ingles");
-			rdbtnIngles.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					idioma.add("Ingles");
-				}
-			});
 			rdbtnIngles.setBounds(197, 63, 69, 23);
 			pnlEncuesta.add(rdbtnIngles);
 
 			rdbtnFrances = new JRadioButton("Frances");
-			rdbtnFrances.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					idioma.add("Frances".toString());
-				}
-			});
 			rdbtnFrances.setBounds(290, 63, 81, 23);
 			pnlEncuesta.add(rdbtnFrances);
 
@@ -961,44 +945,48 @@ public class CrearSolicitud extends JDialog implements Serializable {
 						Solicitud auxSoli = null;
 						if (local == null)
 						{
+							if(rdbtnEspanol.isSelected()) {
+								idioma.add("Español");
+							}
+							if(rdbtnIngles.isSelected()) {
+								idioma.add(rdbtnIngles.getText());
+							}
+							if(rdbtnFrances.isSelected()) {
+								idioma.add(rdbtnFrances.getText());
+							}
 							if (rbtnPostulacion.isSelected())
 							{
-								if (!Bolsa.getinstance().nombreOrCedulaRepetidos(postulado.getCedula()))
-								{
+								
 
-									if (postulado instanceof Obrero)
-									{
-										auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
-												tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-												vehiculo, licencia, Bolsa.getLoginUser(), true, salario, postulado);
-									}
-									else if (postulado instanceof Tecnico)
-									{
-										auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
-												tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-												vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
-												postulado);
-									}
-									else if (postulado instanceof Universitario)
-									{
-										auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
-												tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
-												vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
-												postulado);
-									}
-									
-									if (auxSoli != null)
-									{
-										Bolsa.getinstance().registrarSolicitud(auxSoli);
-										JOptionPane.showMessageDialog(null, "Registro de solicitud satisfactoria", "Información", JOptionPane.INFORMATION_MESSAGE);
-									}
-
-									clean();
-								}
-								else
+								if (postulado instanceof Obrero)
 								{
-									JOptionPane.showMessageDialog(null, "Registro no satisfactorio, Postulado/Empresa ya existente", "Información", JOptionPane.INFORMATION_MESSAGE);
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Obrero", modalidad, 
+											tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, postulado);
 								}
+								else if (postulado instanceof Tecnico)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Tecnico", modalidad, 
+											tiempo, cbxEspecialidadTecnico.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
+											postulado);
+								}
+								else if (postulado instanceof Universitario)
+								{
+									auxSoli = new SolicitudEmpleado(txtCodigo.getText().toString(), "Universitario", modalidad, 
+											tiempo, cbxEspecialidadUniversitario.getSelectedItem().toString(), postulado.getPais(), idioma, sexo, experiencia, dispManejo, 
+											vehiculo, licencia, Bolsa.getLoginUser(), true, salario, 
+											postulado);
+								}
+								
+								if (auxSoli != null)
+								{
+									Bolsa.getinstance().registrarSolicitud(auxSoli);
+									JOptionPane.showMessageDialog(null, "Registro de solicitud satisfactoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+								}
+
+								clean();
+							
 							}
 							else if (rbtnOferta.isSelected())
 							{
@@ -1022,6 +1010,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
 											licencia, Bolsa.getLoginUser(), true, puestosDisp, salario, porcentaje, 
 											empresa);
+									System.out.println(puestosDisp);
 								}
 								
 								if (auxSoli != null)

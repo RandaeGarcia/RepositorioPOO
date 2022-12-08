@@ -88,7 +88,7 @@ public class ListSolicitudesEmpleados extends JDialog implements Serializable{
 					public void actionPerformed(ActionEvent e) {
 						int option;
 						if(aux != null) {
-							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar la cuenta seleccionada? ", "Confirmación", JOptionPane.YES_NO_OPTION);
+							option = JOptionPane.showConfirmDialog(null,"¿Está seguro que desea eliminar la solicitud seleccionada? ", "Confirmación", JOptionPane.YES_NO_OPTION);
 							if(option == JOptionPane.OK_OPTION){
 								Bolsa.getinstance().getListsolicitudes().remove(aux);
 								btnEliminar.setEnabled(false);
