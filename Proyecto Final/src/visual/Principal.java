@@ -9,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
 
 import logico.Bolsa;
+import logico.Oferta;
+import logico.SolicitudEmpleado;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -41,6 +43,9 @@ public class Principal extends JFrame {
 	private JMenuItem mntmListarEmpresas;
 	private JMenuItem mntmCrearSolicitud;
 	private JButton btnCerrarSesion;
+	
+	private SolicitudEmpleado solicitud = null;
+	private Oferta oferta = null;
 
 	public Principal() {
 		setResizable(false);
@@ -84,7 +89,7 @@ public class Principal extends JFrame {
 		}
 		mntmCrearSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearSolicitud crearsolicitud = new CrearSolicitud(null);
+				CrearSolicitud crearsolicitud = new CrearSolicitud(solicitud);
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}
@@ -136,7 +141,7 @@ public class Principal extends JFrame {
 		}
 		mntmCrearOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearSolicitud crearsolicitud = new CrearSolicitud(null);
+				CrearSolicitud crearsolicitud = new CrearSolicitud(oferta);
 				crearsolicitud.setModal(true);
 				crearsolicitud.setVisible(true);
 			}
