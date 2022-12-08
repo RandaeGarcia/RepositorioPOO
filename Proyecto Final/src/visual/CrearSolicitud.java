@@ -811,7 +811,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			spnPuestosDisp.setModel(new SpinnerNumberModel(new Integer(1), new Integer(0), null, new Integer(1)));
 			spnPuestosDisp.setBounds(106, 272, 81, 20);
 			pnlEncuesta.add(spnPuestosDisp);
-			puestosDisp = Integer.valueOf(spnPuestosDisp.getValue().toString());
 
 			lblSexo = new JLabel("Sexo:");
 			lblSexo.setBounds(10, 222, 46, 14);
@@ -941,6 +940,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 				btnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						Solicitud auxSoli = null;
+						puestosDisp = Integer.valueOf(spnPuestosDisp.getValue().toString());
 						if (local == null)
 						{
 							if(rdbtnEspanol.isSelected()) {
@@ -988,7 +988,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 							}
 							else if (rbtnOferta.isSelected())
 							{
-								if (rbtnTecnicoCL.isSelected())
+								if (rbtnObreroCL.isSelected())
 								{
 									auxSoli = new Oferta(txtCodigo.getText().toString(), nivelEst, modalidad, tiempo, cbxEspecialidadObrero.getSelectedItem().toString(), 
 											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
@@ -1008,7 +1008,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 											provincia, idioma, sexo, experiencia, dispManejo, vehiculo,
 											licencia, Bolsa.getLoginUser(), true, puestosDisp, salario, porcentaje, 
 											empresa);
-									System.out.println(puestosDisp);
 								}
 								
 								if (auxSoli != null)
