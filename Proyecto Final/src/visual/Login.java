@@ -75,6 +75,7 @@ public class Login extends JFrame {
 	}
 
 	public Login() throws IOException {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("loginicon.png"));
 		setTitle("Inicio de Sesi\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

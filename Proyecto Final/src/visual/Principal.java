@@ -18,9 +18,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
 
 public class Principal extends JFrame {
 
@@ -42,6 +46,7 @@ public class Principal extends JFrame {
 	private JButton btnCerrarSesion;
 
 	public Principal() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("maletinicono.png"));
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -65,7 +70,7 @@ public class Principal extends JFrame {
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setSize(900,650);
+		setSize(549,413);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -233,6 +238,7 @@ public class Principal extends JFrame {
 		panel.setLayout(null);
 		
 		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setBackground(SystemColor.activeCaption);
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileOutputStream bolsaTrabajoOut;
@@ -253,7 +259,11 @@ public class Principal extends JFrame {
 					}
 			}
 		});
-		btnCerrarSesion.setBounds(704, 538, 170, 41);
+		btnCerrarSesion.setBounds(408, 324, 125, 29);
 		panel.add(btnCerrarSesion);
+		
+		JLabel lblFondo = new JLabel(new ImageIcon("bolsatrabajo.jpg"));
+		lblFondo.setBounds(0, 0, 530, 353);
+		panel.add(lblFondo);
 	}
 }

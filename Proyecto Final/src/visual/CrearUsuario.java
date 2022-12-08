@@ -39,6 +39,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 
 	
 	public CrearUsuario(Usuario local) {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("registroicono.png"));
 	//public CrearUsuario(Usuario usuario) {
 		//local = usuario;
@@ -50,7 +51,7 @@ public class CrearUsuario extends JDialog implements Serializable{
 		{
 			loadUsuario(local);
 		}
-		setBounds(100, 100, 346, 277);
+		setBounds(100, 100, 335, 277);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
