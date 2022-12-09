@@ -84,6 +84,7 @@ public class Registros extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("registroicono.png"));
 		setTitle("Registro");
 		setBounds(100, 100, 512, 569);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

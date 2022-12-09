@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -44,6 +45,7 @@ public class Principal extends JFrame {
 	private JMenuItem mntmListarEmpresas;
 	private JMenuItem mntmCrearSolicitud;
 	private JButton btnCerrarSesion;
+	private Dimension dim;
 	
 	private Solicitud solicitud = null;
 
@@ -72,7 +74,8 @@ public class Principal extends JFrame {
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setSize(1000,700);
+		dim = getToolkit().getScreenSize();
+		setSize(dim.width,dim.height-45);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -258,7 +261,7 @@ public class Principal extends JFrame {
 					}
 			}
 		});
-		btnCerrarSesion.setBounds(800, 580, 167, 48);
+		btnCerrarSesion.setBounds(1726, 913, 167, 48);
 		panel.add(btnCerrarSesion);
 	}
 }

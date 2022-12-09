@@ -32,7 +32,6 @@ public class ListOfertas extends JDialog implements Serializable{
 	private static DefaultTableModel model;
 	private static Object[] rows;
 	private Solicitud aux = null;
-	private Oferta auxMatch = null;
 	private JButton btnModificar;
 	private JButton btnMatch;
 
@@ -109,13 +108,14 @@ public class ListOfertas extends JDialog implements Serializable{
 					public void actionPerformed(ActionEvent e) {
 						if (aux != null)
 						{
-							auxMatch = Bolsa.getinstance().matcheoSolicitudes((Oferta) aux);
+							Oferta auxMatch = Bolsa.getinstance().matcheoSolicitudes((Oferta) aux);
 							ListaMatch matcheo = new ListaMatch(auxMatch);
 							matcheo.setModal(true);
 							matcheo.setVisible(true);
 							btnEliminar.setEnabled(false);
 							btnModificar.setEnabled(false);
 							btnMatch.setEnabled(false);
+							loadOfertas();
 						}
 					}
 				});

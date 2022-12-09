@@ -257,15 +257,14 @@ public class Bolsa implements Serializable {
 	}
 
 	private int posSolicitud(String codigo) {
-		int ind = -1;
-		boolean find = false;
-		while (ind < listsolicitudes.size() && find)
-		{
-			if (listsolicitudes.get(ind).getCodigo().contentEquals(codigo))
-			{
-				find = true;
+		int ind=0, i=-1;
+		
+		for (Solicitud solicitud : listsolicitudes) {
+			
+			if(solicitud.getCodigo().equalsIgnoreCase(codigo)) {
+				ind = i;
 			}
-			ind++;
+			i++;
 		}
 		return ind;
 	}
@@ -276,13 +275,13 @@ public class Bolsa implements Serializable {
 		int vacantes = 0;
 		int puestosDisp = auxOferta.getCantpuestos();
 		int califPostulado = 0;
-		int califMayor = 0;
-		float califOferta = 100 / auxOferta.getMatchpercent();
+		int cantsolis = 0;
+		float califOferta = 100 * auxOferta.getMatchpercent();
 		boolean omitir = false;
 		ArrayList<SolicitudEmpleado> saveCalif = new ArrayList<>();
 		ArrayList<Integer> calif = new ArrayList<>();
 		
-		while (vacantes < puestosDisp && !omitir)
+		while (vacantes < puestosDisp && !omitir && cantsolis < cantSolicitudesEmpleados())
 		{
 			califPostulado = 0;
 			for (int ind = 0; ind < Bolsa.getinstance().getListsolicitudes().size(); ind++) 
@@ -294,54 +293,54 @@ public class Bolsa implements Serializable {
 					{
 						if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getTiempo(), auxOferta.getTiempo()))
 						{
-							califPostulado =+ 10;
+							califPostulado += 10;
 						}
 						
 						if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getModalidad(), auxOferta.getModalidad()))
 						{
-							califPostulado =+ 10;
+							califPostulado += 10;
 						}
 						
 						if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getLicencia(), auxOferta.getLicencia()))
 						{
-							califPostulado =+ 5;
+							califPostulado += 5;
 						}
 						
 						if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getVehiculoPropio(), auxOferta.getVehiculoPropio()))
 						{
-							califPostulado =+ 5;
+							califPostulado += 5;
 						}
 						
 						if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getDispMov(), auxOferta.getDispMov()))
 						{
-							califPostulado =+ 10;
+							califPostulado += 10;
 						}
 						
 						/*if (compareOpcion(Bolsa.getinstance().getListsolicitudes().get(ind).getSexo(), auxOferta.getSexo()))
 						{
-							califPostulado =+ 5;
+							califPostulado += 5;
 						}*/
 						
 						if (Bolsa.getinstance().getListsolicitudes().get(ind).getUbicacion().equalsIgnoreCase(auxOferta.getUbicacion()))
 						{
-							califPostulado =+ 20;
+							califPostulado += 20;
 						}
 						
 						if (((SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(ind)).getSalariomin() <= auxOferta.getSalariomax())
 						{
-							califPostulado =+ 10;
+							califPostulado += 10;
 						}
 						
 						if (Bolsa.getinstance().getListsolicitudes().get(ind).getExp() >= auxOferta.getExp())
 						{
-							califPostulado =+ 5;
+							califPostulado += 5;
 						}
 						
 						if (Bolsa.getinstance().getListsolicitudes().get(ind).getNivelEst().equalsIgnoreCase(auxOferta.getNivelEst()))
 						{
 							if (Bolsa.getinstance().getListsolicitudes().get(ind).getEspecialidad().equalsIgnoreCase(auxOferta.getEspecialidad()))
 							{
-								califPostulado =+ 10;
+								califPostulado += 10;
 							}
 						}
 						
@@ -350,20 +349,20 @@ public class Bolsa implements Serializable {
 							for (String idiomaOferta : auxOferta.getIdiomas()) {
 								if (auxIdiomas.equalsIgnoreCase(idiomaOferta))
 								{
-									califPostulado =+ 2;
+									califPostulado += 2;
 								}
 								
 								if (idiomaOferta.equalsIgnoreCase("Cualquiera") || auxIdiomas.equalsIgnoreCase("Otros"))
 								{
-									califPostulado =+ 4;
+									califPostulado += 4;
 								}
 							}
 						}
 					}
-					
-					if (califPostulado >= califMayor)
+					System.out.println(califOferta);  //50.0
+					System.out.println(califPostulado); //69
+					if (califPostulado >= califOferta)
 					{
-						califMayor = califPostulado;
 						saveCalif.add((SolicitudEmpleado) Bolsa.getinstance().getListsolicitudes().get(ind));
 						calif.add(califPostulado);
 					}
@@ -375,7 +374,7 @@ public class Bolsa implements Serializable {
 				}
 			}
 			vacantes++;
-			
+
 			for (int pos = 0; pos < saveCalif.size(); pos++) 
 			{
 				if (calif.get(pos) >= califOferta && puestosDisp > 0)
@@ -384,11 +383,13 @@ public class Bolsa implements Serializable {
 					saveCalif.get(pos).setEstado(false);
 					auxOferta.getPostulados().add(saveCalif.get(pos));
 					auxOferta.setCantpuestos(puestosDisp);
-					Bolsa.getinstance().getListsolicitudes().get(posSolicitud(saveCalif.get(pos).getCodigo())).setEstado(false);
-					califMayor = 0;
+					int emp = posSolicitud(saveCalif.get(pos).getCodigo());
+					Bolsa.getinstance().getListsolicitudes().get(emp).setEstado(false);
 				}
 			}
+			cantsolis++;
 		}
+		
 		return auxOferta;
 	}
 	
