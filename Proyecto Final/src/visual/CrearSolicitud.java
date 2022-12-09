@@ -685,7 +685,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 
 			cbxEspecialidadObrero = new JComboBox<String>();
 			cbxEspecialidadObrero.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", 
-					"Cocinero", "Electricista", "Constructor", "Chofer"}));
+					"Cocinero", "Electricista", "Constructor", "Chofer", "Mensajero"}));
 			cbxEspecialidadObrero.setBounds(106, 11, 160, 20);
 			pnlEncuesta.add(cbxEspecialidadObrero);
 
@@ -712,19 +712,19 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			}
 			else if (local instanceof SolicitudEmpleado || rbtnPostulacion.isSelected())
 			{
-				if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario"))
+				if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Universitario") || postulado instanceof Universitario)
 				{
 					cbxEspecialidadTecnico.setVisible(false);
 					cbxEspecialidadObrero.setVisible(false);
 					cbxEspecialidadUniversitario.setVisible(true);
 				}
-				else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Obrero"))
+				else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Obrero") || postulado instanceof Obrero)
 				{
 					cbxEspecialidadTecnico.setVisible(false);
 					cbxEspecialidadObrero.setVisible(true);
 					cbxEspecialidadUniversitario.setVisible(false);
 				}
-				else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico"))
+				else if (((SolicitudEmpleado) local).getInfo().getNivelEst().equalsIgnoreCase("Tecnico") || postulado instanceof Tecnico)
 				{
 					cbxEspecialidadTecnico.setVisible(true);
 					cbxEspecialidadObrero.setVisible(false);
@@ -798,7 +798,6 @@ public class CrearSolicitud extends JDialog implements Serializable {
 			cbxProvEncuesta.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Az\u00FAa", "Barahona", "Distrito Nacional", 
 					"Independencia", "La Altagracia", "La Romana", "La Vega", "Puerto Plata", "Samana", "San Cristobal", "San Juan", 
 					"San Pedro de Macor\u00EDs", "Santiago", "Santo Domingo"}));
-			cbxProvEncuesta.setEnabled(false);
 			cbxProvEncuesta.setBounds(365, 11, 160, 20);
 			pnlEncuesta.add(cbxProvEncuesta);
 			provincia = cbxProvEncuesta.getSelectedItem().toString();
@@ -1258,7 +1257,7 @@ public class CrearSolicitud extends JDialog implements Serializable {
 		postulado = null;
 		empresa = null;
 
-		txtCodigo.setText(null);
+		txtIdentificacion.setText(null);
 		txtNombre.setText(null);
 		txtTelefono.setText(null);
 		txtCorreo.setText(null);

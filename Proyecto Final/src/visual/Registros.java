@@ -450,7 +450,13 @@ public class Registros extends JDialog {
 		panel_3.add(lblNewLabel_15);
 		
 		cbxProvinciaEmpresa = new JComboBox<String>();
-		cbxProvinciaEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Azua", "Bahoruco", "Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", "Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", "Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", "Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", "San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez", "Santo Domingo", "Valverde"}));
+		cbxProvinciaEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccionar>", "Azua", "Bahoruco", 
+				"Barahona", "Dajab\u00F3n", "Distrito Nacional", "Duarte", "El\u00EDas Pi\u00F1a", "El Seibo", "Espaillat", 
+				"Hato Mayor", "Hermanas Mirabal", "Independencia", "La Altagracia", "La Romana", "La Vega", 
+				"Mar\u00EDa Trinidad S\u00E1nchez", "Monse\u00F1or Nouel", "Monte Cristi", "Monte Plata", 
+				"Pedernales", "Peravia", "Puerto Plata", "Saman\u00E1", "San Crist\u00F3bal", "San Jos\u00E9 de Ocoa", 
+				"San Juan", "San Pedro de Macor\u00EDs", "S\u00E1nchez Ram\u00EDrez", "Santiago", "Santiago Rodr\u00EDguez",
+				"Santo Domingo", "Valverde"}));
 		cbxProvinciaEmpresa.setBounds(10, 291, 230, 20);
 		panel_3.add(cbxProvinciaEmpresa);
 		
@@ -466,7 +472,8 @@ public class Registros extends JDialog {
 		panel_3.add(lblNewLabel_17);
 		
 		cbxAreaTrabajoEmpresa = new JComboBox<String>();
-		cbxAreaTrabajoEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>", "Turismo", "Medicina", "Economia", "Tecnologia"}));
+		cbxAreaTrabajoEmpresa.setModel(new DefaultComboBoxModel<String>(new String[] {"<Seleccione>", "Turismo", "Medicina", "Economia", 
+				"Tecnologia", "Cocina", "Administracion", "Publicidad", "Ofimatica", "Mensajero"}));
 		cbxAreaTrabajoEmpresa.setBounds(10, 351, 230, 20);
 		panel_3.add(cbxAreaTrabajoEmpresa);
 		cbxAreaTrabajoEmpresa.setEnabled(false);
