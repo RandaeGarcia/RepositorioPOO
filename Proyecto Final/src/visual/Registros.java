@@ -636,6 +636,13 @@ public class Registros extends JDialog {
 		cbxprovincia.setSelectedIndex(0);
 		cbxEspecialidadObrero.setSelectedIndex(0);
 		
+		txtcodigo.setText("EMP-"+Bolsa.getinstance().getGeneradorCodEmpresa());
+		txtNombreEmpresa.setText("");
+		txtCorreoempresa.setText("");
+		txtTelefonoEmpresa.setText("");
+		cbxProvinciaEmpresa.setSelectedIndex(0);
+		cbxAreaTrabajoEmpresa.setSelectedIndex(0);
+		
 		txtcodigo.setEnabled(false);
 		txtCorreoempresa.setEnabled(false);
 		txtNombreEmpresa.setEnabled(false);
