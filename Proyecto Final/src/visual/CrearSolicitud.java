@@ -300,19 +300,19 @@ public class CrearSolicitud extends JDialog implements Serializable {
 									}
 								}
 							}
-							if (rbtnUniversitario.isSelected())
+							if (rbtnUniversitario.isSelected() || postulado instanceof Universitario)
 							{
 								cbxEspecialidadTecnico.setVisible(false);
 								cbxEspecialidadObrero.setVisible(false);
 								cbxEspecialidadUniversitario.setVisible(true);
 							}
-							else if (rbtnObrero.isSelected())
+							else if (rbtnObrero.isSelected() || postulado instanceof Obrero)
 							{
 								cbxEspecialidadTecnico.setVisible(false);
 								cbxEspecialidadObrero.setVisible(true);
 								cbxEspecialidadUniversitario.setVisible(false);
 							}
-							else if (rbtnTecnico.isSelected())
+							else if (rbtnTecnico.isSelected() || postulado instanceof Tecnico)
 							{
 								cbxEspecialidadTecnico.setVisible(true);
 								cbxEspecialidadObrero.setVisible(false);
