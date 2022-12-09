@@ -23,10 +23,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.SystemColor;
+import javax.swing.JLabel;
 
 public class Principal extends JFrame {
 
@@ -70,6 +72,7 @@ public class Principal extends JFrame {
 					}
 			}
 		});
+		
 		
 		setTitle("Bolsa de Trabajo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -238,6 +241,11 @@ public class Principal extends JFrame {
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+		
+		JLabel label = new JLabel (new ImageIcon("bolsadetrabajo.jpg"));
+		label.setSize(1894, 963);
+		label.setLocation(10, 11);
+		panel.add(label);
 		
 		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
 		btnCerrarSesion.setBackground(SystemColor.activeCaption);
